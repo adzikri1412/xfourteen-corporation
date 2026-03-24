@@ -27,7 +27,7 @@ const FEATURES = [
 ];
 
 const TEAM = [
-    { name: 'DziyXFourteen', role: 'CEO & Founder & Developer', img: 'assets/team-dev.jpg', socials: { whatsapp: '628895823757', instagram: 'https://instagram.com/ghaziyinhere', tiktok: 'https://tiktok.com/xenzzsettings', discord: 'https://discord.gg/bekkmRDQXX' } }
+    { name: 'DziyX - XFourteen', role: 'CEO & Founder & Developer', img: 'assets/team-dev.jpg', socials: { whatsapp: '628895823757', instagram: 'https://instagram.com/ghaziyinhere', tiktok: 'https://tiktok.com/xenzzsettings', discord: 'https://discord.gg/bekkmRDQXX' } }
 ];
 
 // ============================================
