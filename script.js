@@ -12,9 +12,9 @@ const CONFIG = {
 
 // Data Master
 const PRODUCTS = [
-    { id: 1, name: 'XFOURTEEN FLUXO', cat: 'ANDROID', price: 35000, img: 'assets/banner-ios.jpg', features: ['Royal Performance', 'Golden Aim Assist', 'Crystal Screen', 'Elite PPI', 'Crown Crosshairs', 'Touch of Kings'], description: 'For those beginning their royal journey.', bestseller: false },
-    { id: 2, name: 'XFOURTEEN EXONIC', cat: 'ANDROID', price: 70000, img: 'assets/banner-ios.jpg', features: ['Royal Performance', 'Golden Aim Assist', 'Crystal Screen', 'Elite PPI', 'Crown Crosshairs', 'Touch of Kings'], description: 'For knights seeking glory.', bestseller: false },
-    { id: 3, name: 'XFOURTEEN PREMIUM', cat: 'ANDROID', price: 100000, img: 'assets/banner-ios.jpg', features: ['Crystal Screen', 'Royal Performance', 'Elite PPI', 'Crown Crosshairs', 'Touch of Kings', 'Golden Aim Assist'], description: 'The crown jewel of Android optimization.', bestseller: true },
+    { id: 1, name: 'XFOURTEEN FLUXO', cat: 'ANDROID', price: 35000, img: 'assets/banner-ios.jpg', features: ['Royal Performance', 'Golden Aim Assist', 'Crystal Screen', 'Elite PPI and Density', 'Crown Crosshairs', 'Touch of Kings'], description: 'For those beginning their royal journey.', bestseller: false },
+    { id: 2, name: 'XFOURTEEN EXONIC', cat: 'ANDROID', price: 70000, img: 'assets/banner-ios.jpg', features: ['Royal Performance', 'Golden Aim Assist', 'Crystal Screen', 'Elite PPI and Density', 'Crown Crosshairs', 'Touch of Kings'], description: 'For knights seeking glory.', bestseller: false },
+    { id: 3, name: 'XFOURTEEN PREMIUM', cat: 'ANDROID', price: 100000, img: 'assets/banner-ios.jpg', features: ['Royal Performance', 'Golden Aim Assist', 'Crystal Screen', 'Elite PPI and Density', 'Crown Crosshairs', 'Touch of Kings'], description: 'The crown jewel of Android optimization.', bestseller: true },
     { id: 4, name: 'Comming Soon iOS', cat: 'IOS', price: 10000000, img: 'assets/banner-ios.jpg', features: ['Comming Soon', 'Comming Soon', 'Comming Soon'], description: 'Premium iOS optimization for the elite Comming Soon.', bestseller: false },
     { id: 5, name: 'XFOURTEEN BASIC', cat: 'PC', price: 30000, img: 'assets/banner-pc.jpg', features: ['Golden Mouse', 'Elite Optimization', 'Royal Emulator'], description: 'Basic royal settings for reliable performance.', bestseller: false },
     { id: 6, name: 'XFOURTEEN V1', cat: 'PC', price: 60000, img: 'assets/banner-pc.jpg', features: ['Royal Settings', 'Elite Pack', 'Crown Aim'], description: 'The ultimate royal configuration.', bestseller: true }
@@ -27,7 +27,7 @@ const FEATURES = [
 ];
 
 const TEAM = [
-    { name: 'DziyXFourteen', role: 'CEO & Founder & Developer', img: 'assets/team-dev.jpg', socials: { whatsapp: '628895823757', instagram: 'https://instagram.com/ghaziyinhere', tiktok: 'https://tiktok.com/xenzzsettings', discord: 'https://discord.gg/' } }
+    { name: 'DziyXFourteen', role: 'CEO & Founder & Developer', img: 'assets/team-dev.jpg', socials: { whatsapp: '628895823757', instagram: 'https://instagram.com/ghaziyinhere', tiktok: 'https://tiktok.com/xenzzsettings', discord: 'https://discord.gg/bekkmRDQXX' } }
 ];
 
 // ============================================
@@ -605,7 +605,7 @@ async function sendToDiscord() {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                username: "XFOURTEEN Royal Court",
+                username: "XFOURTEEN ROYAL COURT",
                 avatar_url: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
                 embeds: [{
                     title: "👑 Royal Audience Request",
@@ -615,7 +615,7 @@ async function sendToDiscord() {
                         { name: "📱 Royal Contact", value: `\`\`\`${phone.value}\`\`\``, inline: true },
                         { name: "📜 Royal Message", value: msg.value.substring(0, 1000), inline: false }
                     ],
-                    footer: { text: "XFOURTEEN Royal Court • " + new Date().toLocaleString('id-ID') },
+                    footer: { text: "XFOURTEEN ROYAL COURT • " + new Date().toLocaleString('id-ID') },
                     timestamp: new Date().toISOString()
                 }]
             })
