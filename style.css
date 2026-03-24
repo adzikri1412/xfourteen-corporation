@@ -1,0 +1,1673 @@
+/* ============================================
+   XFOURTEEN CORPORATION - GOLDEN ROYAL EDITION
+   COMPLETE CSS - ALL FIXES INCLUDED
+   ============================================ */
+
+/* Import Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
+
+/* Root Variables */
+:root {
+    --royal-dark: #0f0a0a;
+    --royal-darker: #080505;
+    --royal-darkest: #030202;
+    --gold-primary: #d4af37;
+    --gold-dark: #b8860b;
+    --gold-light: #f5e56b;
+    --gold-glow: rgba(212, 175, 55, 0.6);
+    --amber-glow: rgba(184, 134, 11, 0.5);
+    --transition-royal: all 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    --transition-elastic: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+}
+
+body {
+    background-color: var(--royal-darker);
+    color: #f5e6d3;
+    overflow-x: hidden;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Custom Scrollbar - Royal Gold */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: linear-gradient(180deg, var(--royal-dark), var(--royal-darker));
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--gold-primary), var(--gold-dark));
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--gold-light), var(--gold-primary));
+}
+
+/* Utility Classes */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.font-cormorant {
+    font-family: 'Cormorant Garamond', serif;
+}
+
+.font-montserrat {
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* ============================================
+   SECTION TITLES - ULTRA VISIBLE FIX
+   ============================================ */
+
+/* All Section Main Titles - FORCE VISIBLE */
+section h2,
+#products h2,
+#about-us h2,
+#our-team h2,
+#contact-us h2,
+.features-section h2,
+section:has(.features-container) h2 {
+    background: linear-gradient(135deg, #ffea8a 0%, #ffe680 25%, #ffdd77 50%, #ffe680 75%, #ffea8a 100%) !important;
+    background-size: 200% auto !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+    text-shadow: 0 0 35px rgba(255, 234, 138, 1), 0 0 15px rgba(212, 175, 55, 0.9) !important;
+    animation: title-shine 2s ease-in-out infinite !important;
+    font-weight: 900 !important;
+    letter-spacing: -0.5px !important;
+    display: inline-block !important;
+    width: 100% !important;
+    text-align: center !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Section Title Span (highlighted words) */
+section h2 span,
+#products h2 span,
+#about-us h2 span,
+#our-team h2 span,
+#contact-us h2 span,
+.features-section h2 span {
+    background: linear-gradient(135deg, #fff5cc 0%, #fff0a0 30%, #ffea8a 50%, #fff0a0 70%, #fff5cc 100%) !important;
+    background-size: 200% auto !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+    text-shadow: 0 0 45px rgba(255, 245, 204, 1), 0 0 20px rgba(212, 175, 55, 1) !important;
+    animation: span-shine 1.8s ease-in-out infinite !important;
+    font-weight: 900 !important;
+}
+
+/* Section Subtitle Badges */
+section .inline-block span,
+#products .inline-block span,
+#about-us .inline-block span,
+#our-team .inline-block span,
+#contact-us .inline-block span {
+    color: #fff0a0 !important;
+    background: rgba(212, 175, 55, 0.3) !important;
+    border-color: #ffdd77 !important;
+    text-shadow: 0 0 12px rgba(255, 240, 160, 0.8) !important;
+    font-weight: 700 !important;
+    letter-spacing: 2px !important;
+}
+
+/* Gold Shine Animation for Section Titles */
+@keyframes title-shine {
+    0% {
+        background-position: 0% 50%;
+        text-shadow: 0 0 25px rgba(255, 234, 138, 0.8);
+    }
+    50% {
+        background-position: 100% 50%;
+        text-shadow: 0 0 55px rgba(255, 234, 138, 1), 0 0 25px rgba(212, 175, 55, 1);
+    }
+    100% {
+        background-position: 0% 50%;
+        text-shadow: 0 0 25px rgba(255, 234, 138, 0.8);
+    }
+}
+
+@keyframes span-shine {
+    0% {
+        background-position: 0% 50%;
+        text-shadow: 0 0 30px rgba(255, 245, 204, 0.8);
+    }
+    50% {
+        background-position: 100% 50%;
+        text-shadow: 0 0 70px rgba(255, 245, 204, 1), 0 0 35px rgba(212, 175, 55, 1);
+    }
+    100% {
+        background-position: 0% 50%;
+        text-shadow: 0 0 30px rgba(255, 245, 204, 0.8);
+    }
+}
+
+/* Section Decorative Line */
+section .w-20.h-0\.5,
+section .w-16.h-0\.5,
+section .w-20.h-0\.5.bg-gradient-to-r {
+    background: linear-gradient(90deg, #fff5cc, #ffea8a, #ffdd77, #ffea8a, #fff5cc) !important;
+    box-shadow: 0 0 20px rgba(255, 234, 138, 1) !important;
+    height: 3px !important;
+    margin: 16px auto !important;
+    width: 80px !important;
+}
+
+/* ============================================
+   HOME TITLE FIX - GOLDEN VISIBLE
+   ============================================ */
+
+/* Main Title XFOURTEEN */
+h1 .text-transparent.bg-clip-text {
+    background: linear-gradient(135deg, #fff5cc 0%, #ffea8a 30%, #ffdd77 50%, #ffea8a 70%, #fff5cc 100%) !important;
+    background-size: 200% auto !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+    text-shadow: 0 0 45px rgba(255, 245, 204, 1), 0 0 20px rgba(212, 175, 55, 0.9) !important;
+    animation: gold-shine 2.5s ease-in-out infinite !important;
+    font-weight: 800 !important;
+}
+
+/* Subtitle CORPORATION */
+h1 .text-white {
+    background: linear-gradient(135deg, #ffffff 0%, #fff5cc 30%, #ffea8a 50%, #fff5cc 70%, #ffffff 100%) !important;
+    background-size: 200% auto !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.9), 0 0 15px rgba(245, 229, 107, 0.7) !important;
+    animation: gold-shine-slow 3.5s ease-in-out infinite !important;
+    font-weight: 700 !important;
+}
+
+/* Gold Shine Animation */
+@keyframes gold-shine {
+    0% {
+        background-position: 0% 50%;
+        text-shadow: 0 0 25px rgba(255, 245, 204, 0.7);
+    }
+    50% {
+        background-position: 100% 50%;
+        text-shadow: 0 0 60px rgba(255, 245, 204, 1), 0 0 30px rgba(212, 175, 55, 1);
+    }
+    100% {
+        background-position: 0% 50%;
+        text-shadow: 0 0 25px rgba(255, 245, 204, 0.7);
+    }
+}
+
+@keyframes gold-shine-slow {
+    0% {
+        background-position: 0% 50%;
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+    }
+    50% {
+        background-position: 100% 50%;
+        text-shadow: 0 0 50px rgba(255, 255, 255, 1), 0 0 25px rgba(245, 229, 107, 0.9);
+    }
+    100% {
+        background-position: 0% 50%;
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+    }
+}
+
+/* Navigation Brand Text */
+nav .font-montserrat {
+    background: linear-gradient(135deg, #ffffff, #ffea8a, #ffdd77) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+    font-weight: 800 !important;
+    text-shadow: 0 0 12px rgba(255, 230, 128, 0.7) !important;
+}
+
+nav .text-gold-500 {
+    color: #ffea8a !important;
+    text-shadow: 0 0 12px rgba(255, 230, 128, 0.8) !important;
+}
+
+/* Hover Effect */
+nav .group-hover\:text-gold-400 {
+    color: #fff5cc !important;
+}
+
+/* ============================================
+   LOADING SCREEN TEXT - GOLDEN VISIBLE
+   ============================================ */
+
+/* Loading Screen Main Text - "PREPARING ROYAL EXPERIENCE" */
+#loader .text-gold-400\/70,
+#loader .text-gold-400,
+#loader p.text-gold-400\/70,
+#loader p:not(.font-montserrat) {
+    background: linear-gradient(135deg, #ffea8a 0%, #ffe680 30%, #ffdd77 60%, #ffe680 80%, #ffea8a 100%) !important;
+    background-size: 200% auto !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+    text-shadow: 0 0 20px rgba(255, 234, 138, 0.9), 0 0 10px rgba(212, 175, 55, 0.6) !important;
+    animation: loader-text-shine 2s ease-in-out infinite !important;
+    font-weight: 600 !important;
+    letter-spacing: 3px !important;
+}
+
+/* Loading Screen Brand Text - "XFOURTEEN CORPORATION" */
+#loader h2,
+#loader .font-cormorant {
+    background: linear-gradient(135deg, #fff5cc 0%, #ffea8a 30%, #ffdd77 50%, #ffea8a 70%, #fff5cc 100%) !important;
+    background-size: 200% auto !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+    text-shadow: 0 0 30px rgba(255, 245, 204, 0.9), 0 0 15px rgba(212, 175, 55, 0.7) !important;
+    animation: loader-title-shine 2.5s ease-in-out infinite !important;
+    font-weight: 800 !important;
+}
+
+/* Loading Bar */
+#loader .bg-gold-900\/50 {
+    background: rgba(212, 175, 55, 0.2) !important;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.3) !important;
+}
+
+#loader #loadingBar {
+    background: linear-gradient(90deg, #ffea8a, #ffdd77, #ffd966, #ffdd77, #ffea8a) !important;
+    box-shadow: 0 0 15px rgba(255, 234, 138, 0.8) !important;
+}
+
+/* Loading Screen Animations */
+@keyframes loader-text-shine {
+    0% {
+        background-position: 0% 50%;
+        text-shadow: 0 0 15px rgba(255, 234, 138, 0.6);
+    }
+    50% {
+        background-position: 100% 50%;
+        text-shadow: 0 0 35px rgba(255, 234, 138, 1), 0 0 15px rgba(212, 175, 55, 0.8);
+    }
+    100% {
+        background-position: 0% 50%;
+        text-shadow: 0 0 15px rgba(255, 234, 138, 0.6);
+    }
+}
+
+@keyframes loader-title-shine {
+    0% {
+        background-position: 0% 50%;
+        text-shadow: 0 0 20px rgba(255, 245, 204, 0.7);
+    }
+    50% {
+        background-position: 100% 50%;
+        text-shadow: 0 0 45px rgba(255, 245, 204, 1), 0 0 20px rgba(212, 175, 55, 0.9);
+    }
+    100% {
+        background-position: 0% 50%;
+        text-shadow: 0 0 20px rgba(255, 245, 204, 0.7);
+    }
+}
+
+/* Decorative Border Elements */
+#loader .border-gold-500\/20 {
+    border-color: rgba(212, 175, 55, 0.4) !important;
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.3) !important;
+}
+
+/* Pulse Glow Animation for Crown */
+#loader .animate-pulse-gold {
+    animation: pulse-gold 3s ease-in-out infinite !important;
+}
+
+/* ============================================
+   PAYMENT MODAL TEXT - GOLDEN VISIBLE
+   ============================================ */
+
+/* Royal Item Label */
+#payment-modal .text-gold-400\/70,
+#payment-modal .text-xs.text-gold-400\/70,
+#payment-modal .flex.justify-between.text-xs {
+    color: #ffea8a !important;
+    text-shadow: 0 0 8px rgba(255, 234, 138, 0.6) !important;
+    font-weight: 600 !important;
+}
+
+/* Royal Item Value (Product Name) */
+#payment-modal #pay-product {
+    background: linear-gradient(135deg, #ffea8a 0%, #ffe680 50%, #ffdd77 100%) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+    text-shadow: 0 0 12px rgba(255, 234, 138, 0.8) !important;
+    font-weight: 800 !important;
+    font-size: 1rem !important;
+}
+
+/* Total Bill / Tribute Text */
+#payment-modal .text-transparent.bg-clip-text,
+#payment-modal .font-bold.text-xl {
+    background: linear-gradient(135deg, #fff5cc 0%, #ffea8a 30%, #ffdd77 70%, #ffea8a 100%) !important;
+    background-size: 200% auto !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+    text-shadow: 0 0 15px rgba(255, 234, 138, 0.7) !important;
+    animation: modal-total-shine 2s ease-in-out infinite !important;
+}
+
+/* Send Proof to Royal Court Button */
+#payment-modal .bg-gradient-to-r.from-gold-600.to-amber-600,
+#payment-modal button:last-child {
+    background: linear-gradient(135deg, #ffdd77, #ffd966, #ffea8a) !important;
+    color: #1a1408 !important;
+    font-weight: 800 !important;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5) !important;
+    box-shadow: 0 4px 20px rgba(255, 234, 138, 0.5) !important;
+    border: none !important;
+}
+
+#payment-modal button:last-child:hover {
+    background: linear-gradient(135deg, #ffea8a, #ffdd77, #ffd966) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 30px rgba(255, 234, 138, 0.7) !important;
+}
+
+/* Modal Title - Royal Treasury */
+#payment-modal h3 {
+    background: linear-gradient(135deg, #fff5cc 0%, #ffea8a 30%, #ffdd77 70%, #ffea8a 100%) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+    text-shadow: 0 0 20px rgba(255, 245, 204, 0.8) !important;
+    font-weight: 800 !important;
+}
+
+/* Modal Subtitle - Scan QR Code & Present Proof */
+#payment-modal .text-gold-400\/60,
+#payment-modal .text-xs.uppercase.tracking-wider {
+    color: #ffea8a !important;
+    text-shadow: 0 0 5px rgba(255, 234, 138, 0.5) !important;
+    font-weight: 500 !important;
+}
+
+/* Modal Background Border */
+#payment-modal .border-gold-500\/30 {
+    border-color: rgba(255, 234, 138, 0.4) !important;
+    box-shadow: 0 0 15px rgba(255, 234, 138, 0.2) !important;
+}
+
+/* Modal Icon */
+#payment-modal .w-16.h-16.rounded-full {
+    background: linear-gradient(135deg, rgba(255, 234, 138, 0.3), rgba(255, 221, 119, 0.3)) !important;
+}
+
+#payment-modal .fa-crown {
+    color: #ffea8a !important;
+    text-shadow: 0 0 10px rgba(255, 234, 138, 0.8) !important;
+}
+
+/* Animation for Total Amount */
+@keyframes modal-total-shine {
+    0% {
+        background-position: 0% 50%;
+        text-shadow: 0 0 10px rgba(255, 234, 138, 0.5);
+    }
+    50% {
+        background-position: 100% 50%;
+        text-shadow: 0 0 25px rgba(255, 234, 138, 1);
+    }
+    100% {
+        background-position: 0% 50%;
+        text-shadow: 0 0 10px rgba(255, 234, 138, 0.5);
+    }
+}
+
+/* ============================================
+   BESTSELLER BADGE - ENHANCED VISIBILITY
+   ============================================ */
+
+/* Bestseller Badge Container */
+#product-grid .absolute.top-3.right-3.z-10,
+#product-grid .absolute.top-4.right-4.z-10 {
+    z-index: 20 !important;
+}
+
+/* Bestseller Badge Styling */
+#product-grid .bg-gradient-to-r.from-gold-600.to-amber-600,
+#product-grid span.bg-gradient-to-r {
+    background: linear-gradient(135deg, #ffdd77, #ffd966, #ffea8a, #ffdd77) !important;
+    background-size: 200% auto !important;
+    color: #1a1408 !important;
+    font-weight: 900 !important;
+    font-size: 10px !important;
+    padding: 4px 12px !important;
+    border-radius: 20px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    box-shadow: 0 0 15px rgba(255, 221, 119, 0.8), 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    animation: bestseller-pulse 1.5s ease-in-out infinite !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+}
+
+/* Crown Icon in Bestseller Badge */
+#product-grid .bg-gradient-to-r.from-gold-600.to-amber-600 i,
+#product-grid span.bg-gradient-to-r i {
+    color: #ffea8a !important;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.3) !important;
+    font-size: 9px !important;
+}
+
+/* Bestseller Badge Animation */
+@keyframes bestseller-pulse {
+    0% {
+        box-shadow: 0 0 5px rgba(255, 221, 119, 0.5);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(255, 221, 119, 1), 0 0 10px rgba(255, 234, 138, 0.8);
+        transform: scale(1.02);
+    }
+    100% {
+        box-shadow: 0 0 5px rgba(255, 221, 119, 0.5);
+        transform: scale(1);
+    }
+}
+
+/* Alternative for RTL or different positioning */
+#product-grid .bestseller-badge,
+#product-grid [class*="bestseller"] {
+    background: linear-gradient(135deg, #ffdd77, #ffd966, #ffea8a) !important;
+    color: #1a1408 !important;
+    font-weight: 900 !important;
+    box-shadow: 0 0 15px rgba(255, 221, 119, 0.8) !important;
+    animation: bestseller-pulse 1.5s ease-in-out infinite !important;
+}
+
+/* ============================================
+   TEAM CARD - ROYAL CREATOR ENHANCEMENT
+   Logo & Background Effect
+   ============================================ */
+
+/* Team Card Container - Royal Creator */
+#team-grid > div {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(145deg, #0f0a0a, #080505) !important;
+    border: 1px solid rgba(212, 175, 55, 0.3) !important;
+    transition: all 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1) !important;
+}
+
+/* Royal Pattern Background */
+#team-grid > div::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%23d4af37' fill-opacity='0.03' d='M50 0 L61.8 38.2 L100 50 L61.8 61.8 L50 100 L38.2 61.8 L0 50 L38.2 38.2 L50 0z'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 40px;
+    opacity: 0.4;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+#team-grid > div:hover::before {
+    opacity: 0.6;
+}
+
+/* Royal Border Glow Effect */
+#team-grid > div::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    padding: 2px;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.4), rgba(184, 134, 11, 0.2), rgba(212, 175, 55, 0.4));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+#team-grid > div:hover::after {
+    opacity: 1;
+}
+
+/* Logo Badge on Card */
+#team-grid > div .team-logo-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #d4af37, #b8860b);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+    animation: logo-pulse 2s ease-in-out infinite;
+}
+
+#team-grid > div .team-logo-badge i {
+    font-size: 20px;
+    color: #080505;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+/* Crown Icon Inside Logo */
+#team-grid > div .team-logo-badge .fa-crown {
+    font-size: 22px;
+}
+
+/* Logo Pulse Animation */
+@keyframes logo-pulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+    }
+    50% {
+        transform: scale(1.08);
+        box-shadow: 0 0 25px rgba(212, 175, 55, 0.9);
+    }
+}
+
+/* Royal Creator Image Container Enhancement */
+#team-grid > div .relative.mb-5 {
+    position: relative;
+    z-index: 5;
+}
+
+/* Glow Ring Around Avatar */
+#team-grid > div .relative.w-24.h-24 {
+    position: relative;
+}
+
+#team-grid > div .relative.w-24.h-24::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ffea8a, #ffdd77, #d4af37);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: -1;
+}
+
+#team-grid > div:hover .relative.w-24.h-24::before {
+    opacity: 0.8;
+    animation: glow-rotate 3s linear infinite;
+}
+
+@keyframes glow-rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Avatar Border Enhancement */
+#team-grid > div .border-2.border-gold-500\/30 {
+    border-color: rgba(212, 175, 55, 0.5) !important;
+    transition: all 0.4s ease;
+}
+
+#team-grid > div:hover .border-2.border-gold-500\/30 {
+    border-color: #ffea8a !important;
+    box-shadow: 0 0 20px rgba(255, 234, 138, 0.6);
+}
+
+/* Royal Creator Name Enhancement */
+#team-grid > div h3 {
+    background: linear-gradient(135deg, #fff5cc, #ffea8a, #ffdd77) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+    text-shadow: 0 0 15px rgba(255, 234, 138, 0.5) !important;
+    font-weight: 800 !important;
+    position: relative;
+    z-index: 5;
+}
+
+/* Role Text Enhancement */
+#team-grid > div .text-gold-500.text-\[10px\] {
+    background: linear-gradient(135deg, #ffea8a, #ffdd77) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+    text-shadow: 0 0 8px rgba(255, 234, 138, 0.6) !important;
+    font-weight: 700 !important;
+    letter-spacing: 1px !important;
+}
+
+/* Social Icons Enhancement */
+#team-grid > div .flex.gap-3.justify-center {
+    position: relative;
+    z-index: 5;
+}
+
+#team-grid > div .flex.gap-3.justify-center a {
+    transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1) !important;
+}
+
+#team-grid > div .flex.gap-3.justify-center a:hover {
+    transform: translateY(-3px) scale(1.1) !important;
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4) !important;
+}
+
+/* ============================================
+   ABOUT SECTION - OUR LEGACY ALIGNMENT
+   ============================================ */
+
+/* About Section Container */
+#about-us {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Our Legacy Badge - Center Alignment */
+#about-us .inline-block,
+#about-us .inline-block.mb-3,
+#about-us > div > div > div:first-child > div:first-child {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+    text-align: center !important;
+}
+
+/* Our Legacy Badge Text */
+#about-us .inline-block span,
+#about-us .border-gold-500\/30.px-4.py-1\.5.rounded-full {
+    display: inline-block !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+}
+
+/* About Section Title Container */
+#about-us .space-y-6 > div:first-child {
+    text-align: center !important;
+}
+
+/* About Section Title "About XFOURTEEN" */
+#about-us h2 {
+    text-align: center !important;
+    display: block !important;
+    width: 100% !important;
+}
+
+/* Decorative Line Under Title */
+#about-us .w-16.h-0\.5 {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    display: block !important;
+}
+
+/* About Section Text Alignment */
+#about-us p.leading-relaxed {
+    text-align: center !important;
+}
+
+/* Quote Section */
+#about-us .pl-5.border-l-4 {
+    text-align: left !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    max-width: 90% !important;
+}
+
+/* Vision & Mission Cards Container */
+#about-us .grid.sm\:grid-cols-2 {
+    justify-content: center !important;
+}
+
+/* Vision & Mission Cards */
+#about-us .grid.sm\:grid-cols-2 > div {
+    text-align: center !important;
+}
+
+/* ============================================
+   TEXT CONTRAST FIXES - READABILITY
+   ============================================ */
+
+/* Hero Description */
+.text-gold-300\/60 {
+    color: rgba(230, 213, 184, 0.95) !important;
+}
+
+/* Product Card Description */
+#product-grid > div p {
+    color: #e6d5b8 !important;
+}
+
+/* Product Card Features */
+#product-grid > div ul li {
+    color: #d4c5a0 !important;
+}
+
+/* Feature Card Description */
+#features-container > div p {
+    color: #e6d5b8 !important;
+}
+
+/* About Section Text */
+#about-us p:not(.italic) {
+    color: #e6d5b8 !important;
+}
+
+/* Team Card Role Text */
+#team-grid > div p.text-gold-500 {
+    color: #ffea8a !important;
+    font-weight: 600;
+}
+
+/* Team Card Bio */
+#team-grid > div p:not(.text-gold-500) {
+    color: #e6d5b8 !important;
+}
+
+/* Contact Form Labels */
+.text-gold-400\/70 {
+    color: rgba(255, 230, 128, 0.95) !important;
+}
+
+/* Footer Text */
+.text-gold-500\/30 {
+    color: rgba(255, 230, 128, 0.6) !important;
+}
+
+/* Tab Items Non-Active */
+.tab-royal:not(.active) {
+    color: #d4c5a0 !important;
+}
+
+.tab-royal:not(.active):hover {
+    color: #ffea8a !important;
+}
+
+/* Navigation Links */
+.royal-link {
+    color: #e6d5b8 !important;
+    font-weight: 500;
+}
+
+.royal-link:hover {
+    color: #ffea8a !important;
+}
+
+/* Mobile Menu Links */
+#mobileMenu a {
+    color: #e6d5b8 !important;
+}
+
+#mobileMenu a:hover {
+    color: #ffea8a !important;
+}
+
+/* Form Input Text */
+.form-royal {
+    color: #fff2e6 !important;
+}
+
+.form-royal::placeholder {
+    color: #c9b37c !important;
+}
+
+/* Toast Message */
+#toast-message {
+    color: #1a1408 !important;
+    font-weight: 700 !important;
+}
+
+/* Button Text */
+.btn-royal-primary, .btn-royal-secondary {
+    font-weight: 800 !important;
+    letter-spacing: 1.5px !important;
+}
+
+/* ============================================
+   ANIMATIONS - ROYAL EDITION
+   ============================================ */
+
+@keyframes pulse-gold {
+    0%, 100% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.08);
+    }
+}
+
+@keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes spin-reverse {
+    from { transform: rotate(360deg); }
+    to { transform: rotate(0deg); }
+}
+
+@keyframes ping-slow {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    75%, 100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+@keyframes crown-rise {
+    0% {
+        transform: scale(0) rotate(-180deg);
+        opacity: 0;
+    }
+    60% {
+        transform: scale(1.1) rotate(10deg);
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+@keyframes float-gold {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-12px);
+    }
+}
+
+@keyframes text-reveal {
+    0% {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scale-on-scroll {
+    0% { transform: scaleX(0); }
+    100% { transform: scaleX(1); }
+}
+
+@keyframes bounce-gold {
+    0%, 100% {
+        transform: translateX(-50%) translateY(0);
+    }
+    50% {
+        transform: translateX(-50%) translateY(-10px);
+    }
+}
+
+@keyframes shimmer-gold {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+@keyframes glow-pulse {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
+        text-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 25px rgba(212, 175, 55, 0.6);
+        text-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+    }
+}
+
+@keyframes border-glow {
+    0%, 100% {
+        border-color: rgba(212, 175, 55, 0.2);
+        box-shadow: 0 0 0 0 rgba(212, 175, 55, 0);
+    }
+    50% {
+        border-color: rgba(212, 175, 55, 0.6);
+        box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+    }
+}
+
+/* Animation Classes */
+.animate-pulse-gold {
+    animation: pulse-gold 3s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+    animation: spin-slow 8s linear infinite;
+}
+
+.animate-spin-reverse {
+    animation: spin-reverse 6s linear infinite;
+}
+
+.animate-ping-slow {
+    animation: ping-slow 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.animate-crown-rise {
+    animation: crown-rise 0.8s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+}
+
+.animate-float-gold {
+    animation: float-gold 4s ease-in-out infinite;
+}
+
+.animate-text-reveal {
+    animation: text-reveal 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    animation-delay: 0.3s;
+}
+
+.animate-text-reveal-delay {
+    animation: text-reveal 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    animation-delay: 0.6s;
+}
+
+.animate-text-reveal-delay2 {
+    animation: text-reveal 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    animation-delay: 0.9s;
+}
+
+.animate-text-reveal-delay3 {
+    animation: text-reveal 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    animation-delay: 1.2s;
+}
+
+.animate-on-scroll {
+    animation: fade-in-up 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+.animate-scale-on-scroll {
+    animation: scale-on-scroll 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    animation-delay: 0.3s;
+    transform-origin: center;
+}
+
+.animate-bounce-gold {
+    animation: bounce-gold 2s ease-in-out infinite;
+}
+
+.animate-pulse-gentle {
+    animation: glow-pulse 2s ease-in-out infinite;
+}
+
+.animate-royal-glow {
+    animation: border-glow 3s ease-in-out infinite;
+}
+
+/* ============================================
+   ROYAL NAVIGATION
+   ============================================ */
+.royal-nav {
+    background: rgba(8, 5, 5, 0.95);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+}
+
+.royal-link {
+    position: relative;
+    font-weight: 500;
+}
+
+.royal-link::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold-primary), var(--gold-dark));
+    transition: width 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+}
+
+.royal-link:hover::after {
+    width: 100%;
+}
+
+/* ============================================
+   ROYAL CROWN ICON
+   ============================================ */
+.royal-crown-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.royal-crown-inner {
+    position: relative;
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+
+.royal-crown-inner:hover {
+    transform: scale(1.05);
+}
+
+/* ============================================
+   ROYAL BUTTONS
+   ============================================ */
+.btn-royal-primary {
+    background: linear-gradient(135deg, #d4af37, #b8860b);
+    color: #080505;
+    padding: 14px 32px;
+    border-radius: 40px;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 1px;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-royal-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: 0.6s;
+}
+
+.btn-royal-primary:hover::before {
+    left: 100%;
+}
+
+.btn-royal-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(212, 175, 55, 0.4);
+    background: linear-gradient(135deg, #f5e56b, #d4af37);
+}
+
+.btn-royal-secondary {
+    background: rgba(212, 175, 55, 0.15);
+    color: #ffffff;
+    padding: 14px 32px;
+    border-radius: 40px;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 1px;
+    border: 1px solid rgba(212, 175, 55, 0.5);
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.4s ease;
+    text-decoration: none;
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+}
+
+.btn-royal-secondary:hover {
+    background: rgba(212, 175, 55, 0.25);
+    border-color: rgba(212, 175, 55, 0.9);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(212, 175, 55, 0.2);
+    color: #fff;
+}
+
+@media (min-width: 768px) {
+    .btn-royal-primary, .btn-royal-secondary {
+        padding: 16px 40px;
+        font-size: 14px;
+    }
+}
+
+/* ============================================
+   ROYAL TABS
+   ============================================ */
+.tab-royal {
+    padding: 8px 24px;
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 13px;
+    transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #d4c5a0;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tab-royal.active {
+    background: linear-gradient(135deg, #d4af37, #b8860b);
+    color: #080505;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+    animation: glow-pulse 2s ease-in-out infinite;
+}
+
+.tab-royal:hover:not(.active) {
+    color: #ffea8a;
+    background: rgba(212, 175, 55, 0.15);
+}
+
+@media (min-width: 768px) {
+    .tab-royal {
+        padding: 10px 32px;
+        font-size: 14px;
+    }
+}
+
+/* ============================================
+   ROYAL CARDS
+   ============================================ */
+#product-grid > div {
+    background: linear-gradient(145deg, #0f0a0a, #080505);
+    border-radius: 20px;
+    padding: 24px;
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    transition: all 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    position: relative;
+    overflow: hidden;
+}
+
+#product-grid > div::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(115deg, 
+        transparent 0%, 
+        transparent 40%, 
+        rgba(212, 175, 55, 0.08) 50%, 
+        rgba(255, 255, 255, 0.15) 60%, 
+        transparent 70%, 
+        transparent 100%);
+    background-size: 200% 100%;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+
+#product-grid > div:hover::before {
+    opacity: 1;
+    animation: shimmer-gold 1.5s ease-in-out infinite;
+}
+
+#product-grid > div:hover {
+    border-color: #d4af37;
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 25px 40px -12px rgba(212, 175, 55, 0.35);
+}
+
+/* Product Card Text */
+#product-grid > div h3 {
+    color: #fff2e6;
+    font-weight: 700;
+}
+
+#product-grid > div p {
+    color: #e6d5b8;
+}
+
+#product-grid > div ul li {
+    color: #d4c5a0;
+}
+
+@media (min-width: 768px) {
+    #product-grid > div {
+        padding: 28px;
+        border-radius: 24px;
+    }
+}
+
+/* Feature Cards */
+#features-container > div {
+    background: linear-gradient(145deg, #0f0a0a, #080505);
+    border-radius: 20px;
+    padding: 32px 24px;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    transition: all 0.5s ease;
+    text-align: center;
+}
+
+#features-container > div h3 {
+    color: #fff2e6;
+}
+
+#features-container > div p {
+    color: #e6d5b8;
+}
+
+#features-container > div:hover {
+    transform: translateY(-8px);
+    border-color: #d4af37;
+    box-shadow: 0 20px 35px -12px rgba(212, 175, 55, 0.25);
+}
+
+/* Team Cards */
+#team-grid > div {
+    background: linear-gradient(145deg, #0f0a0a, #080505);
+    border-radius: 20px;
+    padding: 28px 24px;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    transition: all 0.5s ease;
+    text-align: center;
+}
+
+#team-grid > div h3 {
+    color: #fff2e6;
+}
+
+#team-grid > div p {
+    color: #e6d5b8;
+}
+
+#team-grid > div:hover {
+    transform: translateY(-10px);
+    border-color: #d4af37;
+    box-shadow: 0 25px 40px -12px rgba(212, 175, 55, 0.3);
+}
+
+/* Contact Cards */
+.contact-royal {
+    background: linear-gradient(145deg, #0f0a0a, #080505);
+    padding: 20px 24px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+}
+
+.contact-royal h3 {
+    color: #fff2e6;
+}
+
+.contact-royal:hover {
+    transform: translateX(8px);
+    border-color: #d4af37;
+    box-shadow: 0 10px 25px rgba(212, 175, 55, 0.2);
+}
+
+.contact-icon-royal {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s ease;
+    flex-shrink: 0;
+}
+
+/* Form Inputs */
+.form-royal {
+    width: 100%;
+    background: rgba(8, 5, 5, 0.7);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    padding: 12px 18px;
+    border-radius: 12px;
+    color: #fff2e6;
+    outline: none;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.form-royal:focus {
+    border-color: #d4af37;
+    background: rgba(8, 5, 5, 0.9);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+    transform: translateY(-1px);
+}
+
+.form-royal::placeholder {
+    color: #c9b37c;
+}
+
+@media (min-width: 768px) {
+    .form-royal {
+        padding: 14px 20px;
+        border-radius: 14px;
+        font-size: 15px;
+    }
+}
+
+/* ============================================
+   STAGGER ANIMATION
+   ============================================ */
+.stagger-item {
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+    animation: fade-in-up 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
+}
+
+.stagger-item:nth-child(1) { animation-delay: 0.05s; }
+.stagger-item:nth-child(2) { animation-delay: 0.12s; }
+.stagger-item:nth-child(3) { animation-delay: 0.19s; }
+.stagger-item:nth-child(4) { animation-delay: 0.26s; }
+.stagger-item:nth-child(5) { animation-delay: 0.33s; }
+.stagger-item:nth-child(6) { animation-delay: 0.4s; }
+
+/* ============================================
+   TYPEWRITER CURSOR
+   ============================================ */
+.typewriter-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1.2em;
+    background-color: #ffd966;
+    margin-left: 4px;
+    animation: blink 1s step-end infinite;
+    vertical-align: middle;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* ============================================
+   MODAL ANIMATION
+   ============================================ */
+@keyframes modal-pop-royal {
+    0% {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+#payment-modal > div {
+    animation: modal-pop-royal 0.4s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+}
+
+/* ============================================
+   TOAST ANIMATION
+   ============================================ */
+@keyframes slideInRoyal {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutRoyal {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+#toast {
+    animation: slideInRoyal 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
+}
+
+#toast.hide {
+    animation: slideOutRoyal 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
+}
+
+/* ============================================
+   BACK TO TOP
+   ============================================ */
+#backToTop {
+    transition: opacity 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.3s cubic-bezier(0.34, 1.2, 0.64, 1), box-shadow 0.3s ease;
+}
+
+#backToTop:hover {
+    transform: scale(1.15) translateY(-3px);
+    box-shadow: 0 0 25px rgba(212, 175, 55, 0.6);
+}
+
+/* ============================================
+   BACKGROUND COLORS
+   ============================================ */
+.bg-royal-dark { background-color: #0f0a0a; }
+.bg-royal-darker { background-color: #080505; }
+.bg-royal-darkest { background-color: #030202; }
+.text-gold-100 { color: #f5e6d3; }
+.text-gold-300 { color: #e6d5b8; }
+.text-gold-400 { color: #d4af37; }
+.text-gold-500 { color: #ffea8a; }
+
+/* ============================================
+   CURSOR GLOW
+   ============================================ */
+.cursor-glow {
+    position: fixed;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.6) 0%, rgba(212, 175, 55, 0) 70%);
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s ease, height 0.2s ease;
+    opacity: 0;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 640px) {
+    .btn-royal-primary, .btn-royal-secondary {
+        padding: 10px 24px;
+        font-size: 11px;
+    }
+    
+    .tab-royal {
+        padding: 6px 16px;
+        font-size: 11px;
+    }
+    
+    .contact-royal {
+        padding: 16px 20px;
+    }
+    
+    .contact-icon-royal {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+    }
+    
+    /* Hero Text Mobile */
+    .text-gold-300\/60 {
+        color: rgba(230, 213, 184, 0.95) !important;
+    }
+    
+    /* Home Title Mobile */
+    h1 .text-transparent.bg-clip-text {
+        font-size: 2.5rem;
+    }
+    
+    h1 .text-white {
+        font-size: 1.5rem;
+    }
+    
+    /* Section Titles Mobile */
+    section h2 {
+        font-size: 1.8rem !important;
+    }
+    
+    /* About Section Quote Mobile */
+    #about-us .pl-5.border-l-4 {
+        max-width: 100% !important;
+    }
+    
+    #about-us .pl-5.border-l-4 p {
+        font-size: 1rem !important;
+    }
+    
+    /* Bestseller Badge Mobile */
+    #product-grid .bg-gradient-to-r.from-gold-600.to-amber-600 {
+        font-size: 8px !important;
+        padding: 3px 8px !important;
+    }
+}
+
+/* ============================================
+   PERFORMANCE
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ============================================
+   ADDITIONAL CONTRAST FIXES
+   ============================================ */
+
+/* About Section Quote */
+.pl-5.border-l-4.border-gold-500 p {
+    color: #f0e2c5 !important;
+    font-weight: 500;
+}
+
+/* Vision & Mission Cards */
+.p-5.rounded-xl h4 {
+    color: #ffea8a !important;
+    font-weight: 700;
+}
+
+.p-5.rounded-xl p {
+    color: #d4c5a0 !important;
+}
+
+/* Footer Links */
+footer a {
+    color: #d4c5a0 !important;
+}
+
+footer a:hover {
+    color: #ffea8a !important;
+}
+
+/* Royal Crown Text */
+.royal-crown-inner i {
+    color: #ffea8a !important;
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+}
+
+/* Typewriter Text */
+#typewriter-text {
+    color: #ffea8a !important;
+    font-weight: 600;
+    text-shadow: 0 0 8px rgba(255, 230, 128, 0.5);
+}
+
+/* Hero Description on Mobile */
+@media (max-width: 768px) {
+    .text-gold-300\/60 {
+        color: #e6d5b8 !important;
+    }
+    
+    .text-gold-300\/70 {
+        color: #f0e2c5 !important;
+    }
+}
+
+/* Navigation Brand Text Enhancement */
+nav .group-hover\:text-gold-400 {
+    background: linear-gradient(135deg, #ffea8a, #ffffff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent !important;
+}
+
+/* FORCE VISIBLE - CRITICAL FIX FOR ALL SECTIONS */
+#products h2,
+#about-us h2,
+#our-team h2,
+#contact-us h2,
+section.bg-royal-darker h2,
+section:has(.grid) h2 {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+    color: #ffea8a !important;
+    text-shadow: 0 0 30px rgba(255, 234, 138, 1) !important;
+    background: linear-gradient(135deg, #ffea8a 0%, #ffe680 25%, #ffdd77 50%, #ffe680 75%, #ffea8a 100%) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+}
+
+/* Features Section Specific */
+section:has(.grid.md\:grid-cols-3) h2,
+.bg-royal-darker h2 {
+    background: linear-gradient(135deg, #ffea8a 0%, #ffe680 25%, #ffdd77 50%, #ffe680 75%, #ffea8a 100%) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+    text-shadow: 0 0 30px rgba(255, 234, 138, 1) !important;
+}

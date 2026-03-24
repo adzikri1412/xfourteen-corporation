@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>XFOURTEEN CORPORATION</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-royal-dark text-gold-100 overflow-x-hidden">
+
+    <!-- Canvas Effects -->
+    <canvas id="goldDustCanvas" class="fixed inset-0 -z-10"></canvas>
+    <canvas id="particleCanvas" class="fixed inset-0 -z-5"></canvas>
+    <canvas id="mouseTrailCanvas" class="fixed inset-0 -z-5 pointer-events-none"></canvas>
+
+    <!-- Royal Loading Screen -->
+    <div id="loader" class="fixed inset-0 z-[100] bg-royal-darkest flex flex-col items-center justify-center transition-all duration-1000">
+        <div class="text-center relative">
+            <!-- Royal Crest Animation -->
+            <div class="relative mb-10">
+                <div class="absolute inset-0 bg-gradient-to-r from-gold-500/30 via-amber-500/30 to-gold-600/30 rounded-full blur-2xl animate-pulse-gold"></div>
+                <div class="relative w-28 h-28 md:w-32 md:h-32 mx-auto">
+                    <div class="absolute inset-0 border-2 border-gold-500/30 rounded-full animate-ping-slow"></div>
+                    <div class="absolute inset-0 border-2 border-gold-500 rounded-full animate-spin-slow"></div>
+                    <div class="absolute inset-2 border border-gold-400/50 rounded-full animate-spin-reverse"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="w-20 h-20 md:w-24 md:h-24 bg-gradient-to-br from-gold-600 to-amber-700 rounded-full flex items-center justify-center shadow-2xl shadow-gold-500/40 animate-royal-glow">
+                            <i class="fas fa-crown text-3xl md:text-4xl text-white"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="absolute -bottom-6 left-1/2 -translate-x-1/2 w-24 h-px bg-gradient-to-r from-transparent via-gold-500 to-transparent"></div>
+            </div>
+            
+            <!-- Brand Text -->
+            <h2 class="text-2xl md:text-3xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-gold-400 via-amber-400 to-gold-500 uppercase font-cormorant mb-4">
+                XFOURTEEN CORPORATION
+            </h2>
+            
+            <!-- Royal Loading Bar -->
+            <div class="relative w-48 h-0.5 bg-gold-900/50 rounded-full overflow-hidden mx-auto my-6">
+                <div id="loadingBar" class="absolute inset-0 w-0 bg-gradient-to-r from-gold-500 to-amber-500 rounded-full transition-all duration-300"></div>
+            </div>
+            
+            <!-- Loading Text -->
+            <p class="text-gold-400/70 text-xs tracking-[0.3em] uppercase font-montserrat animate-pulse-gentle">Preparing XFourteen Experience</p>
+            
+            <!-- Decorative Elements -->
+            <div class="absolute -top-10 -left-10 w-20 h-20 border border-gold-500/20 rounded-full"></div>
+            <div class="absolute -bottom-10 -right-10 w-20 h-20 border border-gold-500/20 rounded-full"></div>
+        </div>
+    </div>
+
+    <!-- Royal Navigation -->
+    <nav id="mainNav" class="fixed top-0 w-full z-50 royal-nav transform -translate-y-full transition-all duration-700">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Logo -->
+            <div class="flex items-center gap-3 cursor-pointer group" onclick="scrollToTop()">
+                <div class="relative">
+                    <div class="absolute inset-0 bg-gold-500/30 blur-md rounded-lg group-hover:blur-xl transition-all duration-500"></div>
+                    <div class="relative w-10 h-10 bg-gradient-to-br from-gold-600 to-amber-700 rounded-lg flex items-center justify-center shadow-lg">
+                        <i class="fas fa-crown text-white text-sm"></i>
+                    </div>
+                </div>
+                <span class="text-lg md:text-xl font-bold tracking-tight text-white font-montserrat group-hover:text-gold-400 transition-colors duration-300">
+                    XFOURTEEN<span class="text-gold-500"> CORPORATION</span>
+                </span>
+            </div>
+            
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex items-center gap-10">
+                <a href="#" onclick="scrollToSection('home')" class="royal-link text-sm font-medium text-gold-200/80 hover:text-gold-400 transition-all duration-300">Home</a>
+                <a href="#" onclick="scrollToSection('products')" class="royal-link text-sm font-medium text-gold-200/80 hover:text-gold-400 transition-all duration-300">Products</a>
+                <a href="#" onclick="scrollToSection('about-us')" class="royal-link text-sm font-medium text-gold-200/80 hover:text-gold-400 transition-all duration-300">About</a>
+                <a href="#" onclick="scrollToSection('contact-us')" class="royal-link text-sm font-medium text-gold-200/80 hover:text-gold-400 transition-all duration-300">Contact</a>
+            </div>
+            
+            <!-- Mobile Menu Button -->
+            <button id="mobileMenuBtn" class="md:hidden text-gold-300 hover:text-gold-400 text-xl transition-colors">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden absolute top-full left-0 w-full bg-royal-darkest/95 backdrop-blur-xl border-t border-gold-500/20 py-5 px-6 transform translate-y-[-100%] opacity-0 transition-all duration-400">
+            <div class="flex flex-col gap-4">
+                <a href="#" onclick="scrollToSection('home')" class="text-gold-300 hover:text-gold-400 py-2 font-medium transition-colors">Home</a>
+                <a href="#" onclick="scrollToSection('products')" class="text-gold-300 hover:text-gold-400 py-2 font-medium transition-colors">Products</a>
+                <a href="#" onclick="scrollToSection('about-us')" class="text-gold-300 hover:text-gold-400 py-2 font-medium transition-colors">About</a>
+                <a href="#" onclick="scrollToSection('contact-us')" class="text-gold-300 hover:text-gold-400 py-2 font-medium transition-colors">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section - Royal Edition -->
+    <header id="home" class="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-20 pb-16 overflow-hidden">
+        <!-- Royal Background Effects -->
+        <div class="absolute inset-0">
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-gold-500/5 rounded-full blur-3xl animate-pulse-gold"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl animate-pulse-gold delay-1000"></div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-r from-gold-500/5 to-amber-500/5 rounded-full blur-[100px]"></div>
+        </div>
+        
+        <!-- Royal Crown Icon -->
+        <div class="royal-crown-wrapper mb-8 transform scale-0 animate-crown-rise">
+            <div class="royal-crown-inner">
+                <div class="absolute inset-0 bg-gradient-to-r from-gold-500 to-amber-500 rounded-full blur-2xl animate-pulse-gold"></div>
+                <div class="relative w-28 h-28 md:w-36 md:h-36 bg-gradient-to-br from-royal-dark to-royal-darker rounded-full flex items-center justify-center shadow-2xl shadow-gold-500/30 border border-gold-500/30">
+                    <i class="fas fa-crown text-4xl md:text-5xl text-gold-400 animate-float-gold"></i>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Title -->
+        <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold mb-4 tracking-tight transform translate-y-10 opacity-0 animate-text-reveal font-cormorant">
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 via-amber-400 to-gold-500">XFOURTEEN</span>
+            <br>
+            <span class="text-white text-2xl md:text-3xl lg:text-4xl tracking-wider font-montserrat">CORPORATION</span>
+        </h1>
+        
+        <!-- Subtitle with Typewriter -->
+        <p class="text-xl md:text-2xl font-semibold text-gold-300 mb-4 transform translate-y-10 opacity-0 animate-text-reveal-delay">
+            <span id="typewriter-text" class="font-montserrat"></span>
+            <span class="typewriter-cursor"></span>
+        </p>
+        
+        <!-- Description -->
+        <p class="text-gold-300/60 max-w-2xl mx-auto mb-10 text-base md:text-lg leading-relaxed transform translate-y-10 opacity-0 animate-text-reveal-delay2">
+            Available for iOS and Android. The finest sensitivity settings crafted for royalty. Elevate your Free Fire experience to throne level.
+        </p>
+        
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row gap-5 transform translate-y-10 opacity-0 animate-text-reveal-delay3">
+            <a href="#products" class="btn-royal-primary group">
+                <span>View Collection</span>
+                <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform duration-300"></i>
+            </a>
+            <a href="#contact-us" class="btn-royal-secondary group">
+                <span>Royal Contact</span>
+                <i class="far fa-comment-dots ml-2 group-hover:scale-110 transition-transform duration-300"></i>
+            </a>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce-gold">
+            <div class="text-gold-500/50 text-xs tracking-[0.3em] uppercase font-montserrat font-semibold">SCROLL</div>
+            <div class="w-px h-10 bg-gradient-to-b from-gold-500 to-transparent mx-auto mt-1"></div>
+        </div>
+    </header>
+
+    <!-- Products Section -->
+    <section id="products" class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-royal-dark via-royal-darker to-royal-dark"></div>
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-16">
+                <div class="inline-block mb-4">
+                    <span class="text-gold-500 font-semibold uppercase text-xs tracking-[0.3em] border border-gold-500/30 px-4 py-1.5 rounded-full font-montserrat">Royal Product</span>
+                </div>
+                <h2 class="text-white text-4xl md:text-5xl font-bold mb-4 transform translate-y-10 opacity-0 animate-on-scroll font-cormorant">
+                    Our <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-amber-500">Product</span>
+                </h2>
+                <div class="w-20 h-0.5 bg-gradient-to-r from-gold-500 to-amber-500 mx-auto rounded-full transform scale-x-0 animate-scale-on-scroll"></div>
+            </div>
+            
+            <!-- Category Tabs -->
+            <div class="mb-12 flex justify-center overflow-x-auto no-scrollbar">
+                <div class="inline-flex gap-2 bg-royal-darker/60 p-1.5 rounded-full backdrop-blur-sm border border-gold-500/20">
+                    <button onclick="filterProducts('ANDROID')" id="tab-ANDROID" class="tab-royal active">
+                        <i class="fab fa-android mr-2"></i> Android
+                    </button>
+                    <button onclick="filterProducts('IOS')" id="tab-IOS" class="tab-royal">
+                        <i class="fab fa-apple mr-2"></i> iOS
+                    </button>
+                    <button onclick="filterProducts('PC')" id="tab-PC" class="tab-royal">
+                        <i class="fas fa-desktop mr-2"></i> PC
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Product Grid -->
+            <div id="product-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-24 bg-royal-darker relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gold-500 to-transparent"></div>
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-16">
+                <div class="inline-block mb-4">
+                    <span class="text-gold-500 font-semibold uppercase text-xs tracking-[0.3em] border border-gold-500/30 px-4 py-1.5 rounded-full font-montserrat">Why We're The Best</span>
+                </div>
+                <h2 class="text-white text-4xl md:text-5xl font-bold mb-4 transform translate-y-10 opacity-0 animate-on-scroll font-cormorant">
+                    Why <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-amber-500">Choose Us</span>
+                </h2>
+                <div class="w-20 h-0.5 bg-gradient-to-r from-gold-500 to-amber-500 mx-auto rounded-full transform scale-x-0 animate-scale-on-scroll"></div>
+            </div>
+            <div id="features-container" class="grid md:grid-cols-3 gap-8"></div>
+        </div>
+    </section>
+
+<!-- About Section - Our Legacy Center Alignment -->
+<section id="about-us" class="py-24 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-royal-dark via-royal-darker to-royal-dark"></div>
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+            <div class="relative group order-2 lg:order-1">
+                <div class="absolute -inset-4 bg-gradient-to-r from-gold-500/20 via-amber-500/20 to-gold-600/20 rounded-3xl blur-2xl group-hover:blur-3xl transition-all duration-700"></div>
+                <div class="relative rounded-2xl overflow-hidden border border-gold-500/30 shadow-2xl shadow-gold-500/10">
+                    <img src="assets/prdc.jpeg" alt="About XFOURTEEN" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" onerror="this.src='https://placehold.co/800x600/1a1a1a/d4af37?text=XFOURTEEN'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-royal-darker/80 via-transparent to-transparent"></div>
+                </div>
+            </div>
+            <div class="space-y-6 order-1 lg:order-2">
+                <!-- Our Legacy Badge - CENTER ALIGNED -->
+                <div class="text-center w-full">
+                    <div class="inline-block mb-3">
+                        <span class="text-gold-500 font-semibold uppercase text-xs tracking-[0.3em] border border-gold-500/30 px-4 py-1.5 rounded-full font-montserrat">Our Story</span>
+                    </div>
+                </div>
+                <!-- End Our Legacy Badge -->
+                
+                <!-- Title - CENTER ALIGNED -->
+                <div class="text-center">
+                    <h2 class="text-white text-4xl md:text-5xl font-bold mb-2 font-cormorant">
+                        About <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-amber-500">XFOURTEEN</span>
+                    </h2>
+                    <div class="w-16 h-0.5 bg-gradient-to-r from-gold-500 to-amber-500 rounded-full mx-auto"></div>
+                </div>
+                <!-- End Title -->
+                
+                <!-- Description - CENTER ALIGNED -->
+                <p class="text-gold-300/70 leading-relaxed text-base md:text-lg text-center">
+                    <span class="text-gold-500 font-bold">XFOURTEEN CORPORATION</span> is the pinnacle of Free Fire game settings optimization. Crafted for those who demand nothing but excellence. Every setting is meticulously calibrated for royal precision.
+                </p>
+                <!-- End Description -->
+                
+                <!-- Quote - CENTER ALIGNED with max-width -->
+                <div class="pl-5 border-l-4 border-gold-500 py-3 bg-gradient-to-r from-gold-500/5 to-transparent rounded-r-xl mx-auto" style="max-width: 90%;">
+                    <p class="text-gold-300 italic font-cormorant font-bold text-xl text-center">"Excellence is not an act, but a habit. Forge your throne with precision."</p>
+                </div>
+                <!-- End Quote -->
+                
+                <!-- Vision & Mission Cards - CENTER ALIGNED -->
+                <div class="grid sm:grid-cols-2 gap-6">
+                    <div class="p-5 rounded-xl bg-royal-darker/50 border border-gold-500/10 hover:border-gold-500/30 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg hover:shadow-gold-500/10 text-center">
+                        <h4 class="text-gold-500 font-bold uppercase text-xs tracking-wider mb-2">our vision</h4>
+                        <p class="text-gold-300/60 text-sm leading-relaxed">To become the golden standard for professional players worldwide.</p>
+                    </div>
+                    <div class="p-5 rounded-xl bg-royal-darker/50 border border-gold-500/10 hover:border-gold-500/30 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg hover:shadow-amber-500/10 text-center">
+                        <h4 class="text-gold-500 font-bold uppercase text-xs tracking-wider mb-2">our mission</h4>
+                        <p class="text-gold-300/60 text-sm leading-relaxed">Delivering premium, safe, and legal optimization for the elite gaming community.</p>
+                    </div>
+                </div>
+                <!-- End Vision & Mission Cards -->
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Team Section -->
+    <section id="our-team" class="py-24 bg-royal-darker relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-16">
+                <div class="inline-block mb-4">
+                    <span class="text-gold-500 font-semibold uppercase text-xs tracking-[0.3em] border border-gold-500/30 px-4 py-1.5 rounded-full font-montserrat">The Royal Council</span>
+                </div>
+                <h2 class="text-white text-4xl md:text-5xl font-bold mb-4 transform translate-y-10 opacity-0 animate-on-scroll font-cormorant">
+                    Our <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-amber-500">Nobles</span>
+                </h2>
+                <div class="w-20 h-0.5 bg-gradient-to-r from-gold-500 to-amber-500 mx-auto rounded-full transform scale-x-0 animate-scale-on-scroll"></div>
+            </div>
+            <div id="team-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact-us" class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-t from-royal-dark via-royal-darker to-royal-dark"></div>
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-16">
+                <div class="inline-block mb-4">
+                    <span class="text-gold-500 font-semibold uppercase text-xs tracking-[0.3em] border border-gold-500/30 px-4 py-1.5 rounded-full font-montserrat">Get In Touch</span>
+                </div>
+                <h2 class="text-white text-4xl md:text-5xl font-bold mb-4 transform translate-y-10 opacity-0 animate-on-scroll font-cormorant">
+                    Contact <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-amber-500">The Throne</span>
+                </h2>
+                <div class="w-20 h-0.5 bg-gradient-to-r from-gold-500 to-amber-500 mx-auto rounded-full transform scale-x-0 animate-scale-on-scroll"></div>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-10 max-w-5xl mx-auto">
+                <!-- Contact Cards -->
+                <div class="space-y-5">
+                    <div class="contact-royal group">
+                        <div class="contact-icon-royal bg-gold-500/10 text-gold-500 group-hover:bg-gold-500 group-hover:text-royal-dark transition-all duration-500">
+                            <i class="fab fa-whatsapp text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-white font-bold text-lg font-montserrat">X14 Channel</h3>
+                            <a href="https://whatsapp.com/channel/0029Vacu3BN9Gv7OILrZIX0i" target="_blank" class="text-gold-500 text-sm font-medium group-hover:text-gold-400 transition-colors">JOIN THE CHAMBER →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-royal group">
+                        <div class="contact-icon-royal bg-gold-500/10 text-gold-500 group-hover:bg-gold-500 group-hover:text-royal-dark transition-all duration-500">
+                            <i class="fab fa-discord text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-white font-bold text-lg font-montserrat">X14 Discord</h3>
+                            <a href="#" onclick="alert('Discord server coming soon!')" class="text-gold-500 text-sm font-medium group-hover:text-gold-400 transition-colors">ENTER THE HALL →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="bg-royal-darker/60 p-8 rounded-2xl border border-gold-500/20 backdrop-blur-sm shadow-2xl hover:border-gold-500/40 transition-all duration-500">
+                    <h3 class="text-xl font-bold mb-5 text-white flex items-center gap-3 font-montserrat">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-r from-gold-500/20 to-amber-500/20 flex items-center justify-center">
+                            <i class="fas fa-feather-alt text-gold-500"></i>
+                        </div>
+                        Send Royal Message
+                    </h3>
+                    <div class="space-y-4">
+                        <input type="text" id="webhook-name" placeholder="Your Noble Name" class="form-royal" required>
+                        <input type="tel" id="webhook-phone" placeholder="Royal Contact (WhatsApp)" class="form-royal" required>
+                        <textarea id="webhook-msg" placeholder="Your Royal Message..." rows="4" class="form-royal" required></textarea>
+                        <button onclick="sendToDiscord()" id="webhook-btn" class="w-full btn-royal-primary justify-center">
+                            <i class="fas fa-paper-plane mr-2"></i> Deliver Message
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Modal -->
+    <div id="payment-modal" class="fixed inset-0 z-[110] bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="bg-gradient-to-br from-royal-darker to-royal-dark w-full max-w-md rounded-2xl border border-gold-500/30 p-8 text-center relative shadow-2xl transform scale-95 transition-all duration-300">
+            <button onclick="closePayment()" class="absolute top-4 right-4 text-gold-500/50 hover:text-gold-500 transition-all">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+            <div class="w-16 h-16 rounded-full bg-gradient-to-r from-gold-500/20 to-amber-500/20 flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-crown text-gold-500 text-2xl"></i>
+            </div>
+            <h3 class="text-2xl font-bold mb-1 text-white font-cormorant">XFOURTEEN PAYMENT</h3>
+            <p class="text-gold-400/60 text-xs mb-6 uppercase tracking-wider">Scan QR Code & Present Proof</p>
+            
+            <div class="bg-white p-4 rounded-xl inline-block mb-6 shadow-xl">
+                <img id="qris-img" src="assets/qris.jpg" alt="QRIS" class="w-40 h-40 object-contain" onerror="this.src='https://placehold.co/160x160/d4af37/1a1a1a?text=QRIS'">
+            </div>
+            
+            <div class="bg-royal-dark/50 p-4 rounded-xl mb-6 text-left space-y-2 border border-gold-500/20">
+                <div class="flex justify-between text-xs text-gold-400/70 font-medium">
+                    <span>Item:</span><span id="pay-product" class="text-gold-500"></span>
+                </div>
+                <div class="flex justify-between font-bold text-xl text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-amber-500">
+                    <span>Total:</span><span id="pay-amount"></span>
+                </div>
+            </div>
+            
+            <button onclick="confirmToWA()" class="w-full bg-gradient-to-r from-gold-600 to-amber-600 hover:from-gold-500 hover:to-amber-500 text-royal-dark py-3 rounded-xl font-bold flex items-center justify-center gap-3 transition-all duration-300 shadow-lg shadow-gold-500/30">
+                <i class="fab fa-whatsapp text-xl"></i> Send Evidence to the Throne
+            </button>
+        </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="fixed bottom-6 right-6 z-50 w-12 h-12 bg-gradient-to-br from-gold-600 to-amber-600 rounded-full flex items-center justify-center text-royal-dark shadow-2xl shadow-gold-500/30 opacity-0 transition-all duration-500 hover:scale-110 hover:shadow-gold-500/50">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 right-6 z-[100] transform translate-x-full transition-all duration-500">
+        <div class="bg-gradient-to-r from-gold-600 to-amber-600 rounded-lg px-5 py-3 shadow-2xl flex items-center gap-2">
+            <i class="fas fa-crown text-royal-dark text-sm"></i>
+            <span id="toast-message" class="text-royal-dark text-sm font-bold"></span>
+        </div>
+    </div>
+
+    <footer class="py-10 text-center border-t border-gold-500/20 bg-royal-darker">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-gradient-to-br from-gold-600 to-amber-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-crown text-royal-dark text-xs"></i>
+                    </div>
+                    <span class="text-sm md:text-base font-bold tracking-tight text-white font-montserrat">XFOURTEEN<span class="text-gold-500"> CORPORATION</span></span>
+                </div>
+                <div class="flex gap-6">
+                    <a href="#" onclick="scrollToSection('home')" class="text-gold-400/50 hover:text-gold-400 text-xs uppercase tracking-wider font-medium transition-colors">Home</a>
+                    <a href="#" onclick="scrollToSection('products')" class="text-gold-400/50 hover:text-gold-400 text-xs uppercase tracking-wider font-medium transition-colors">Products</a>
+                    <a href="#" onclick="scrollToSection('about-us')" class="text-gold-400/50 hover:text-gold-400 text-xs uppercase tracking-wider font-medium transition-colors">About</a>
+                    <a href="#" onclick="scrollToSection('contact-us')" class="text-gold-400/50 hover:text-gold-400 text-xs uppercase tracking-wider font-medium transition-colors">Contact</a>
+                </div>
+            </div>
+            <p class="text-gold-500/30 text-[10px] tracking-wider uppercase font-medium">&copy; 2026 XFOURTEEN CORPORATION. All Rights Reserved. Forged in Royalty.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
