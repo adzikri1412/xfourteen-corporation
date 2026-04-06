@@ -12,12 +12,12 @@ const CONFIG = {
 
 // Data Master
 const PRODUCTS = [
-    { id: 1, name: 'XFOURTEEN FLUXO', cat: 'ANDROID', price: 25000, img: 'assets/banner-ios.jpg', features: ['Royal Performance', 'Golden Aim Assist', 'Crystal Screen', 'Elite PPI and Density', 'Crown Crosshairs', 'Touch of Kings'], description: 'For those beginning their royal journey.', bestseller: false },
-    { id: 2, name: 'XFOURTEEN EXONIC', cat: 'ANDROID', price: 50000, img: 'assets/banner-ios.jpg', features: ['Royal Performance', 'Golden Aim Assist', 'Crystal Screen', 'Elite PPI and Density', 'Crown Crosshairs', 'Touch of Kings'], description: 'For knights seeking glory.', bestseller: false },
-    { id: 3, name: 'XFOURTEEN PREMIUM', cat: 'ANDROID', price: 75000, img: 'assets/banner-ios.jpg', features: ['Royal Performance', 'Golden Aim Assist', 'Crystal Screen', 'Elite PPI and Density', 'Crown Crosshairs', 'Touch of Kings'], description: 'The crown jewel of Android optimization.', bestseller: true },
+    { id: 1, name: 'XFOURTEEN FLUXO', cat: 'ANDROID', price: 35000, img: 'assets/banner-ios.jpg', features: ['Royal Performance', 'Golden Aim Assist', 'Crystal Screen', 'Elite PPI and Density', 'Crown Crosshairs', 'Touch of Kings'], description: 'For those beginning their royal journey.', bestseller: false },
+    { id: 2, name: 'XFOURTEEN EXONIC', cat: 'ANDROID', price: 70000, img: 'assets/banner-ios.jpg', features: ['Royal Performance', 'Golden Aim Assist', 'Crystal Screen', 'Elite PPI and Density', 'Crown Crosshairs', 'Touch of Kings'], description: 'For knights seeking glory.', bestseller: false },
+    { id: 3, name: 'XFOURTEEN PREMIUM', cat: 'ANDROID', price: 100000, img: 'assets/banner-ios.jpg', features: ['Royal Performance', 'Golden Aim Assist', 'Crystal Screen', 'Elite PPI and Density', 'Crown Crosshairs', 'Touch of Kings'], description: 'The crown jewel of Android optimization.', bestseller: true },
     { id: 4, name: 'Comming Soon iOS', cat: 'IOS', price: 10000000, img: 'assets/banner-ios.jpg', features: ['Comming Soon', 'Comming Soon', 'Comming Soon'], description: 'Premium iOS optimization for the elite Comming Soon.', bestseller: false },
-    { id: 5, name: 'XFOURTEEN BASIC', cat: 'PC', price: 35000, img: 'assets/banner-pc.jpg', features: ['Golden Mouse', 'Elite Optimization', 'Royal Emulator'], description: 'Basic royal settings for reliable performance.', bestseller: false },
-    { id: 6, name: 'XFOURTEEN V1', cat: 'PC', price: 70000, img: 'assets/banner-pc.jpg', features: ['Royal Settings', 'Elite Pack', 'Crown Aim'], description: 'The ultimate royal configuration.', bestseller: true }
+    { id: 5, name: 'XFOURTEEN BASIC', cat: 'PC', price: 30000, img: 'assets/banner-pc.jpg', features: ['Golden Mouse', 'Elite Optimization', 'Royal Emulator'], description: 'Basic royal settings for reliable performance.', bestseller: false },
+    { id: 6, name: 'XFOURTEEN V1', cat: 'PC', price: 60000, img: 'assets/banner-pc.jpg', features: ['Royal Settings', 'Elite Pack', 'Crown Aim'], description: 'The ultimate royal configuration.', bestseller: true }
 ];
 
 const FEATURES = [
@@ -184,7 +184,7 @@ class ParticleSystem {
 }
 
 // ============================================
-// MOUSE TRAIL
+// MOUSE TRAIL - GOLDEN
 // ============================================
 class MouseTrail {
     constructor() {
@@ -238,7 +238,7 @@ class MouseTrail {
 }
 
 // ============================================
-// CURSOR GLOW
+// CURSOR GLOW - ROYAL
 // ============================================
 class CursorGlow {
     constructor() {
@@ -369,11 +369,21 @@ window.addEventListener('DOMContentLoaded', () => {
     new ParticleSystem();
     new MouseTrail();
     
-    // Fix z-index untuk particle canvas
+    // Fix: Particle canvas z-index biar muncul di semua section
     const particleCanvas = document.getElementById('particleCanvas');
     if (particleCanvas) {
         particleCanvas.style.zIndex = '1';
         particleCanvas.style.pointerEvents = 'none';
+    }
+    
+    const goldDustCanvas = document.getElementById('goldDustCanvas');
+    if (goldDustCanvas) {
+        goldDustCanvas.style.zIndex = '0';
+    }
+    
+    const mouseTrailCanvas = document.getElementById('mouseTrailCanvas');
+    if (mouseTrailCanvas) {
+        mouseTrailCanvas.style.zIndex = '2';
     }
     
     // Typewriter Effect
@@ -405,10 +415,11 @@ window.addEventListener('DOMContentLoaded', () => {
     const tg = document.getElementById('team-grid');
     if (tg) {
         tg.innerHTML = TEAM.map(t => `
-            <div class="stagger-item">
+            <div class="stagger-item bg-gradient-to-br from-royal-dark to-royal-darker p-8 rounded-2xl border border-gold-500/20 text-center group hover:border-gold-500/50 transition-all duration-500 hover:-translate-y-2">
                 <div class="relative mb-5">
-                    <div class="w-24 h-24 rounded-full border-2 border-gold-500/30 p-1 mx-auto overflow-hidden">
-                        <img src="${t.img}" class="w-full h-full object-cover rounded-full" onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=${t.name}'">
+                    <div class="absolute -inset-4 bg-gradient-to-r from-gold-500/20 to-amber-500/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="relative w-24 h-24 rounded-full border-2 border-gold-500/30 p-1 mx-auto overflow-hidden group-hover:border-gold-500 transition-all duration-500">
+                        <img src="${t.img}" class="w-full h-full object-cover rounded-full group-hover:scale-110 transition-all duration-500" onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=${t.name}'">
                     </div>
                 </div>
                 <div class="flex items-center justify-center gap-2 mb-1">
@@ -430,7 +441,7 @@ window.addEventListener('DOMContentLoaded', () => {
     
     filterProducts('ANDROID');
     
-    // Add Ripple Effect
+    // Add Ripple Effect to all buttons
     const buttons = document.querySelectorAll('.btn-royal-primary, .btn-royal-secondary, .tab-royal');
     buttons.forEach(btn => addRippleEffect(btn));
     
@@ -477,7 +488,7 @@ window.addEventListener('DOMContentLoaded', () => {
     
     if (backToTop) backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     
-    // Smooth scroll
+    // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', (e) => {
             e.preventDefault();
@@ -509,7 +520,9 @@ window.addEventListener('DOMContentLoaded', () => {
         }, 150);
     }
 
-    // Fix decorative lines
+    // ============================================
+    // FIX: Dekoratif garis posisi di bawah judul
+    // ============================================
     const allDecoLines = document.querySelectorAll('.w-20.h-0\\.5, .w-16.h-0\\.5');
     allDecoLines.forEach(line => {
         line.style.marginTop = '30px';
@@ -518,6 +531,7 @@ window.addEventListener('DOMContentLoaded', () => {
         line.style.top = '0';
     });
 
+    // Pastikan semua section title container punya margin bawah cukup
     const allSections = document.querySelectorAll('#products, #about-us, #our-team, #contact-us');
     allSections.forEach(section => {
         const textCenterDiv = section.querySelector('.text-center.mb-16');
@@ -527,7 +541,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Filter Products
+// Filter Products - Update Bestseller Badge
 function filterProducts(cat) {
     const grid = document.getElementById('product-grid');
     if (!grid) return;
