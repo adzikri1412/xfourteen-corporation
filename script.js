@@ -184,7 +184,7 @@ class ParticleSystem {
 }
 
 // ============================================
-// MOUSE TRAIL - GOLDEN
+// MOUSE TRAIL
 // ============================================
 class MouseTrail {
     constructor() {
@@ -238,7 +238,7 @@ class MouseTrail {
 }
 
 // ============================================
-// CURSOR GLOW - ROYAL
+// CURSOR GLOW
 // ============================================
 class CursorGlow {
     constructor() {
@@ -369,21 +369,11 @@ window.addEventListener('DOMContentLoaded', () => {
     new ParticleSystem();
     new MouseTrail();
     
-    // Fix: Particle canvas z-index biar muncul di semua section
+    // Fix z-index untuk particle canvas
     const particleCanvas = document.getElementById('particleCanvas');
     if (particleCanvas) {
         particleCanvas.style.zIndex = '1';
         particleCanvas.style.pointerEvents = 'none';
-    }
-    
-    const goldDustCanvas = document.getElementById('goldDustCanvas');
-    if (goldDustCanvas) {
-        goldDustCanvas.style.zIndex = '0';
-    }
-    
-    const mouseTrailCanvas = document.getElementById('mouseTrailCanvas');
-    if (mouseTrailCanvas) {
-        mouseTrailCanvas.style.zIndex = '2';
     }
     
     // Typewriter Effect
@@ -415,11 +405,10 @@ window.addEventListener('DOMContentLoaded', () => {
     const tg = document.getElementById('team-grid');
     if (tg) {
         tg.innerHTML = TEAM.map(t => `
-            <div class="stagger-item bg-gradient-to-br from-royal-dark to-royal-darker p-8 rounded-2xl border border-gold-500/20 text-center group hover:border-gold-500/50 transition-all duration-500 hover:-translate-y-2">
+            <div class="stagger-item">
                 <div class="relative mb-5">
-                    <div class="absolute -inset-4 bg-gradient-to-r from-gold-500/20 to-amber-500/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <div class="relative w-24 h-24 rounded-full border-2 border-gold-500/30 p-1 mx-auto overflow-hidden group-hover:border-gold-500 transition-all duration-500">
-                        <img src="${t.img}" class="w-full h-full object-cover rounded-full group-hover:scale-110 transition-all duration-500" onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=${t.name}'">
+                    <div class="w-24 h-24 rounded-full border-2 border-gold-500/30 p-1 mx-auto overflow-hidden">
+                        <img src="${t.img}" class="w-full h-full object-cover rounded-full" onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=${t.name}'">
                     </div>
                 </div>
                 <div class="flex items-center justify-center gap-2 mb-1">
@@ -441,7 +430,7 @@ window.addEventListener('DOMContentLoaded', () => {
     
     filterProducts('ANDROID');
     
-    // Add Ripple Effect to all buttons
+    // Add Ripple Effect
     const buttons = document.querySelectorAll('.btn-royal-primary, .btn-royal-secondary, .tab-royal');
     buttons.forEach(btn => addRippleEffect(btn));
     
@@ -488,7 +477,7 @@ window.addEventListener('DOMContentLoaded', () => {
     
     if (backToTop) backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     
-    // Smooth scroll for anchor links
+    // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', (e) => {
             e.preventDefault();
@@ -520,9 +509,7 @@ window.addEventListener('DOMContentLoaded', () => {
         }, 150);
     }
 
-    // ============================================
-    // FIX: Dekoratif garis posisi di bawah judul
-    // ============================================
+    // Fix decorative lines
     const allDecoLines = document.querySelectorAll('.w-20.h-0\\.5, .w-16.h-0\\.5');
     allDecoLines.forEach(line => {
         line.style.marginTop = '30px';
@@ -531,7 +518,6 @@ window.addEventListener('DOMContentLoaded', () => {
         line.style.top = '0';
     });
 
-    // Pastikan semua section title container punya margin bawah cukup
     const allSections = document.querySelectorAll('#products, #about-us, #our-team, #contact-us');
     allSections.forEach(section => {
         const textCenterDiv = section.querySelector('.text-center.mb-16');
@@ -541,7 +527,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Filter Products - Update Bestseller Badge
+// Filter Products
 function filterProducts(cat) {
     const grid = document.getElementById('product-grid');
     if (!grid) return;
