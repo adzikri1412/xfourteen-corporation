@@ -1,6 +1,7 @@
 /* ============================================
    XFOURTEEN CORPORATION - GOLDEN ROYAL EDITION
    COMPLETE CSS - ALL FIXES INCLUDED
+   TEAM CARDS UPDATED (MODEL KOTAK)
    ============================================ */
 
 /* Import Fonts */
@@ -71,63 +72,99 @@ body {
     font-family: 'Montserrat', sans-serif;
 }
 
+/* Utility untuk team cards */
+.w-15 {
+    width: 60px;
+}
+.h-15 {
+    height: 60px;
+}
+.w-3\.5 {
+    width: 14px;
+}
+.h-3\.5 {
+    height: 14px;
+}
+
 /* ============================================
-   SECTION TITLES - ULTRA VISIBLE FIX
+   FORCE FIX: DECORATIVE LINE 100% DI BAWAH JUDUL
+   TIDAK BISA NUTUPIN JUDUL!
    ============================================ */
 
-/* All Section Main Titles - FORCE VISIBLE */
+/* Paksa semua garis dekoratif turun ke bawah */
+section .w-20.h-0\.5,
+section .w-16.h-0\.5,
+#products .w-20.h-0\.5,
+#about-us .w-16.h-0\.5,
+#our-team .w-20.h-0\.5,
+#contact-us .w-20.h-0\.5,
+section .text-center .w-20,
+section .text-center .w-16,
+div.w-20.h-0\.5,
+div.w-16.h-0\.5 {
+    margin-top: 30px !important;
+    margin-bottom: 0 !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    position: relative !important;
+    top: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+    display: block !important;
+    clear: both !important;
+}
+
+/* Pastikan container judul tidak overflow dan garis tidak numpuk */
+section .text-center.mb-16,
+#products .text-center.mb-16,
+#about-us .text-center.mb-16,
+#our-team .text-center.mb-16,
+#contact-us .text-center.mb-16,
+section .text-center {
+    margin-bottom: 50px !important;
+    padding-bottom: 0 !important;
+    overflow: visible !important;
+}
+
+/* H2 judul harus block dan tidak terpengaruh garis */
 section h2,
 #products h2,
 #about-us h2,
 #our-team h2,
 #contact-us h2,
-.features-section h2,
-section:has(.features-container) h2 {
-    background: linear-gradient(135deg, #ffea8a 0%, #ffe680 25%, #ffdd77 50%, #ffe680 75%, #ffea8a 100%) !important;
-    background-size: 200% auto !important;
-    -webkit-background-clip: text !important;
-    background-clip: text !important;
-    color: transparent !important;
-    text-shadow: 0 0 35px rgba(255, 234, 138, 1), 0 0 15px rgba(212, 175, 55, 0.9) !important;
-    animation: title-shine 2s ease-in-out infinite !important;
-    font-weight: 900 !important;
-    letter-spacing: -0.5px !important;
-    display: inline-block !important;
-    width: 100% !important;
-    text-align: center !important;
-    opacity: 1 !important;
-    visibility: visible !important;
+section .font-cormorant.text-4xl,
+section .font-cormorant.text-5xl {
+    display: block !important;
+    margin-bottom: 15px !important;
+    margin-top: 0 !important;
+    position: relative !important;
+    z-index: 5 !important;
 }
 
-/* Section Title Span (highlighted words) */
-section h2 span,
-#products h2 span,
-#about-us h2 span,
-#our-team h2 span,
-#contact-us h2 span,
-.features-section h2 span {
-    background: linear-gradient(135deg, #fff5cc 0%, #fff0a0 30%, #ffea8a 50%, #fff0a0 70%, #fff5cc 100%) !important;
-    background-size: 200% auto !important;
-    -webkit-background-clip: text !important;
-    background-clip: text !important;
-    color: transparent !important;
-    text-shadow: 0 0 45px rgba(255, 245, 204, 1), 0 0 20px rgba(212, 175, 55, 1) !important;
-    animation: span-shine 1.8s ease-in-out infinite !important;
-    font-weight: 900 !important;
+/* Garis yang ada di dalam div yang sama dengan h2 */
+section h2 + .w-20,
+section h2 + .w-16,
+#products h2 + .w-20,
+#about-us h2 + .w-16,
+#our-team h2 + .w-20,
+#contact-us h2 + .w-20,
+.text-center.mb-16 > .w-20,
+.text-center.mb-16 > .w-16 {
+    margin-top: 25px !important;
+    margin-bottom: 0 !important;
 }
 
-/* Section Subtitle Badges */
-section .inline-block span,
-#products .inline-block span,
-#about-us .inline-block span,
-#our-team .inline-block span,
-#contact-us .inline-block span {
-    color: #fff0a0 !important;
-    background: rgba(212, 175, 55, 0.3) !important;
-    border-color: #ffdd77 !important;
-    text-shadow: 0 0 12px rgba(255, 240, 160, 0.8) !important;
-    font-weight: 700 !important;
-    letter-spacing: 2px !important;
+/* Hapus margin bawah yang berlebihan dari h2 */
+section h2 {
+    margin-bottom: 5px !important;
+}
+
+/* Pastikan tidak ada pseudo-element yang mengganggu */
+section h2::before,
+section h2::after,
+section .w-20::before,
+section .w-20::after {
+    display: none !important;
 }
 
 /* Gold Shine Animation for Section Titles */
@@ -161,15 +198,57 @@ section .inline-block span,
     }
 }
 
-/* Section Decorative Line */
+/* ============================================
+   FIX: DECORATIVE LINE POSITION - UNDER TITLE
+   ============================================ */
+
+/* Geser garis ke bawah judul, ga nutupin */
 section .w-20.h-0\.5,
 section .w-16.h-0\.5,
-section .w-20.h-0\.5.bg-gradient-to-r {
+section .w-20.h-0\.5.bg-gradient-to-r,
+section .w-16.h-0\.5.bg-gradient-to-r,
+#products .w-20.h-0\.5,
+#about-us .w-16.h-0\.5,
+#our-team .w-20.h-0\.5,
+#contact-us .w-20.h-0\.5 {
+    margin-top: 20px !important;
+    margin-bottom: 0 !important;
+    position: relative !important;
+    top: 0 !important;
+    transform: translateY(0) !important;
     background: linear-gradient(90deg, #fff5cc, #ffea8a, #ffdd77, #ffea8a, #fff5cc) !important;
     box-shadow: 0 0 20px rgba(255, 234, 138, 1) !important;
     height: 3px !important;
-    margin: 16px auto !important;
     width: 80px !important;
+}
+
+/* Pastikan container judul ga overflow */
+section .text-center.mb-16,
+#products .text-center.mb-16,
+#about-us .text-center.mb-16,
+#our-team .text-center.mb-16,
+#contact-us .text-center.mb-16 {
+    margin-bottom: 40px !important;
+}
+
+/* Spacing khusus untuk h2 biar garis ga numpuk */
+section h2,
+#products h2,
+#about-us h2,
+#our-team h2,
+#contact-us h2 {
+    margin-bottom: 0 !important;
+    display: block !important;
+}
+
+/* Garis di bawah judul - tambah jarak */
+section h2 + div,
+#products h2 + div,
+#about-us h2 + div,
+#our-team h2 + div,
+#contact-us h2 + div {
+    margin-top: 16px !important;
+    margin-bottom: 0 !important;
 }
 
 /* ============================================
@@ -255,7 +334,7 @@ nav .group-hover\:text-gold-400 {
    LOADING SCREEN TEXT - GOLDEN VISIBLE
    ============================================ */
 
-/* Loading Screen Main Text - "PREPARING ROYAL EXPERIENCE" */
+/* Loading Screen Main Text */
 #loader .text-gold-400\/70,
 #loader .text-gold-400,
 #loader p.text-gold-400\/70,
@@ -271,7 +350,7 @@ nav .group-hover\:text-gold-400 {
     letter-spacing: 3px !important;
 }
 
-/* Loading Screen Brand Text - "XFOURTEEN CORPORATION" */
+/* Loading Screen Brand Text */
 #loader h2,
 #loader .font-cormorant {
     background: linear-gradient(135deg, #fff5cc 0%, #ffea8a 30%, #ffdd77 50%, #ffea8a 70%, #fff5cc 100%) !important;
@@ -494,31 +573,73 @@ nav .group-hover\:text-gold-400 {
     }
 }
 
-/* Alternative for RTL or different positioning */
-#product-grid .bestseller-badge,
-#product-grid [class*="bestseller"] {
-    background: linear-gradient(135deg, #ffdd77, #ffd966, #ffea8a) !important;
-    color: #1a1408 !important;
-    font-weight: 900 !important;
-    box-shadow: 0 0 15px rgba(255, 221, 119, 0.8) !important;
-    animation: bestseller-pulse 1.5s ease-in-out infinite !important;
+/* ============================================
+   TEAM SECTION - BACKGROUND BLUR VIDEO
+   ============================================ */
+
+/* Background Video Container untuk Team Section */
+#our-team {
+    position: relative;
+    overflow: hidden;
+}
+
+#our-team::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://cdn.pixabay.com/video/2023/07/06/170456-841364800_large.mp4') center/cover no-repeat;
+    filter: blur(8px) brightness(0.3);
+    z-index: 0;
+    pointer-events: none;
+    transform: scale(1.05);
+}
+
+/* Alternatif pake gambar kalo video ga ke-load */
+#our-team::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #0f0a0a 0%, #080505 100%);
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Pastikan konten di atas background */
+#our-team .max-w-7xl,
+#our-team .relative.z-10 {
+    position: relative;
+    z-index: 2;
 }
 
 /* ============================================
-   TEAM CARD - ROYAL CREATOR ENHANCEMENT
-   Logo & Background Effect
+   TEAM CARDS - MODEL KOTAK KAYA FOTO KE 2
    ============================================ */
 
-/* Team Card Container - Royal Creator */
-#team-grid > div {
-    position: relative;
-    overflow: hidden;
-    background: linear-gradient(145deg, #0f0a0a, #080505) !important;
-    border: 1px solid rgba(212, 175, 55, 0.3) !important;
-    transition: all 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1) !important;
+#team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
 }
 
-/* Royal Pattern Background */
+#team-grid > div {
+    background: linear-gradient(145deg, rgba(15, 10, 10, 0.95), rgba(8, 5, 5, 0.95));
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 1.25rem 1rem;
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
 #team-grid > div::before {
     content: '';
     position: absolute;
@@ -526,162 +647,147 @@ nav .group-hover\:text-gold-400 {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%23d4af37' fill-opacity='0.03' d='M50 0 L61.8 38.2 L100 50 L61.8 61.8 L50 100 L38.2 61.8 L0 50 L38.2 38.2 L50 0z'/%3E%3C/svg%3E");
-    background-repeat: repeat;
-    background-size: 40px;
-    opacity: 0.4;
+    background: radial-gradient(circle at top right, rgba(212, 175, 55, 0.05), transparent);
     pointer-events: none;
-    transition: opacity 0.5s ease;
 }
 
-#team-grid > div:hover::before {
-    opacity: 0.6;
+#team-grid > div:hover {
+    transform: translateY(-5px);
+    border-color: #d4af37;
+    box-shadow: 0 12px 25px -8px rgba(212, 175, 55, 0.3);
 }
 
-/* Royal Border Glow Effect */
-#team-grid > div::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 20px;
-    padding: 2px;
-    background: linear-gradient(135deg, rgba(212, 175, 55, 0.4), rgba(184, 134, 11, 0.2), rgba(212, 175, 55, 0.4));
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.5s ease;
+/* Avatar Container - KOTAK, BULAT, KECIL */
+#team-grid > div .relative.mb-3 {
+    margin-bottom: 0.75rem;
 }
 
-#team-grid > div:hover::after {
-    opacity: 1;
+#team-grid > div .w-15.h-15 {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto;
+    border: 2px solid rgba(212, 175, 55, 0.4);
+    border-radius: 50%;
+    transition: all 0.4s ease;
+    overflow: hidden;
 }
 
-/* Logo Badge on Card */
-#team-grid > div .team-logo-badge {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    width: 40px;
-    height: 40px;
-    background: linear-gradient(135deg, #d4af37, #b8860b);
+#team-grid > div:hover .w-15.h-15 {
+    border-color: #ffea8a;
+    transform: scale(1.03);
+    box-shadow: 0 0 12px rgba(255, 234, 138, 0.3);
+}
+
+/* Avatar Image */
+#team-grid > div img.rounded-full {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Name with Verified Badge */
+#team-grid > div .flex.items-center.justify-center.gap-1 {
+    margin-bottom: 0.25rem;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+#team-grid > div h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #fff5cc, #ffea8a);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-family: 'Cormorant Garamond', serif;
+}
+
+/* Verified Badge - KECIL */
+#team-grid > div .w-3\.5.h-3\.5 {
+    width: 14px;
+    height: 14px;
+    background: linear-gradient(135deg, #ffdd77, #ffd966);
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(255, 221, 119, 0.5);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#team-grid > div .w-3\.5.h-3\.5 img {
+    width: 9px;
+    height: 9px;
+    object-fit: contain;
+}
+
+/* Role Text */
+#team-grid > div .text-gold-500.text-\[9px\] {
+    font-size: 9px;
+    letter-spacing: 1px;
+    margin-bottom: 0.75rem;
+    color: #ffea8a !important;
+    text-shadow: 0 0 3px rgba(255, 234, 138, 0.4);
+    font-weight: 600;
+}
+
+/* Social Icons - KECIL & RAPIH */
+#team-grid > div .flex.gap-2.justify-center {
+    gap: 0.6rem;
+    margin-top: 0.25rem;
+}
+
+#team-grid > div .flex.gap-2.justify-center a {
+    width: 32px;
+    height: 32px;
+    background: rgba(212, 175, 55, 0.1);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 10;
-    box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
-    animation: logo-pulse 2s ease-in-out infinite;
+    transition: all 0.3s ease;
 }
 
-#team-grid > div .team-logo-badge i {
-    font-size: 20px;
-    color: #080505;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+#team-grid > div .flex.gap-2.justify-center a i {
+    font-size: 14px;
 }
 
-/* Crown Icon Inside Logo */
-#team-grid > div .team-logo-badge .fa-crown {
-    font-size: 22px;
+#team-grid > div .flex.gap-2.justify-center a:hover {
+    transform: translateY(-2px) scale(1.08);
+    background: linear-gradient(135deg, #d4af37, #b8860b);
 }
 
-/* Logo Pulse Animation */
-@keyframes logo-pulse {
-    0%, 100% {
-        transform: scale(1);
-        box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+#team-grid > div .flex.gap-2.justify-center a:hover i {
+    color: #080505 !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    #team-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
     }
-    50% {
-        transform: scale(1.08);
-        box-shadow: 0 0 25px rgba(212, 175, 55, 0.9);
+    
+    #team-grid > div {
+        padding: 1rem;
     }
-}
-
-/* Royal Creator Image Container Enhancement */
-#team-grid > div .relative.mb-5 {
-    position: relative;
-    z-index: 5;
-}
-
-/* Glow Ring Around Avatar */
-#team-grid > div .relative.w-24.h-24 {
-    position: relative;
-}
-
-#team-grid > div .relative.w-24.h-24::before {
-    content: '';
-    position: absolute;
-    inset: -8px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #ffea8a, #ffdd77, #d4af37);
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    z-index: -1;
-}
-
-#team-grid > div:hover .relative.w-24.h-24::before {
-    opacity: 0.8;
-    animation: glow-rotate 3s linear infinite;
-}
-
-@keyframes glow-rotate {
-    0% {
-        transform: rotate(0deg);
+    
+    #team-grid > div h3 {
+        font-size: 0.85rem;
     }
-    100% {
-        transform: rotate(360deg);
+    
+    #team-grid > div .w-15.h-15 {
+        width: 52px;
+        height: 52px;
     }
-}
-
-/* Avatar Border Enhancement */
-#team-grid > div .border-2.border-gold-500\/30 {
-    border-color: rgba(212, 175, 55, 0.5) !important;
-    transition: all 0.4s ease;
-}
-
-#team-grid > div:hover .border-2.border-gold-500\/30 {
-    border-color: #ffea8a !important;
-    box-shadow: 0 0 20px rgba(255, 234, 138, 0.6);
-}
-
-/* Royal Creator Name Enhancement */
-#team-grid > div h3 {
-    background: linear-gradient(135deg, #fff5cc, #ffea8a, #ffdd77) !important;
-    -webkit-background-clip: text !important;
-    background-clip: text !important;
-    color: transparent !important;
-    text-shadow: 0 0 15px rgba(255, 234, 138, 0.5) !important;
-    font-weight: 800 !important;
-    position: relative;
-    z-index: 5;
-}
-
-/* Role Text Enhancement */
-#team-grid > div .text-gold-500.text-\[10px\] {
-    background: linear-gradient(135deg, #ffea8a, #ffdd77) !important;
-    -webkit-background-clip: text !important;
-    background-clip: text !important;
-    color: transparent !important;
-    text-shadow: 0 0 8px rgba(255, 234, 138, 0.6) !important;
-    font-weight: 700 !important;
-    letter-spacing: 1px !important;
-}
-
-/* Social Icons Enhancement */
-#team-grid > div .flex.gap-3.justify-center {
-    position: relative;
-    z-index: 5;
-}
-
-#team-grid > div .flex.gap-3.justify-center a {
-    transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1) !important;
-}
-
-#team-grid > div .flex.gap-3.justify-center a:hover {
-    transform: translateY(-3px) scale(1.1) !important;
-    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4) !important;
+    
+    #team-grid > div .flex.gap-2.justify-center a {
+        width: 28px;
+        height: 28px;
+    }
+    
+    #team-grid > div .flex.gap-2.justify-center a i {
+        font-size: 12px;
+    }
 }
 
 /* ============================================
@@ -1277,52 +1383,109 @@ nav .group-hover\:text-gold-400 {
     }
 }
 
-/* Feature Cards */
+/* ============================================
+   FEATURE CARDS - RAPIH KAYA FOTO KE 2
+   ============================================ */
+
+#features-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
 #features-container > div {
     background: linear-gradient(145deg, #0f0a0a, #080505);
-    border-radius: 20px;
-    padding: 32px 24px;
-    border: 1px solid rgba(212, 175, 55, 0.2);
-    transition: all 0.5s ease;
+    border-radius: 24px;
+    padding: 2rem 1.5rem;
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
     text-align: center;
+    position: relative;
+    overflow: hidden;
 }
 
-#features-container > div h3 {
-    color: #fff2e6;
-}
-
-#features-container > div p {
-    color: #e6d5b8;
+#features-container > div::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at top right, rgba(212, 175, 55, 0.05), transparent);
+    pointer-events: none;
 }
 
 #features-container > div:hover {
     transform: translateY(-8px);
     border-color: #d4af37;
-    box-shadow: 0 20px 35px -12px rgba(212, 175, 55, 0.25);
+    box-shadow: 0 20px 35px -12px rgba(212, 175, 55, 0.3);
 }
 
-/* Team Cards */
-#team-grid > div {
-    background: linear-gradient(145deg, #0f0a0a, #080505);
-    border-radius: 20px;
-    padding: 28px 24px;
-    border: 1px solid rgba(212, 175, 55, 0.2);
-    transition: all 0.5s ease;
-    text-align: center;
+/* Icon Container */
+#features-container > div .w-16.h-16 {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 1.25rem auto;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(184, 134, 11, 0.1));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s ease;
 }
 
-#team-grid > div h3 {
-    color: #fff2e6;
+#features-container > div:hover .w-16.h-16 {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.3), rgba(184, 134, 11, 0.2));
+    transform: scale(1.05);
 }
 
-#team-grid > div p {
-    color: #e6d5b8;
+#features-container > div .w-16.h-16 i {
+    font-size: 28px;
+    color: #ffea8a;
+    text-shadow: 0 0 8px rgba(255, 234, 138, 0.5);
 }
 
-#team-grid > div:hover {
-    transform: translateY(-10px);
-    border-color: #d4af37;
-    box-shadow: 0 25px 40px -12px rgba(212, 175, 55, 0.3);
+/* Title */
+#features-container > div h3 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    background: linear-gradient(135deg, #fff5cc, #ffea8a);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-family: 'Cormorant Garamond', serif;
+    letter-spacing: -0.3px;
+}
+
+/* Description */
+#features-container > div p {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: #d4c5a0;
+    margin-bottom: 0;
+    padding: 0 0.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    #features-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    #features-container > div {
+        padding: 1.5rem;
+    }
+    
+    #features-container > div h3 {
+        font-size: 1.2rem;
+    }
+    
+    #features-container > div p {
+        font-size: 0.8rem;
+    }
 }
 
 /* Contact Cards */
