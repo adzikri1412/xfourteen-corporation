@@ -27,17 +27,7 @@ const FEATURES = [
 ];
 
 const TEAM = [
-    { 
-        name: 'XenzzSettingsx', 
-        role: 'CEO & Founder', 
-        img: 'assets/team-dev.jpg', 
-        socials: { 
-            whatsapp: '628895823757', 
-            instagram: 'https://instagram.com/dziyx14', 
-            tiktok: 'https://tiktok.com/xenzzsettings', 
-            discord: 'https://discord.gg/bekkmRDQXX' 
-        } 
-    }
+    { name: 'XenzzSettingsx', role: 'CEO & Founder', img: 'assets/team-dev.jpg', socials: { whatsapp: '628895823757', instagram: 'https://instagram.com/dziyx14', tiktok: 'https://tiktok.com/xenzzsettings', discord: 'https://discord.gg/bekkmRDQXX' } }
 ];
 
 // ============================================
@@ -379,39 +369,22 @@ window.addEventListener('DOMContentLoaded', () => {
     new ParticleSystem();
     new MouseTrail();
     
-    // Fix: Particle canvas z-index biar muncul di semua section
-    const particleCanvas = document.getElementById('particleCanvas');
-    if (particleCanvas) {
-        particleCanvas.style.zIndex = '1';
-        particleCanvas.style.pointerEvents = 'none';
-    }
-    
-    const goldDustCanvas = document.getElementById('goldDustCanvas');
-    if (goldDustCanvas) {
-        goldDustCanvas.style.zIndex = '0';
-    }
-    
-    const mouseTrailCanvas = document.getElementById('mouseTrailCanvas');
-    if (mouseTrailCanvas) {
-        mouseTrailCanvas.style.zIndex = '2';
-    }
-    
     // Typewriter Effect
     const typewriterElement = document.getElementById('typewriter-text');
     if (typewriterElement) {
         new TypeWriter(typewriterElement, [
-            'Optimize Your Free Fire Experience',
-            'Best Sensitivity Settings',
-            'Designed for Elite Players',
-            'Elevate Your Game to Throne Level'
+        'Optimize Your Free Fire Experience',
+        'Best Sensitivity Settings',
+        'Designed for Players',
+        'Elevate Your Game to Throne Level'
         ], 80, 2500);
     }
     
     // Render Features
     const fc = document.getElementById('features-container');
     if (fc) {
-        fc.innerHTML = FEATURES.map((f, idx) => `
-            <div class="stagger-item">
+        fc.innerHTML = FEATURES.map((f) => `
+            <div class="stagger-item bg-gradient-to-br from-royal-dark to-royal-darker p-8 rounded-2xl border border-gold-500/20 text-center hover:border-gold-500/50 transition-all duration-500 transform hover:-translate-y-2">
                 <div class="w-16 h-16 rounded-full bg-gradient-to-br from-gold-500/20 to-amber-500/20 flex items-center justify-center mx-auto mb-5">
                     <i class="fas fa-${f.icon} text-gold-500 text-2xl"></i>
                 </div>
@@ -421,32 +394,31 @@ window.addEventListener('DOMContentLoaded', () => {
         `).join('');
     }
     
-// Render Team - MODEL KOTAK KAYA FOTO KE 2
-const tg = document.getElementById('team-grid');
-if (tg) {
-    tg.innerHTML = TEAM.map(t => `
-        <div class="stagger-item">
-            <div class="relative mb-3">
-                <div class="w-15 h-15 rounded-full border-2 border-gold-500/30 p-0.5 mx-auto overflow-hidden transition-all duration-500 hover:border-gold-500">
-                    <img src="${t.img}" class="w-full h-full object-cover rounded-full transition-all duration-500 hover:scale-105" onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=${t.name}'">
+    // Render Team
+    const tg = document.getElementById('team-grid');
+    if (tg) {
+        tg.innerHTML = TEAM.map(t => `
+            <div class="stagger-item bg-gradient-to-br from-royal-dark to-royal-darker p-8 rounded-2xl border border-gold-500/20 text-center group hover:border-gold-500/50 transition-all duration-500 hover:-translate-y-2">
+                <div class="relative mb-5">
+                    <div class="absolute -inset-4 bg-gradient-to-r from-gold-500/20 to-amber-500/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="relative w-24 h-24 rounded-full border-2 border-gold-500/30 p-1 mx-auto overflow-hidden group-hover:border-gold-500 transition-all duration-500">
+                        <img src="${t.img}" class="w-full h-full object-cover rounded-full group-hover:scale-110 transition-all duration-500" onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=${t.name}'">
+                    </div>
+                    <div class="absolute -bottom-2 -right-2 w-8 h-8 bg-gradient-to-br from-gold-600 to-amber-600 rounded-full flex items-center justify-center text-royal-dark text-xs">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                </div>
+                <h3 class="text-white font-bold text-lg mb-1 font-cormorant">${t.name}</h3>
+                <p class="text-gold-500 text-[10px] font-bold uppercase tracking-wider mb-3">${t.role}</p>
+                <div class="flex gap-3 justify-center">
+                    ${t.socials.whatsapp ? `<a href="https://wa.me/${t.socials.whatsapp}" target="_blank" class="w-9 h-9 rounded-full bg-green-500/10 hover:bg-green-500 flex items-center justify-center text-green-500 hover:text-white transition-all hover:scale-110"><i class="fab fa-whatsapp"></i></a>` : ''}
+                    ${t.socials.instagram ? `<a href="${t.socials.instagram}" target="_blank" class="w-9 h-9 rounded-full bg-pink-500/10 hover:bg-pink-500 flex items-center justify-center text-pink-500 hover:text-white transition-all hover:scale-110"><i class="fab fa-instagram"></i></a>` : ''}
+                    ${t.socials.tiktok ? `<a href="${t.socials.tiktok}" target="_blank" class="w-9 h-9 rounded-full bg-black/10 hover:bg-black flex items-center justify-center text-gold-300/60 hover:text-white transition-all hover:scale-110"><i class="fab fa-tiktok"></i></a>` : ''}
+                    ${t.socials.discord ? `<a href="${t.socials.discord}" target="_blank" class="w-9 h-9 rounded-full bg-indigo-500/10 hover:bg-indigo-500 flex items-center justify-center text-indigo-400 hover:text-white transition-all hover:scale-110"><i class="fab fa-discord"></i></a>` : ''}
                 </div>
             </div>
-            <div class="flex items-center justify-center gap-1 mb-0.5 flex-wrap">
-                <h3 class="font-cormorant font-bold text-[0.95rem] bg-gradient-to-r from-gold-400 to-amber-500 bg-clip-text text-transparent">${t.name}</h3>
-                <div class="w-3.5 h-3.5 rounded-full overflow-hidden bg-gradient-to-br from-gold-500 to-amber-500 flex items-center justify-center shadow-sm">
-                    <img src="assets/verified.png" class="w-2.5 h-2.5 object-cover" alt="verified" onerror="this.style.display='none'">
-                </div>
-            </div>
-            <p class="text-gold-500 text-[9px] font-bold uppercase tracking-wider mb-2">${t.role}</p>
-            <div class="flex gap-2 justify-center">
-                ${t.socials.whatsapp ? `<a href="https://wa.me/${t.socials.whatsapp}" target="_blank" class="w-8 h-8 rounded-full bg-green-500/10 hover:bg-green-500 flex items-center justify-center text-green-500 hover:text-white transition-all hover:scale-105"><i class="fab fa-whatsapp text-sm"></i></a>` : ''}
-                ${t.socials.instagram ? `<a href="${t.socials.instagram}" target="_blank" class="w-8 h-8 rounded-full bg-pink-500/10 hover:bg-pink-500 flex items-center justify-center text-pink-500 hover:text-white transition-all hover:scale-105"><i class="fab fa-instagram text-sm"></i></a>` : ''}
-                ${t.socials.tiktok ? `<a href="${t.socials.tiktok}" target="_blank" class="w-8 h-8 rounded-full bg-black/10 hover:bg-black flex items-center justify-center text-gold-300/60 hover:text-white transition-all hover:scale-105"><i class="fab fa-tiktok text-sm"></i></a>` : ''}
-                ${t.socials.discord ? `<a href="${t.socials.discord}" target="_blank" class="w-8 h-8 rounded-full bg-indigo-500/10 hover:bg-indigo-500 flex items-center justify-center text-indigo-400 hover:text-white transition-all hover:scale-105"><i class="fab fa-discord text-sm"></i></a>` : ''}
-            </div>
-        </div>
-    `).join('');
-}
+        `).join('');
+    }
     
     filterProducts('ANDROID');
     
@@ -509,45 +481,14 @@ if (tg) {
     // Loader
     const loader = document.getElementById('loader');
     if (loader) {
-        let width = 0;
-        const loadingBar = document.getElementById('loadingBar');
-        const interval = setInterval(() => {
-            if (width >= 100) {
-                clearInterval(interval);
-                setTimeout(() => {
-                    loader.style.opacity = '0';
-                    setTimeout(() => {
-                        loader.style.display = 'none';
-                        if (nav) nav.style.transform = 'translateY(0)';
-                    }, 500);
-                }, 500);
-            } else {
-                width += Math.random() * 15 + 5;
-                if (width > 100) width = 100;
-                if (loadingBar) loadingBar.style.width = width + '%';
-            }
-        }, 150);
+        setTimeout(() => {
+            loader.style.opacity = '0';
+            setTimeout(() => {
+                loader.style.display = 'none';
+                if (nav) nav.style.transform = 'translateY(0)';
+            }, 500);
+        }, 2000);
     }
-
-    // ============================================
-    // FIX: Dekoratif garis posisi di bawah judul
-    // ============================================
-    const allDecoLines = document.querySelectorAll('.w-20.h-0\\.5, .w-16.h-0\\.5');
-    allDecoLines.forEach(line => {
-        line.style.marginTop = '30px';
-        line.style.marginBottom = '0';
-        line.style.position = 'relative';
-        line.style.top = '0';
-    });
-
-    // Pastikan semua section title container punya margin bawah cukup
-    const allSections = document.querySelectorAll('#products, #about-us, #our-team, #contact-us');
-    allSections.forEach(section => {
-        const textCenterDiv = section.querySelector('.text-center.mb-16');
-        if (textCenterDiv) {
-            textCenterDiv.style.marginBottom = '50px';
-        }
-    });
 });
 
 // Filter Products - Update Bestseller Badge
