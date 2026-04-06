@@ -369,14 +369,31 @@ window.addEventListener('DOMContentLoaded', () => {
     new ParticleSystem();
     new MouseTrail();
     
+    // Fix: Particle canvas z-index biar muncul di semua section
+    const particleCanvas = document.getElementById('particleCanvas');
+    if (particleCanvas) {
+        particleCanvas.style.zIndex = '1';
+        particleCanvas.style.pointerEvents = 'none';
+    }
+    
+    const goldDustCanvas = document.getElementById('goldDustCanvas');
+    if (goldDustCanvas) {
+        goldDustCanvas.style.zIndex = '0';
+    }
+    
+    const mouseTrailCanvas = document.getElementById('mouseTrailCanvas');
+    if (mouseTrailCanvas) {
+        mouseTrailCanvas.style.zIndex = '2';
+    }
+    
     // Typewriter Effect
     const typewriterElement = document.getElementById('typewriter-text');
     if (typewriterElement) {
         new TypeWriter(typewriterElement, [
-        'Optimize Your Free Fire Experience',
-        'Best Sensitivity Settings',
-        'Designed for Players',
-        'Elevate Your Game to Throne Level'
+            'Optimize Your Free Fire Experience',
+            'Best Sensitivity Settings',
+            'Designed for Elite Players',
+            'Elevate Your Game to Throne Level'
         ], 80, 2500);
     }
     
@@ -384,7 +401,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const fc = document.getElementById('features-container');
     if (fc) {
         fc.innerHTML = FEATURES.map((f) => `
-            <div class="stagger-item bg-gradient-to-br from-royal-dark to-royal-darker p-8 rounded-2xl border border-gold-500/20 text-center hover:border-gold-500/50 transition-all duration-500 transform hover:-translate-y-2">
+            <div class="stagger-item">
                 <div class="w-16 h-16 rounded-full bg-gradient-to-br from-gold-500/20 to-amber-500/20 flex items-center justify-center mx-auto mb-5">
                     <i class="fas fa-${f.icon} text-gold-500 text-2xl"></i>
                 </div>
@@ -404,11 +421,13 @@ window.addEventListener('DOMContentLoaded', () => {
                     <div class="relative w-24 h-24 rounded-full border-2 border-gold-500/30 p-1 mx-auto overflow-hidden group-hover:border-gold-500 transition-all duration-500">
                         <img src="${t.img}" class="w-full h-full object-cover rounded-full group-hover:scale-110 transition-all duration-500" onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=${t.name}'">
                     </div>
-                    <div class="absolute -bottom-2 -right-2 w-8 h-8 bg-gradient-to-br from-gold-600 to-amber-600 rounded-full flex items-center justify-center text-royal-dark text-xs">
-                        <i class="fas fa-crown"></i>
+                </div>
+                <div class="flex items-center justify-center gap-2 mb-1">
+                    <h3 class="text-white font-bold text-lg font-cormorant">${t.name}</h3>
+                    <div class="w-5 h-5 rounded-full overflow-hidden bg-gradient-to-br from-gold-500 to-amber-500 flex items-center justify-center shadow-md">
+                        <img src="assets/verified.png" class="w-full h-full object-cover" alt="verified">
                     </div>
                 </div>
-                <h3 class="text-white font-bold text-lg mb-1 font-cormorant">${t.name}</h3>
                 <p class="text-gold-500 text-[10px] font-bold uppercase tracking-wider mb-3">${t.role}</p>
                 <div class="flex gap-3 justify-center">
                     ${t.socials.whatsapp ? `<a href="https://wa.me/${t.socials.whatsapp}" target="_blank" class="w-9 h-9 rounded-full bg-green-500/10 hover:bg-green-500 flex items-center justify-center text-green-500 hover:text-white transition-all hover:scale-110"><i class="fab fa-whatsapp"></i></a>` : ''}
@@ -481,14 +500,45 @@ window.addEventListener('DOMContentLoaded', () => {
     // Loader
     const loader = document.getElementById('loader');
     if (loader) {
-        setTimeout(() => {
-            loader.style.opacity = '0';
-            setTimeout(() => {
-                loader.style.display = 'none';
-                if (nav) nav.style.transform = 'translateY(0)';
-            }, 500);
-        }, 2000);
+        let width = 0;
+        const loadingBar = document.getElementById('loadingBar');
+        const interval = setInterval(() => {
+            if (width >= 100) {
+                clearInterval(interval);
+                setTimeout(() => {
+                    loader.style.opacity = '0';
+                    setTimeout(() => {
+                        loader.style.display = 'none';
+                        if (nav) nav.style.transform = 'translateY(0)';
+                    }, 500);
+                }, 500);
+            } else {
+                width += Math.random() * 15 + 5;
+                if (width > 100) width = 100;
+                if (loadingBar) loadingBar.style.width = width + '%';
+            }
+        }, 150);
     }
+
+    // ============================================
+    // FIX: Dekoratif garis posisi di bawah judul
+    // ============================================
+    const allDecoLines = document.querySelectorAll('.w-20.h-0\\.5, .w-16.h-0\\.5');
+    allDecoLines.forEach(line => {
+        line.style.marginTop = '30px';
+        line.style.marginBottom = '0';
+        line.style.position = 'relative';
+        line.style.top = '0';
+    });
+
+    // Pastikan semua section title container punya margin bawah cukup
+    const allSections = document.querySelectorAll('#products, #about-us, #our-team, #contact-us');
+    allSections.forEach(section => {
+        const textCenterDiv = section.querySelector('.text-center.mb-16');
+        if (textCenterDiv) {
+            textCenterDiv.style.marginBottom = '50px';
+        }
+    });
 });
 
 // Filter Products - Update Bestseller Badge
