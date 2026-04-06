@@ -1,6 +1,6 @@
 /* ============================================
    XFOURTEEN CORPORATION - GOLDEN ROYAL EDITION
-   COMPLETE CSS - TEAM RAPIH KAYA FOTO KE 2
+   COMPLETE CSS - JUDUL KELIATAN + TEAM RAPIH
    ============================================ */
 
 /* Import Fonts */
@@ -38,7 +38,7 @@ body {
     font-family: 'Montserrat', sans-serif;
 }
 
-/* Custom Scrollbar - Royal Gold */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
     width: 8px;
 }
@@ -51,7 +51,6 @@ body {
 ::-webkit-scrollbar-thumb {
     background: linear-gradient(180deg, var(--gold-primary), var(--gold-dark));
     border-radius: 10px;
-    transition: all 0.3s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -72,7 +71,7 @@ body {
 }
 
 /* ============================================
-   FORCE FIX: DECORATIVE LINE 100% DI BAWAH JUDUL
+   DECORATIVE LINE DI BAWAH JUDUL
    ============================================ */
 
 section .w-20.h-0\.5,
@@ -80,50 +79,32 @@ section .w-16.h-0\.5,
 #products .w-20.h-0\.5,
 #about-us .w-16.h-0\.5,
 #our-team .w-20.h-0\.5,
-#contact-us .w-20.h-0\.5,
-section .text-center .w-20,
-section .text-center .w-16,
-div.w-20.h-0\.5,
-div.w-16.h-0\.5 {
+#contact-us .w-20.h-0\.5 {
     margin-top: 30px !important;
     margin-bottom: 0 !important;
     margin-left: auto !important;
     margin-right: auto !important;
     position: relative !important;
     top: auto !important;
-    bottom: auto !important;
-    transform: none !important;
-    display: block !important;
-    clear: both !important;
     background: linear-gradient(90deg, #fff5cc, #ffea8a, #ffdd77, #ffea8a, #fff5cc) !important;
     box-shadow: 0 0 20px rgba(255, 234, 138, 1) !important;
     height: 3px !important;
     width: 80px !important;
 }
 
-section .text-center.mb-16,
-#products .text-center.mb-16,
-#about-us .text-center.mb-16,
-#our-team .text-center.mb-16,
-#contact-us .text-center.mb-16,
-section .text-center {
+section .text-center.mb-16 {
     margin-bottom: 50px !important;
-    padding-bottom: 0 !important;
-    overflow: visible !important;
 }
+
+/* ============================================
+   SECTION TITLES - BIAR KELIATAN
+   ============================================ */
 
 section h2,
 #products h2,
 #about-us h2,
 #our-team h2,
-#contact-us h2,
-section .font-cormorant.text-4xl,
-section .font-cormorant.text-5xl {
-    display: block !important;
-    margin-bottom: 15px !important;
-    margin-top: 0 !important;
-    position: relative !important;
-    z-index: 5 !important;
+#contact-us h2 {
     background: linear-gradient(135deg, #ffea8a 0%, #ffe680 25%, #ffdd77 50%, #ffe680 75%, #ffea8a 100%) !important;
     background-size: 200% auto !important;
     -webkit-background-clip: text !important;
@@ -132,15 +113,13 @@ section .font-cormorant.text-5xl {
     text-shadow: 0 0 35px rgba(255, 234, 138, 1), 0 0 15px rgba(212, 175, 55, 0.9) !important;
     animation: title-shine 2s ease-in-out infinite !important;
     font-weight: 900 !important;
-    letter-spacing: -0.5px !important;
     text-align: center !important;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
-section h2 span,
-#products h2 span,
-#about-us h2 span,
-#our-team h2 span,
-#contact-us h2 span {
+section h2 span {
     background: linear-gradient(135deg, #fff5cc 0%, #fff0a0 30%, #ffea8a 50%, #fff0a0 70%, #fff5cc 100%) !important;
     background-size: 200% auto !important;
     -webkit-background-clip: text !important;
@@ -148,23 +127,22 @@ section h2 span,
     color: transparent !important;
     text-shadow: 0 0 45px rgba(255, 245, 204, 1), 0 0 20px rgba(212, 175, 55, 1) !important;
     animation: span-shine 1.8s ease-in-out infinite !important;
-    font-weight: 900 !important;
 }
 
 @keyframes title-shine {
     0% { background-position: 0% 50%; text-shadow: 0 0 25px rgba(255, 234, 138, 0.8); }
-    50% { background-position: 100% 50%; text-shadow: 0 0 55px rgba(255, 234, 138, 1), 0 0 25px rgba(212, 175, 55, 1); }
+    50% { background-position: 100% 50%; text-shadow: 0 0 55px rgba(255, 234, 138, 1); }
     100% { background-position: 0% 50%; text-shadow: 0 0 25px rgba(255, 234, 138, 0.8); }
 }
 
 @keyframes span-shine {
     0% { background-position: 0% 50%; text-shadow: 0 0 30px rgba(255, 245, 204, 0.8); }
-    50% { background-position: 100% 50%; text-shadow: 0 0 70px rgba(255, 245, 204, 1), 0 0 35px rgba(212, 175, 55, 1); }
+    50% { background-position: 100% 50%; text-shadow: 0 0 70px rgba(255, 245, 204, 1); }
     100% { background-position: 0% 50%; text-shadow: 0 0 30px rgba(255, 245, 204, 0.8); }
 }
 
 /* ============================================
-   HOME TITLE FIX
+   HOME TITLE
    ============================================ */
 
 h1 .text-transparent.bg-clip-text {
@@ -184,20 +162,19 @@ h1 .text-white {
     -webkit-background-clip: text !important;
     background-clip: text !important;
     color: transparent !important;
-    text-shadow: 0 0 30px rgba(255, 255, 255, 0.9), 0 0 15px rgba(245, 229, 107, 0.7) !important;
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.9) !important;
     animation: gold-shine-slow 3.5s ease-in-out infinite !important;
-    font-weight: 700 !important;
 }
 
 @keyframes gold-shine {
     0% { background-position: 0% 50%; text-shadow: 0 0 25px rgba(255, 245, 204, 0.7); }
-    50% { background-position: 100% 50%; text-shadow: 0 0 60px rgba(255, 245, 204, 1), 0 0 30px rgba(212, 175, 55, 1); }
+    50% { background-position: 100% 50%; text-shadow: 0 0 60px rgba(255, 245, 204, 1); }
     100% { background-position: 0% 50%; text-shadow: 0 0 25px rgba(255, 245, 204, 0.7); }
 }
 
 @keyframes gold-shine-slow {
     0% { background-position: 0% 50%; text-shadow: 0 0 20px rgba(255, 255, 255, 0.6); }
-    50% { background-position: 100% 50%; text-shadow: 0 0 50px rgba(255, 255, 255, 1), 0 0 25px rgba(245, 229, 107, 0.9); }
+    50% { background-position: 100% 50%; text-shadow: 0 0 50px rgba(255, 255, 255, 1); }
     100% { background-position: 0% 50%; text-shadow: 0 0 20px rgba(255, 255, 255, 0.6); }
 }
 
@@ -205,41 +182,35 @@ h1 .text-white {
    LOADING SCREEN
    ============================================ */
 
-#loader .text-gold-400\/70,
-#loader .text-gold-400,
-#loader p.text-gold-400\/70 {
+#loader .text-gold-400\/70 {
     background: linear-gradient(135deg, #ffea8a 0%, #ffe680 30%, #ffdd77 60%, #ffe680 80%, #ffea8a 100%) !important;
     background-size: 200% auto !important;
     -webkit-background-clip: text !important;
     background-clip: text !important;
     color: transparent !important;
-    text-shadow: 0 0 20px rgba(255, 234, 138, 0.9), 0 0 10px rgba(212, 175, 55, 0.6) !important;
+    text-shadow: 0 0 20px rgba(255, 234, 138, 0.9) !important;
     animation: loader-text-shine 2s ease-in-out infinite !important;
-    font-weight: 600 !important;
-    letter-spacing: 3px !important;
 }
 
-#loader h2,
-#loader .font-cormorant {
+#loader h2 {
     background: linear-gradient(135deg, #fff5cc 0%, #ffea8a 30%, #ffdd77 50%, #ffea8a 70%, #fff5cc 100%) !important;
     background-size: 200% auto !important;
     -webkit-background-clip: text !important;
     background-clip: text !important;
     color: transparent !important;
-    text-shadow: 0 0 30px rgba(255, 245, 204, 0.9), 0 0 15px rgba(212, 175, 55, 0.7) !important;
+    text-shadow: 0 0 30px rgba(255, 245, 204, 0.9) !important;
     animation: loader-title-shine 2.5s ease-in-out infinite !important;
-    font-weight: 800 !important;
 }
 
 @keyframes loader-text-shine {
     0% { background-position: 0% 50%; text-shadow: 0 0 15px rgba(255, 234, 138, 0.6); }
-    50% { background-position: 100% 50%; text-shadow: 0 0 35px rgba(255, 234, 138, 1), 0 0 15px rgba(212, 175, 55, 0.8); }
+    50% { background-position: 100% 50%; text-shadow: 0 0 35px rgba(255, 234, 138, 1); }
     100% { background-position: 0% 50%; text-shadow: 0 0 15px rgba(255, 234, 138, 0.6); }
 }
 
 @keyframes loader-title-shine {
     0% { background-position: 0% 50%; text-shadow: 0 0 20px rgba(255, 245, 204, 0.7); }
-    50% { background-position: 100% 50%; text-shadow: 0 0 45px rgba(255, 245, 204, 1), 0 0 20px rgba(212, 175, 55, 0.9); }
+    50% { background-position: 100% 50%; text-shadow: 0 0 45px rgba(255, 245, 204, 1); }
     100% { background-position: 0% 50%; text-shadow: 0 0 20px rgba(255, 245, 204, 0.7); }
 }
 
@@ -293,33 +264,18 @@ h1 .text-white {
 }
 
 @keyframes glow-pulse {
-    0%, 100% { box-shadow: 0 0 5px rgba(212, 175, 55, 0.3); text-shadow: 0 0 5px rgba(212, 175, 55, 0.3); }
-    50% { box-shadow: 0 0 25px rgba(212, 175, 55, 0.6); text-shadow: 0 0 15px rgba(212, 175, 55, 0.6); }
+    0%, 100% { box-shadow: 0 0 5px rgba(212, 175, 55, 0.3); }
+    50% { box-shadow: 0 0 25px rgba(212, 175, 55, 0.6); }
 }
 
 @keyframes border-glow {
-    0%, 100% { border-color: rgba(212, 175, 55, 0.2); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+    0%, 100% { border-color: rgba(212, 175, 55, 0.2); }
     50% { border-color: rgba(212, 175, 55, 0.6); box-shadow: 0 0 20px rgba(212, 175, 55, 0.3); }
 }
 
 @keyframes blink {
     0%, 100% { opacity: 1; }
     50% { opacity: 0; }
-}
-
-@keyframes modal-pop-royal {
-    0% { opacity: 0; transform: scale(0.9) translateY(20px); }
-    100% { opacity: 1; transform: scale(1) translateY(0); }
-}
-
-@keyframes slideInRoyal {
-    from { transform: translateX(100%); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
-}
-
-@keyframes slideOutRoyal {
-    from { transform: translateX(0); opacity: 1; }
-    to { transform: translateX(100%); opacity: 0; }
 }
 
 /* Animation Classes */
@@ -332,14 +288,14 @@ h1 .text-white {
 .animate-text-reveal-delay2 { animation: text-reveal 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards; animation-delay: 0.9s; }
 .animate-text-reveal-delay3 { animation: text-reveal 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards; animation-delay: 1.2s; }
 .animate-on-scroll { animation: fade-in-up 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
-.animate-scale-on-scroll { animation: scale-on-scroll 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards; animation-delay: 0.3s; transform-origin: center; }
+.animate-scale-on-scroll { animation: scale-on-scroll 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards; animation-delay: 0.3s; }
 .animate-bounce-gold { animation: bounce-gold 2s ease-in-out infinite; }
 .animate-pulse-gentle { animation: glow-pulse 2s ease-in-out infinite; }
 .animate-royal-glow { animation: border-glow 3s ease-in-out infinite; }
 .typewriter-cursor { display: inline-block; width: 2px; height: 1.2em; background-color: #ffd966; margin-left: 4px; animation: blink 1s step-end infinite; vertical-align: middle; }
 
 /* ============================================
-   ROYAL NAVIGATION
+   NAVIGATION
    ============================================ */
 .royal-nav {
     background: rgba(8, 5, 5, 0.95);
@@ -379,11 +335,10 @@ nav .font-montserrat {
     background-clip: text !important;
     color: transparent !important;
     font-weight: 800 !important;
-    text-shadow: 0 0 12px rgba(255, 230, 128, 0.7) !important;
 }
 
 /* ============================================
-   ROYAL BUTTONS
+   BUTTONS
    ============================================ */
 .btn-royal-primary {
     background: linear-gradient(135deg, #d4af37, #b8860b);
@@ -397,8 +352,6 @@ nav .font-montserrat {
     display: inline-flex;
     align-items: center;
     transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-    text-decoration: none;
-    border: none;
     cursor: pointer;
     box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
     position: relative;
@@ -423,7 +376,6 @@ nav .font-montserrat {
 .btn-royal-primary:hover {
     transform: translateY(-3px);
     box-shadow: 0 15px 35px rgba(212, 175, 55, 0.4);
-    background: linear-gradient(135deg, #f5e56b, #d4af37);
 }
 
 .btn-royal-secondary {
@@ -439,7 +391,6 @@ nav .font-montserrat {
     display: inline-flex;
     align-items: center;
     transition: all 0.4s ease;
-    text-decoration: none;
     backdrop-filter: blur(10px);
     cursor: pointer;
 }
@@ -448,8 +399,6 @@ nav .font-montserrat {
     background: rgba(212, 175, 55, 0.25);
     border-color: rgba(212, 175, 55, 0.9);
     transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(212, 175, 55, 0.2);
-    color: #fff;
 }
 
 @media (min-width: 768px) {
@@ -457,7 +406,7 @@ nav .font-montserrat {
 }
 
 /* ============================================
-   ROYAL TABS
+   TABS
    ============================================ */
 .tab-royal {
     padding: 8px 24px;
@@ -478,16 +427,11 @@ nav .font-montserrat {
     background: linear-gradient(135deg, #d4af37, #b8860b);
     color: #080505;
     box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
-    animation: glow-pulse 2s ease-in-out infinite;
 }
 
 .tab-royal:hover:not(.active) {
     color: #ffea8a;
     background: rgba(212, 175, 55, 0.15);
-}
-
-@media (min-width: 768px) {
-    .tab-royal { padding: 10px 32px; font-size: 14px; }
 }
 
 /* ============================================
@@ -509,50 +453,19 @@ nav .font-montserrat {
     overflow: hidden;
 }
 
-#product-grid > div::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(115deg, transparent 0%, transparent 40%, rgba(212, 175, 55, 0.08) 50%, rgba(255, 255, 255, 0.15) 60%, transparent 70%, transparent 100%);
-    background-size: 200% 100%;
-    background-repeat: no-repeat;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-    z-index: 1;
-}
-
-#product-grid > div:hover::before {
-    opacity: 1;
-    animation: shimmer-gold 1.5s ease-in-out infinite;
-}
-
 #product-grid > div:hover {
     border-color: #d4af37;
     transform: translateY(-12px) scale(1.02);
     box-shadow: 0 25px 40px -12px rgba(212, 175, 55, 0.35);
 }
 
-#product-grid > div h3 { color: #fff2e6; font-weight: 700; }
-#product-grid > div p { color: #e6d5b8; }
-#product-grid > div ul li { color: #d4c5a0; }
-
-@media (min-width: 768px) {
-    #product-grid > div { padding: 28px; border-radius: 24px; }
-}
-
 /* ============================================
-   FEATURE CARDS - RAPIH
+   FEATURE CARDS
    ============================================ */
-
 #features-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
-    margin-top: 2rem;
 }
 
 #features-container > div {
@@ -589,7 +502,6 @@ nav .font-montserrat {
 #features-container > div h3 {
     font-size: 1.35rem;
     font-weight: 700;
-    margin-bottom: 0.75rem;
     background: linear-gradient(135deg, #fff5cc, #ffea8a);
     -webkit-background-clip: text;
     background-clip: text;
@@ -603,30 +515,13 @@ nav .font-montserrat {
     color: #d4c5a0;
 }
 
-@media (max-width: 768px) {
-    #features-container {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-    
-    #features-container > div {
-        padding: 1.5rem;
-    }
-    
-    #features-container > div h3 {
-        font-size: 1.2rem;
-    }
-}
-
 /* ============================================
-   TEAM CARDS - RAPIH KAYA FOTO KE 2
+   TEAM CARDS - SESUAI FOTO
    ============================================ */
-
 #team-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
-    margin-top: 2rem;
 }
 
 #team-grid > div {
@@ -669,7 +564,7 @@ nav .font-montserrat {
     object-fit: cover;
 }
 
-/* Hapus efek blur yang ganggu */
+/* Hilangkan efek blur berlebih */
 #team-grid > div .absolute.-inset-4 {
     display: none;
 }
@@ -688,7 +583,6 @@ nav .font-montserrat {
     font-weight: 700;
     color: #ffffff;
     font-family: 'Cormorant Garamond', serif;
-    letter-spacing: -0.2px;
 }
 
 /* Verified Badge */
@@ -723,7 +617,6 @@ nav .font-montserrat {
     display: flex;
     gap: 0.75rem;
     justify-content: center;
-    margin-top: 0.5rem;
 }
 
 #team-grid > div .flex.gap-3.justify-center a {
@@ -740,7 +633,6 @@ nav .font-montserrat {
 
 #team-grid > div .flex.gap-3.justify-center a i {
     font-size: 16px;
-    transition: all 0.3s ease;
 }
 
 #team-grid > div .flex.gap-3.justify-center a:hover {
@@ -750,32 +642,6 @@ nav .font-montserrat {
 
 #team-grid > div .flex.gap-3.justify-center a:hover i {
     color: #080505 !important;
-}
-
-/* Responsive Team */
-@media (max-width: 768px) {
-    #team-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-    
-    #team-grid > div {
-        padding: 1.5rem;
-    }
-    
-    #team-grid > div .w-24.h-24 {
-        width: 80px;
-        height: 80px;
-    }
-    
-    #team-grid > div h3 {
-        font-size: 1.15rem;
-    }
-    
-    #team-grid > div .flex.gap-3.justify-center a {
-        width: 34px;
-        height: 34px;
-    }
 }
 
 /* ============================================
@@ -791,8 +657,6 @@ nav .font-montserrat {
     border: 1px solid rgba(212, 175, 55, 0.25);
     transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
 }
-
-.contact-royal h3 { color: #fff2e6; }
 
 .contact-royal:hover {
     transform: translateX(8px);
@@ -828,13 +692,6 @@ nav .font-montserrat {
     border-color: #d4af37;
     background: rgba(8, 5, 5, 0.9);
     box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
-    transform: translateY(-1px);
-}
-
-.form-royal::placeholder { color: #c9b37c; }
-
-@media (min-width: 768px) {
-    .form-royal { padding: 14px 20px; border-radius: 14px; font-size: 15px; }
 }
 
 /* ============================================
@@ -854,15 +711,29 @@ nav .font-montserrat {
 .stagger-item:nth-child(6) { animation-delay: 0.4s; }
 
 /* ============================================
-   MODAL & TOAST
+   MODAL, TOAST, BACK TO TOP
    ============================================ */
 #payment-modal > div { animation: modal-pop-royal 0.4s cubic-bezier(0.34, 1.2, 0.64, 1) forwards; }
 #toast { animation: slideInRoyal 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards; }
 #toast.hide { animation: slideOutRoyal 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards; }
 
-/* Back to Top */
+@keyframes modal-pop-royal {
+    0% { opacity: 0; transform: scale(0.9) translateY(20px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes slideInRoyal {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideOutRoyal {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(100%); opacity: 0; }
+}
+
 #backToTop {
-    transition: opacity 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.3s cubic-bezier(0.34, 1.2, 0.64, 1), box-shadow 0.3s ease;
+    transition: opacity 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
 }
 
 #backToTop:hover {
@@ -893,31 +764,27 @@ nav .font-montserrat {
     opacity: 0;
 }
 
-/* ============================================
-   RESPONSIVE
-   ============================================ */
+/* Responsive */
 @media (max-width: 640px) {
     .btn-royal-primary, .btn-royal-secondary { padding: 10px 24px; font-size: 11px; }
     .tab-royal { padding: 6px 16px; font-size: 11px; }
     .contact-royal { padding: 16px 20px; }
-    .contact-icon-royal { width: 44px; height: 44px; border-radius: 12px; }
-    .text-gold-300\/60 { color: rgba(230, 213, 184, 0.95) !important; }
+    .contact-icon-royal { width: 44px; height: 44px; }
     h1 .text-transparent.bg-clip-text { font-size: 2.5rem; }
     h1 .text-white { font-size: 1.5rem; }
     section h2 { font-size: 1.8rem !important; }
-    #about-us .pl-5.border-l-4 { max-width: 100% !important; }
-    #about-us .pl-5.border-l-4 p { font-size: 1rem !important; }
-    #product-grid .bg-gradient-to-r.from-gold-600.to-amber-600 { font-size: 8px !important; padding: 3px 8px !important; }
+    #team-grid { grid-template-columns: 1fr; }
+    #team-grid > div .w-24.h-24 { width: 80px; height: 80px; }
+    #team-grid > div h3 { font-size: 1.15rem; }
+    #features-container { grid-template-columns: 1fr; }
+    #product-grid { grid-template-columns: 1fr; }
 }
 
 @media (prefers-reduced-motion: reduce) {
     * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
 
-/* Additional Contrast Fixes */
-.pl-5.border-l-4.border-gold-500 p { color: #f0e2c5 !important; font-weight: 500; }
-.p-5.rounded-xl h4 { color: #ffea8a !important; font-weight: 700; }
-.p-5.rounded-xl p { color: #d4c5a0 !important; }
+/* Additional Fixes */
+#typewriter-text { color: #ffea8a !important; font-weight: 600; text-shadow: 0 0 8px rgba(255, 230, 128, 0.5); }
 footer a { color: #d4c5a0 !important; }
 footer a:hover { color: #ffea8a !important; }
-#typewriter-text { color: #ffea8a !important; font-weight: 600; text-shadow: 0 0 8px rgba(255, 230, 128, 0.5); }
