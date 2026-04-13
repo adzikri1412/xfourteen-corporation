@@ -12,12 +12,13 @@ const CONFIG = {
 
 // Data Master
 const PRODUCTS = [
-    { id: 1, name: 'XFOURTEEN FLUXO', cat: 'ANDROID', price: 35000, img: 'assets/banner-ios.jpg', features: ['Royal Performance', 'Golden Aim Assist', 'Crystal Screen', 'Elite PPI and Density', 'Crown Crosshairs', 'Touch of Kings'], description: 'For those beginning their royal journey.', bestseller: false },
-    { id: 2, name: 'XFOURTEEN EXONIC', cat: 'ANDROID', price: 70000, img: 'assets/banner-ios.jpg', features: ['Royal Performance', 'Golden Aim Assist', 'Crystal Screen', 'Elite PPI and Density', 'Crown Crosshairs', 'Touch of Kings'], description: 'For knights seeking glory.', bestseller: false },
-    { id: 3, name: 'XFOURTEEN PREMIUM', cat: 'ANDROID', price: 100000, img: 'assets/banner-ios.jpg', features: ['Royal Performance', 'Golden Aim Assist', 'Crystal Screen', 'Elite PPI and Density', 'Crown Crosshairs', 'Touch of Kings'], description: 'The crown jewel of Android optimization.', bestseller: true },
+    { id: 1, name: 'XFOURTEEN FLUXO', cat: 'ANDROID', price: 30000, img: 'assets/banner-ios.jpg', features: ['Royal Performance', 'Golden Aim Assist', 'Crystal Screen', 'Elite PPI and Density', 'Crown Crosshairs', 'Touch of Kings'], description: 'For those starting a new gameplay journey.', bestseller: false },
+    { id: 2, name: 'XFOURTEEN EXONIC', cat: 'ANDROID', price: 60000, img: 'assets/banner-ios.jpg', features: ['Royal Performance', 'Golden Aim Assist', 'Crystal Screen', 'Elite PPI and Density', 'Crown Crosshairs', 'Touch of Kings'], description: 'For knights who train for high performance.', bestseller: false },
+    { id: 3, name: 'XFOURTEEN PREMIUM', cat: 'ANDROID', price: 100000, img: 'assets/banner-ios.jpg', features: ['Royal Performance', 'Golden Aim Assist', 'Crystal Screen', 'Elite PPI and Density', 'Crown Crosshairs', 'Touch of Kings'], description: 'The best features of Android settings.', bestseller: true },
     { id: 4, name: 'Comming Soon iOS', cat: 'IOS', price: 10000000, img: 'assets/banner-ios.jpg', features: ['Comming Soon', 'Comming Soon', 'Comming Soon'], description: 'Premium iOS optimization for the elite Comming Soon.', bestseller: false },
-    { id: 5, name: 'XFOURTEEN BASIC', cat: 'PC', price: 30000, img: 'assets/banner-pc.jpg', features: ['Golden Mouse', 'Elite Optimization', 'Royal Emulator'], description: 'Basic royal settings for reliable performance.', bestseller: false },
-    { id: 6, name: 'XFOURTEEN V1', cat: 'PC', price: 60000, img: 'assets/banner-pc.jpg', features: ['Royal Settings', 'Elite Pack', 'Crown Aim'], description: 'The ultimate royal configuration.', bestseller: true }
+    { id: 5, name: 'XFOURTEEN BASIC', cat: 'PC', price: 15000, img: 'assets/banner-pc.jpg', features: ['Reg Mouse', 'Keybin/Mapping', 'Best Emulator'], description: 'Basic royal settings for reliable performance.', bestseller: false },
+    { id: 5, name: 'XFOURTEEN X-ONE', cat: 'PC', price: 35000, img: 'assets/banner-pc.jpg', features: ['Golden Mouse', 'Elite Optimization', 'Royal Emulator'], description: 'Basic royal settings for reliable performance.', bestseller: false },
+    { id: 6, name: 'XFOURTEEN X-TWO', cat: 'PC', price: 60000, img: 'assets/banner-pc.jpg', features: ['Royal Settings', 'Elite Pack', 'Crown Aim'], description: 'The ultimate royal configuration.', bestseller: true }
 ];
 
 const FEATURES = [
@@ -27,7 +28,7 @@ const FEATURES = [
 ];
 
 const TEAM = [
-    { name: 'XenzzSettingsx', role: 'CEO & Founder', img: 'assets/team-dev.jpg', socials: { whatsapp: '628895823757', instagram: 'https://instagram.com/dziyx14', tiktok: 'https://tiktok.com/xenzzsettings', discord: 'https://discord.gg/bekkmRDQXX' } }
+    { name: 'XenzzSettings', role: 'FOUNDER & DEVELOPER', img: 'assets/team-dev.jpg', socials: { whatsapp: '628895823757', instagram: 'https://instagram.com/dziyx14', tiktok: 'https://tiktok.com/xenzzsettings', discord: 'https://discord.gg/bekkmRDQXX' } }
 ];
 
 // ============================================
@@ -184,7 +185,7 @@ class ParticleSystem {
 }
 
 // ============================================
-// MOUSE TRAIL - GOLDEN
+// MOUSE TRAIL
 // ============================================
 class MouseTrail {
     constructor() {
@@ -238,7 +239,7 @@ class MouseTrail {
 }
 
 // ============================================
-// CURSOR GLOW - ROYAL
+// CURSOR GLOW
 // ============================================
 class CursorGlow {
     constructor() {
@@ -360,33 +361,38 @@ function addRippleEffect(element) {
 }
 
 // ============================================
+// DYNAMIC QRIS GENERATOR (STATIC TAPI NOMINAL DINAMIS)
+// ============================================
+function generateDynamicQRIS(amount) {
+    // Ini simulasi QRIS statis dengan nominal dinamis
+    // Dalam implementasi nyata, ini akan generate QRIS string dengan nominal tertentu
+    // Untuk demo, kita tetap pake gambar QRIS statis tapi dengan overlay text nominal
+    const qrisImg = document.getElementById('qris-img');
+    if (qrisImg) {
+        // Tetap pakai gambar QRIS statis dari assets
+        qrisImg.src = 'assets/qris.jpg';
+        qrisImg.alt = `QRIS - Rp ${amount.toLocaleString('id-ID')}`;
+        
+        // Tambahkan tooltip atau efek visual bahwa nominal sudah sesuai
+        qrisImg.title = `Total: Rp ${amount.toLocaleString('id-ID')}`;
+    }
+}
+
+// ============================================
 // DOM READY
 // ============================================
 window.addEventListener('DOMContentLoaded', () => {
-    // Initialize All Effects
     new CursorGlow();
     new GoldDustSystem();
     new ParticleSystem();
     new MouseTrail();
     
-    // Fix: Particle canvas z-index biar muncul di semua section
     const particleCanvas = document.getElementById('particleCanvas');
     if (particleCanvas) {
         particleCanvas.style.zIndex = '1';
         particleCanvas.style.pointerEvents = 'none';
     }
     
-    const goldDustCanvas = document.getElementById('goldDustCanvas');
-    if (goldDustCanvas) {
-        goldDustCanvas.style.zIndex = '0';
-    }
-    
-    const mouseTrailCanvas = document.getElementById('mouseTrailCanvas');
-    if (mouseTrailCanvas) {
-        mouseTrailCanvas.style.zIndex = '2';
-    }
-    
-    // Typewriter Effect
     const typewriterElement = document.getElementById('typewriter-text');
     if (typewriterElement) {
         new TypeWriter(typewriterElement, [
@@ -397,7 +403,6 @@ window.addEventListener('DOMContentLoaded', () => {
         ], 80, 2500);
     }
     
-    // Render Features
     const fc = document.getElementById('features-container');
     if (fc) {
         fc.innerHTML = FEATURES.map((f) => `
@@ -411,15 +416,13 @@ window.addEventListener('DOMContentLoaded', () => {
         `).join('');
     }
     
-    // Render Team
     const tg = document.getElementById('team-grid');
     if (tg) {
         tg.innerHTML = TEAM.map(t => `
-            <div class="stagger-item bg-gradient-to-br from-royal-dark to-royal-darker p-8 rounded-2xl border border-gold-500/20 text-center group hover:border-gold-500/50 transition-all duration-500 hover:-translate-y-2">
+            <div class="stagger-item">
                 <div class="relative mb-5">
-                    <div class="absolute -inset-4 bg-gradient-to-r from-gold-500/20 to-amber-500/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <div class="relative w-24 h-24 rounded-full border-2 border-gold-500/30 p-1 mx-auto overflow-hidden group-hover:border-gold-500 transition-all duration-500">
-                        <img src="${t.img}" class="w-full h-full object-cover rounded-full group-hover:scale-110 transition-all duration-500" onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=${t.name}'">
+                    <div class="w-24 h-24 rounded-full border-2 border-gold-500/30 p-1 mx-auto overflow-hidden">
+                        <img src="${t.img}" class="w-full h-full object-cover rounded-full" onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=${t.name}'">
                     </div>
                 </div>
                 <div class="flex items-center justify-center gap-2 mb-1">
@@ -441,11 +444,9 @@ window.addEventListener('DOMContentLoaded', () => {
     
     filterProducts('ANDROID');
     
-    // Add Ripple Effect to all buttons
     const buttons = document.querySelectorAll('.btn-royal-primary, .btn-royal-secondary, .tab-royal');
     buttons.forEach(btn => addRippleEffect(btn));
     
-    // Mobile Menu
     const menuBtn = document.getElementById('mobileMenuBtn');
     const mobileMenu = document.getElementById('mobileMenu');
     if (menuBtn && mobileMenu) {
@@ -473,7 +474,6 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // Scroll Animations
     const backToTop = document.getElementById('backToTop');
     const nav = document.getElementById('mainNav');
     
@@ -488,7 +488,6 @@ window.addEventListener('DOMContentLoaded', () => {
     
     if (backToTop) backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     
-    // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', (e) => {
             e.preventDefault();
@@ -497,7 +496,6 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-    // Loader
     const loader = document.getElementById('loader');
     if (loader) {
         let width = 0;
@@ -519,29 +517,8 @@ window.addEventListener('DOMContentLoaded', () => {
             }
         }, 150);
     }
-
-    // ============================================
-    // FIX: Dekoratif garis posisi di bawah judul
-    // ============================================
-    const allDecoLines = document.querySelectorAll('.w-20.h-0\\.5, .w-16.h-0\\.5');
-    allDecoLines.forEach(line => {
-        line.style.marginTop = '30px';
-        line.style.marginBottom = '0';
-        line.style.position = 'relative';
-        line.style.top = '0';
-    });
-
-    // Pastikan semua section title container punya margin bawah cukup
-    const allSections = document.querySelectorAll('#products, #about-us, #our-team, #contact-us');
-    allSections.forEach(section => {
-        const textCenterDiv = section.querySelector('.text-center.mb-16');
-        if (textCenterDiv) {
-            textCenterDiv.style.marginBottom = '50px';
-        }
-    });
 });
 
-// Filter Products - Update Bestseller Badge
 function filterProducts(cat) {
     const grid = document.getElementById('product-grid');
     if (!grid) return;
@@ -568,7 +545,7 @@ function filterProducts(cat) {
                 </ul>
             </div>
             <div class="mb-5">
-                <p class="text-gold-300/40 text-[10px] font-semibold uppercase tracking-wider mb-1">Royal Tribute</p>
+                <p class="text-gold-300/40 text-[10px] font-semibold uppercase tracking-wider mb-1">ROYAL TRIBUTE</p>
                 <p class="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-amber-500 font-bold text-2xl">Rp ${p.price.toLocaleString('id-ID')}</p>
             </div>
             <button onclick="openPayment(${p.id})" class="w-full btn-royal-primary justify-center py-3">
@@ -588,9 +565,12 @@ function openPayment(id) {
     const p = PRODUCTS.find(x => x.id === id);
     if (!p) return;
     currentOrder = { ...p, orderId: 'ROYAL' + Date.now().toString().slice(-8) };
-    document.getElementById('qris-img').src = 'assets/qris.jpg';
+    
+    // Generate QRIS dinamis sesuai nominal
+    generateDynamicQRIS(p.price);
+    
     document.getElementById('pay-product').innerText = p.name;
-    document.getElementById('pay-amount').innerText = "Rp " + p.price.toLocaleString('id-ID');
+    document.getElementById('pay-amount').innerHTML = "Rp " + p.price.toLocaleString('id-ID');
     const modal = document.getElementById('payment-modal');
     modal.classList.remove('hidden');
     modal.classList.add('flex');
