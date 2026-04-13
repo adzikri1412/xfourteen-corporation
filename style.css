@@ -1,6 +1,6 @@
 /* ============================================
    XFOURTEEN CORPORATION - GOLDEN ROYAL EDITION
-   COMPLETE CSS - JUDUL KELIATAN + TEAM RAPIH
+   FINAL CSS
    ============================================ */
 
 /* Import Fonts */
@@ -16,8 +16,6 @@
     --gold-light: #f5e56b;
     --gold-glow: rgba(212, 175, 55, 0.6);
     --amber-glow: rgba(184, 134, 11, 0.5);
-    --transition-royal: all 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-    --transition-elastic: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 * {
@@ -71,74 +69,122 @@ body {
 }
 
 /* ============================================
-   DECORATIVE LINE DI BAWAH JUDUL
+   SECTION TITLES
    ============================================ */
 
-section .w-20.h-0\.5,
-section .w-16.h-0\.5,
-#products .w-20.h-0\.5,
-#about-us .w-16.h-0\.5,
-#our-team .w-20.h-0\.5,
-#contact-us .w-20.h-0\.5 {
-    margin-top: 30px !important;
-    margin-bottom: 0 !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    position: relative !important;
-    top: auto !important;
-    background: linear-gradient(90deg, #fff5cc, #ffea8a, #ffdd77, #ffea8a, #fff5cc) !important;
-    box-shadow: 0 0 20px rgba(255, 234, 138, 1) !important;
-    height: 3px !important;
-    width: 80px !important;
+.section-title-gold {
+    font-family: 'Cormorant Garamond', serif !important;
+    font-size: 3rem !important;
+    font-weight: 800 !important;
+    text-align: center !important;
+    background: linear-gradient(135deg, #fff8e7 0%, #ffea8a 20%, #ffdd77 40%, #ffea8a 60%, #fff5cc 80%, #ffea8a 100%) !important;
+    background-size: 300% auto !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+    text-shadow: 0 0 30px rgba(255, 234, 138, 0.9), 0 0 15px rgba(212, 175, 55, 0.7) !important;
+    animation: title-gold-shine 3s ease-in-out infinite !important;
+    letter-spacing: 1px !important;
+    margin-bottom: 0.5rem !important;
 }
 
-section .text-center.mb-16 {
-    margin-bottom: 50px !important;
+.section-title-gold span {
+    background: linear-gradient(135deg, #ffffff 0%, #fff8e7 20%, #ffea8a 40%, #ffdd77 60%, #ffea8a 80%, #fff5cc 100%) !important;
+    background-size: 300% auto !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+    text-shadow: 0 0 35px rgba(255, 255, 255, 0.8), 0 0 20px rgba(212, 175, 55, 0.9) !important;
+    animation: title-gold-shine-span 2.5s ease-in-out infinite !important;
+}
+
+@keyframes title-gold-shine {
+    0% { background-position: 0% 50%; text-shadow: 0 0 20px rgba(255, 234, 138, 0.7); }
+    50% { background-position: 100% 50%; text-shadow: 0 0 50px rgba(255, 234, 138, 1), 0 0 25px rgba(212, 175, 55, 0.9); }
+    100% { background-position: 0% 50%; text-shadow: 0 0 20px rgba(255, 234, 138, 0.7); }
+}
+
+@keyframes title-gold-shine-span {
+    0% { background-position: 0% 50%; text-shadow: 0 0 25px rgba(255, 255, 255, 0.6); }
+    50% { background-position: 100% 50%; text-shadow: 0 0 55px rgba(255, 255, 255, 1), 0 0 25px rgba(212, 175, 55, 1); }
+    100% { background-position: 0% 50%; text-shadow: 0 0 25px rgba(255, 255, 255, 0.6); }
 }
 
 /* ============================================
-   SECTION TITLES - BIAR KELIATAN
+   PAYMENT TOTAL - FIXED! KELIHATAN TERANG
    ============================================ */
 
-section h2,
-#products h2,
-#about-us h2,
-#our-team h2,
-#contact-us h2 {
-    background: linear-gradient(135deg, #ffea8a 0%, #ffe680 25%, #ffdd77 50%, #ffe680 75%, #ffea8a 100%) !important;
+.payment-total-fixed {
+    background: linear-gradient(135deg, #ffea8a 0%, #ffdd77 40%, #ffea8a 60%, #fff5cc 100%) !important;
     background-size: 200% auto !important;
     -webkit-background-clip: text !important;
     background-clip: text !important;
     color: transparent !important;
-    text-shadow: 0 0 35px rgba(255, 234, 138, 1), 0 0 15px rgba(212, 175, 55, 0.9) !important;
-    animation: title-shine 2s ease-in-out infinite !important;
+    text-shadow: 0 0 20px rgba(255, 234, 138, 0.9), 0 0 10px rgba(212, 175, 55, 0.7) !important;
     font-weight: 900 !important;
-    text-align: center !important;
-    display: block !important;
-    opacity: 1 !important;
-    visibility: visible !important;
+    font-size: 1.8rem !important;
+    display: inline-block !important;
+    animation: payment-total-shine 1.5s ease-in-out infinite !important;
 }
 
-section h2 span {
-    background: linear-gradient(135deg, #fff5cc 0%, #fff0a0 30%, #ffea8a 50%, #fff0a0 70%, #fff5cc 100%) !important;
-    background-size: 200% auto !important;
+@keyframes payment-total-shine {
+    0% { background-position: 0% 50%; text-shadow: 0 0 15px rgba(255, 234, 138, 0.6); }
+    50% { background-position: 100% 50%; text-shadow: 0 0 30px rgba(255, 234, 138, 1); }
+    100% { background-position: 0% 50%; text-shadow: 0 0 15px rgba(255, 234, 138, 0.6); }
+}
+
+/* ============================================
+   ABOUT SECTION - FIXED XFOURTEEN VISIBILITY
+   ============================================ */
+
+.about-title-fixed {
+    font-family: 'Cormorant Garamond', serif !important;
+    font-size: 3rem !important;
+    font-weight: 800 !important;
+    color: white !important;
+    text-align: center !important;
+    margin-bottom: 0.5rem !important;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5) !important;
+}
+
+.about-xfourteen-fixed {
+    background: linear-gradient(135deg, #fff8e7 0%, #ffea8a 30%, #ffdd77 50%, #ffea8a 70%, #fff5cc 100%) !important;
+    background-size: 300% auto !important;
     -webkit-background-clip: text !important;
     background-clip: text !important;
     color: transparent !important;
-    text-shadow: 0 0 45px rgba(255, 245, 204, 1), 0 0 20px rgba(212, 175, 55, 1) !important;
-    animation: span-shine 1.8s ease-in-out infinite !important;
+    text-shadow: 0 0 30px rgba(255, 234, 138, 0.9), 0 0 15px rgba(212, 175, 55, 0.7) !important;
+    animation: about-xfourteen-shine 2s ease-in-out infinite !important;
+    font-weight: 800 !important;
 }
 
-@keyframes title-shine {
-    0% { background-position: 0% 50%; text-shadow: 0 0 25px rgba(255, 234, 138, 0.8); }
-    50% { background-position: 100% 50%; text-shadow: 0 0 55px rgba(255, 234, 138, 1); }
-    100% { background-position: 0% 50%; text-shadow: 0 0 25px rgba(255, 234, 138, 0.8); }
+@keyframes about-xfourteen-shine {
+    0% { background-position: 0% 50%; text-shadow: 0 0 15px rgba(255, 234, 138, 0.6); }
+    50% { background-position: 100% 50%; text-shadow: 0 0 40px rgba(255, 234, 138, 1), 0 0 20px rgba(212, 175, 55, 0.9); }
+    100% { background-position: 0% 50%; text-shadow: 0 0 15px rgba(255, 234, 138, 0.6); }
 }
 
-@keyframes span-shine {
-    0% { background-position: 0% 50%; text-shadow: 0 0 30px rgba(255, 245, 204, 0.8); }
-    50% { background-position: 100% 50%; text-shadow: 0 0 70px rgba(255, 245, 204, 1); }
-    100% { background-position: 0% 50%; text-shadow: 0 0 30px rgba(255, 245, 204, 0.8); }
+@media (max-width: 768px) {
+    .about-title-fixed {
+        font-size: 2.2rem !important;
+    }
+}
+
+/* Royal Divider */
+.royal-divider {
+    width: 80px !important;
+    height: 3px !important;
+    background: linear-gradient(90deg, #fff5cc, #ffea8a, #ffdd77, #ffea8a, #fff5cc) !important;
+    margin: 20px auto 0 auto !important;
+    border-radius: 3px !important;
+    box-shadow: 0 0 20px rgba(255, 234, 138, 0.8) !important;
+}
+
+/* Responsive section titles */
+@media (max-width: 768px) {
+    .section-title-gold {
+        font-size: 2.2rem !important;
+    }
 }
 
 /* ============================================
@@ -256,11 +302,6 @@ h1 .text-white {
 @keyframes bounce-gold {
     0%, 100% { transform: translateX(-50%) translateY(0); }
     50% { transform: translateX(-50%) translateY(-10px); }
-}
-
-@keyframes shimmer-gold {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
 }
 
 @keyframes glow-pulse {
@@ -460,6 +501,39 @@ nav .font-montserrat {
 }
 
 /* ============================================
+   HARGA PRODUK
+   ============================================ */
+
+#product-grid .mb-5 .text-transparent.bg-clip-text,
+#product-grid .font-bold.text-2xl,
+#product-grid p.text-transparent.bg-clip-text,
+#product-grid [class*="text-2xl"] {
+    background: linear-gradient(135deg, #ffea8a 0%, #ffdd77 50%, #ffea8a 100%) !important;
+    background-size: 200% auto !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+    text-shadow: 0 0 15px rgba(255, 234, 138, 0.8) !important;
+    font-weight: 900 !important;
+    font-size: 1.8rem !important;
+    display: inline-block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+#product-grid .text-gold-300\/40.text-\[10px\] {
+    color: #ffea8a !important;
+    opacity: 1 !important;
+    font-weight: 600 !important;
+    letter-spacing: 2px !important;
+}
+
+#product-grid .mb-5 {
+    margin-bottom: 1rem !important;
+    text-align: center !important;
+}
+
+/* ============================================
    FEATURE CARDS
    ============================================ */
 #features-container {
@@ -516,7 +590,7 @@ nav .font-montserrat {
 }
 
 /* ============================================
-   TEAM CARDS - SESUAI FOTO
+   TEAM CARDS
    ============================================ */
 #team-grid {
     display: grid;
@@ -539,11 +613,6 @@ nav .font-montserrat {
     box-shadow: 0 15px 30px -10px rgba(212, 175, 55, 0.2);
 }
 
-/* Avatar */
-#team-grid > div .relative.mb-5 {
-    margin-bottom: 1.25rem;
-}
-
 #team-grid > div .w-24.h-24 {
     width: 90px;
     height: 90px;
@@ -564,12 +633,6 @@ nav .font-montserrat {
     object-fit: cover;
 }
 
-/* Hilangkan efek blur berlebih */
-#team-grid > div .absolute.-inset-4 {
-    display: none;
-}
-
-/* Nama & Verified Badge */
 #team-grid > div .flex.items-center.justify-center.gap-2 {
     display: flex;
     align-items: center;
@@ -585,7 +648,6 @@ nav .font-montserrat {
     font-family: 'Cormorant Garamond', serif;
 }
 
-/* Verified Badge */
 #team-grid > div .w-5.h-5 {
     width: 20px;
     height: 20px;
@@ -602,7 +664,6 @@ nav .font-montserrat {
     object-fit: contain;
 }
 
-/* Role */
 #team-grid > div .text-gold-500.text-\[10px\] {
     font-size: 11px;
     letter-spacing: 2px;
@@ -612,7 +673,6 @@ nav .font-montserrat {
     text-transform: uppercase;
 }
 
-/* Social Icons */
 #team-grid > div .flex.gap-3.justify-center {
     display: flex;
     gap: 0.75rem;
@@ -772,12 +832,15 @@ nav .font-montserrat {
     .contact-icon-royal { width: 44px; height: 44px; }
     h1 .text-transparent.bg-clip-text { font-size: 2.5rem; }
     h1 .text-white { font-size: 1.5rem; }
-    section h2 { font-size: 1.8rem !important; }
+    .section-title-gold { font-size: 2rem !important; }
+    .about-title-fixed { font-size: 1.8rem !important; }
+    .payment-total-fixed { font-size: 1.4rem !important; }
     #team-grid { grid-template-columns: 1fr; }
-    #team-grid > div .w-24.h-24 { width: 80px; height: 80px; }
-    #team-grid > div h3 { font-size: 1.15rem; }
     #features-container { grid-template-columns: 1fr; }
     #product-grid { grid-template-columns: 1fr; }
+    #product-grid .mb-5 p:last-child {
+        font-size: 1.4rem !important;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
