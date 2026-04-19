@@ -10,6 +10,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Library QR Code Generator -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-royal-dark text-gold-100 overflow-x-hidden">
@@ -300,37 +302,56 @@
         </div>
     </section>
 
-    <!-- Payment Modal - FIXED: Total visible + QRIS dinamis sesuai harga -->
+    <!-- ========== PAYMENT MODAL - QRIS STATIS + MOBILE FRIENDLY ========== -->
     <div id="payment-modal" class="fixed inset-0 z-[110] bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
-        <div class="bg-gradient-to-br from-royal-darker to-royal-dark w-full max-w-md rounded-2xl border border-gold-500/30 p-8 text-center relative shadow-2xl transform scale-95 transition-all duration-300">
-            <button onclick="closePayment()" class="absolute top-4 right-4 text-gold-500/50 hover:text-gold-500 transition-all">
+        <div class="bg-gradient-to-br from-royal-darker to-royal-dark w-full max-w-md rounded-2xl border border-gold-500/30 p-5 md:p-6 text-center relative shadow-2xl transform scale-95 transition-all duration-300">
+            <button onclick="closePayment()" class="absolute top-4 right-4 text-gold-500/50 hover:text-gold-500 transition-all z-20">
                 <i class="fas fa-times text-xl"></i>
             </button>
-            <div class="flex justify-center mb-4">
-                <div class="relative w-16 h-16 bg-gradient-to-br from-gold-600 to-amber-700 rounded-lg flex items-center justify-center shadow-lg overflow-hidden">
+            
+            <div class="flex justify-center mb-3">
+                <div class="relative w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-gold-600 to-amber-700 rounded-lg flex items-center justify-center shadow-lg overflow-hidden">
                     <img src="assets/icx14.png" class="w-full h-full object-cover" alt="logo">
                 </div>
             </div>
-            <h3 class="text-2xl font-bold mb-1 text-white font-cormorant">XFOURTEEN PAYMENT</h3>
-            <p class="text-gold-400/60 text-xs mb-6 uppercase tracking-wider">SCAN QR CODE & PRESENT PROOF</p>
             
-            <!-- QRIS Dinamis sesuai harga -->
-            <div class="bg-white p-4 rounded-xl inline-block mb-6 shadow-xl">
-                <img id="qris-img" src="assets/qris.jpg" alt="QRIS" class="w-40 h-40 object-contain" onerror="this.src='https://placehold.co/160x160/d4af37/1a1a1a?text=QRIS'">
-            </div>
+            <h3 class="text-xl md:text-2xl font-bold mb-1 text-white font-cormorant">ROYAL TREASURY</h3>
+            <p class="text-gold-400/60 text-[10px] md:text-xs mb-4 uppercase tracking-wider">COMPLETE YOUR TRIBUTE</p>
             
-            <div class="bg-royal-dark/50 p-4 rounded-xl mb-6 text-left space-y-2 border border-gold-500/20">
+            <!-- Info Pesanan -->
+            <div class="bg-royal-dark/50 p-3 md:p-4 rounded-xl mb-4 text-left space-y-2 border border-gold-500/20">
                 <div class="flex justify-between text-xs text-gold-400/70 font-medium">
-                    <span>Item:</span><span id="pay-product" class="text-gold-500 font-semibold"></span>
+                    <span>ROYAL ITEM:</span><span id="pay-product" class="text-gold-500 font-semibold"></span>
                 </div>
-                <div class="flex justify-between font-bold text-xl">
-                    <span class="text-gold-400">Total:</span>
+                <div class="flex justify-between font-bold text-lg md:text-xl">
+                    <span class="text-gold-400">TRIBUTE:</span>
                     <span id="pay-amount" class="payment-total-fixed"></span>
                 </div>
             </div>
+
+            <!-- Tab Navigasi Metode Bayar - Mobile Friendly -->
+            <div class="flex gap-1 mb-4 border-b border-gold-500/30 pb-2 overflow-x-auto no-scrollbar">
+                <button onclick="switchPaymentTab('qris')" id="tab-qris" class="payment-tab active flex-1 py-2 px-1 text-[10px] md:text-xs font-bold uppercase tracking-wider rounded-t-lg transition-all whitespace-nowrap">
+                    <i class="fas fa-qrcode mr-1"></i> QRIS
+                </button>
+                <button onclick="switchPaymentTab('dana')" id="tab-dana" class="payment-tab flex-1 py-2 px-1 text-[10px] md:text-xs font-bold uppercase tracking-wider rounded-t-lg transition-all whitespace-nowrap">
+                    <i class="fas fa-mobile-alt mr-1"></i> DANA
+                </button>
+                <button onclick="switchPaymentTab('gopay')" id="tab-gopay" class="payment-tab flex-1 py-2 px-1 text-[10px] md:text-xs font-bold uppercase tracking-wider rounded-t-lg transition-all whitespace-nowrap">
+                    <i class="fas fa-wallet mr-1"></i> GOPAY
+                </button>
+                <button onclick="switchPaymentTab('seabank')" id="tab-seabank" class="payment-tab flex-1 py-2 px-1 text-[10px] md:text-xs font-bold uppercase tracking-wider rounded-t-lg transition-all whitespace-nowrap">
+                    <i class="fas fa-water mr-1"></i> SEABANK
+                </button>
+            </div>
+
+            <!-- Konten Dinamis per Metode Bayar -->
+            <div id="payment-content" class="min-h-[260px] md:min-h-[280px] flex flex-col justify-center">
+                <!-- Konten akan diganti via JavaScript -->
+            </div>
             
-            <button onclick="confirmToWA()" class="w-full bg-gradient-to-r from-gold-600 to-amber-600 hover:from-gold-500 hover:to-amber-500 text-royal-dark py-3 rounded-xl font-bold flex items-center justify-center gap-3 transition-all duration-300 shadow-lg shadow-gold-500/30">
-                <i class="fab fa-whatsapp text-xl"></i> Send Evidence to the Throne
+            <button onclick="confirmToWA()" class="w-full bg-gradient-to-r from-gold-600 to-amber-600 hover:from-gold-500 hover:to-amber-500 text-royal-dark py-3 rounded-xl font-bold flex items-center justify-center gap-2 md:gap-3 transition-all duration-300 shadow-lg shadow-gold-500/30 mt-4 text-sm md:text-base">
+                <i class="fab fa-whatsapp text-lg md:text-xl"></i> SEND PROOF TO THRONE
             </button>
         </div>
     </div>
