@@ -1,6 +1,6 @@
 /**
  * XFOURTEEN CORPORATION - GOLDEN ROYAL EDITION
- * FULL SCRIPT.JS - FIXED BUKTI TRANSFER
+ * FULL SCRIPT.JS - PAKAI BASE64 (NO UPLOAD)
  */
 
 // Configuration
@@ -25,7 +25,7 @@ const PRODUCTS = [
     { id: 6, name: 'XIV - BASIC', cat: 'PC', price: 25000, img: 'assets/banner-pc.jpg', features: ['Reg Mouse', 'Keybin/Mapping', 'Best Emulator'], description: 'Basic royal settings for reliable performance.', bestseller: false },
     { id: 7, name: 'XIV V-ONE', cat: 'PC', price: 50000, img: 'assets/banner-pc.jpg', features: ['Golden Mouse', 'Elite Optimization', 'Royal Emulator'], description: 'Basic royal settings for reliable performance.', bestseller: false },
     { id: 8, name: 'XIV V-TWO', cat: 'PC', price: 75000, img: 'assets/banner-pc.jpg', features: ['Royal Settings', 'Elite Pack', 'Crown Aim'], description: 'The ultimate royal configuration.', bestseller: false },
-    { id: 9, name: 'XIV X-CHEATS', cat: 'PC', price: 100000, img: 'assets/banner-pc.jpg', features: ['AimBot Head/Neck', 'NoRecoil', 'AimFov'], description: 'The ultimate royal configuration.', bestseller: false }
+    { id: 9, name: 'XIV X-CHEATS', cat: 'PC', price: 109000, img: 'assets/banner-pc.jpg', features: ['AimBot Head/Neck', 'NoRecoil', 'AimFov'], description: 'The ultimate royal configuration.', bestseller: false }
 ];
 
 const FEATURES = [
@@ -41,7 +41,8 @@ const TEAM = [
 // Global variables
 let currentOrder = null;
 let currentPaymentMethod = 'qris';
-let currentFileBukti = null; // Menyimpan URL bukti yang sudah diupload
+let currentBuktiBase64 = null; // Menyimpan base64 bukti
+let currentBuktiNama = null;
 
 // ============================================
 // GOLD DUST PARTICLE SYSTEM
@@ -470,62 +471,7 @@ function switchPaymentTab(method) {
 }
 
 // ============================================
-// UPLOAD BUKTI KE TELEGRAPH (STABIL)
-// ============================================
-async function uploadBukti(file) {
-    // Validasi file
-    if (!file) {
-        showToast("❌ Tidak ada file yang dipilih!");
-        return null;
-    }
-    
-    // Cek ukuran file (max 5MB)
-    if (file.size > 5 * 1024 * 1024) {
-        showToast("❌ Ukuran file terlalu besar! Max 5MB");
-        return null;
-    }
-    
-    // Cek tipe file
-    if (!file.type.startsWith('image/')) {
-        showToast("❌ Hanya file gambar yang diperbolehkan!");
-        return null;
-    }
-    
-    showToast("📸 Mengupload bukti transfer...");
-    
-    const formData = new FormData();
-    formData.append('file', file);
-    
-    try {
-        // Pake Telegra.ph (gratis, stabil, no API key)
-        const response = await fetch('https://telegra.ph/upload', {
-            method: 'POST',
-            body: formData
-        });
-        
-        if (!response.ok) {
-            throw new Error('Upload failed');
-        }
-        
-        const result = await response.json();
-        
-        if (result && result[0] && result[0].src) {
-            const url = 'https://telegra.ph' + result[0].src;
-            showToast("✅ Bukti berhasil diupload!");
-            return url;
-        } else {
-            throw new Error('Invalid response');
-        }
-        
-    } catch (error) {
-        console.log("Upload error:", error);
-        showToast("⚠️ Upload gagal, kirim manual via WhatsApp");
-        return null;
-    }
-}
-
-// ============================================
-// ATTACH BUKTI - FIXED (Pastikan URL tersimpan)
+// ATTACH BUKTI - PAKAI BASE64 (NO UPLOAD)
 // ============================================
 function attachBukti() {
     // Cek apakah ada pesanan
@@ -543,27 +489,32 @@ function attachBukti() {
         fileInput.style.display = 'none';
         document.body.appendChild(fileInput);
         
-        fileInput.addEventListener('change', async (e) => {
+        fileInput.addEventListener('change', (e) => {
             const file = e.target.files[0];
             if (!file) return;
             
-            // Upload ke Telegraph
-            const url = await uploadBukti(file);
+            // Cek ukuran (max 2MB untuk base64 biar ga kepanjangan)
+            if (file.size > 2 * 1024 * 1024) {
+                showToast("❌ Ukuran file terlalu besar! Max 2MB untuk bukti transfer");
+                return;
+            }
             
-            console.log("Hasil upload URL:", url);
+            showToast("📸 Memproses bukti transfer...");
             
-            if (url && url !== null) {
-                currentFileBukti = url; // Simpan URL
-                console.log("currentFileBukti sekarang:", currentFileBukti);
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                const base64 = evt.target.result;
+                currentBuktiBase64 = base64;
+                currentBuktiNama = file.name;
                 
-                // Simpan ke localStorage juga biar aman
-                localStorage.setItem('buktiTransfer', url);
+                console.log("Base64 length:", base64.length);
+                console.log("Bukti berhasil disimpan sebagai base64");
                 
-                // Tampilkan indikator dengan URL pendek
+                // Tampilkan indikator
                 const indicator = document.getElementById('buktiIndicator');
                 if (indicator) {
                     indicator.classList.remove('hidden');
-                    indicator.innerHTML = '<span class="text-xs text-green-500"><i class="fas fa-check-circle"></i> Bukti sudah dilampirkan ✓</span>';
+                    indicator.innerHTML = '<span class="text-xs text-green-500"><i class="fas fa-check-circle"></i> Bukti sudah dilampirkan (' + file.name + ')</span>';
                 }
                 
                 // Ganti teks tombol upload
@@ -574,11 +525,22 @@ function attachBukti() {
                     btnAttach.style.borderColor = '#10b981';
                 }
                 
+                // Preview gambar kecil (opsional)
+                const preview = document.getElementById('buktiPreview');
+                if (!preview) {
+                    const previewDiv = document.createElement('div');
+                    previewDiv.id = 'buktiPreview';
+                    previewDiv.className = 'mt-2';
+                    previewDiv.innerHTML = `<img src="${base64}" class="w-full h-24 object-cover rounded-lg border border-gold-500/30">`;
+                    indicator.parentElement.insertBefore(previewDiv, indicator.nextSibling);
+                } else {
+                    preview.innerHTML = `<img src="${base64}" class="w-full h-24 object-cover rounded-lg border border-gold-500/30">`;
+                    preview.classList.remove('hidden');
+                }
+                
                 showToast('✅ Bukti transfer berhasil dilampirkan!');
-            } else {
-                currentFileBukti = null;
-                showToast('❌ Gagal upload bukti, kirim manual via WA nanti');
-            }
+            };
+            reader.readAsDataURL(file);
         });
     }
     
@@ -586,9 +548,9 @@ function attachBukti() {
 }
 
 // ============================================
-// KIRIM INVOICE KE WEBHOOK PEMBELIAN
+// KIRIM INVOICE KE WEBHOOK PEMBELIAN (DENGAN BASE64)
 // ============================================
-async function sendInvoiceToDiscord(order, method, buktiUrl = null) {
+async function sendInvoiceToDiscord(order, method, buktiBase64 = null, buktiNama = null) {
     let methodText = '';
     let methodEmoji = '';
     
@@ -620,9 +582,9 @@ async function sendInvoiceToDiscord(order, method, buktiUrl = null) {
         timestamp: new Date().toISOString()
     };
     
-    if (buktiUrl && buktiUrl !== null) {
-        embed.image = { url: buktiUrl };
-        embed.fields.push({ name: "📸 PROOF OF TRANSFER", value: `[KLIK LIHAT BUKTI](${buktiUrl})`, inline: false });
+    if (buktiBase64) {
+        // Untuk Discord, kita kasih link (tapi base64 ga bisa langsung, jadi kasih info aja)
+        embed.fields.push({ name: "📸 BUKTI TRANSFER", value: `Bukti transfer sudah dilampirkan di pesan WhatsApp (${buktiNama || 'gambar'})`, inline: false });
     }
     
     try {
@@ -633,7 +595,7 @@ async function sendInvoiceToDiscord(order, method, buktiUrl = null) {
                 username: "XFOURTEEN ROYAL BANK",
                 avatar_url: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
                 embeds: [embed],
-                content: "@Owner **ADA PEMBELIAN BARU!** 👑"
+                content: "@everyone **ADA PEMBELIAN BARU!** 👑"
             })
         });
         console.log("✅ Invoice sent to PURCHASE webhook");
@@ -645,7 +607,7 @@ async function sendInvoiceToDiscord(order, method, buktiUrl = null) {
 }
 
 // ============================================
-// CONFIRM TO WA - DENGAN BUKTI YANG UDAH DIUPLOAD (FIXED)
+// CONFIRM TO WA - PAKAI BASE64 LANGSUNG
 // ============================================
 async function confirmToWA() {
     if (!currentOrder) {
@@ -655,22 +617,14 @@ async function confirmToWA() {
     
     showToast("📤 Mengirim konfirmasi...");
     
-    // Ambil URL bukti dari variable global atau localStorage
-    let buktiUrl = currentFileBukti;
+    // Ambil base64 bukti
+    let buktiBase64 = currentBuktiBase64;
+    let buktiNama = currentBuktiNama;
     
-    // Kalo currentFileBukti kosong, coba ambil dari localStorage
-    if (!buktiUrl) {
-        buktiUrl = localStorage.getItem('buktiTransfer');
-        if (buktiUrl) {
-            currentFileBukti = buktiUrl;
-            console.log("Ambil bukti dari localStorage:", buktiUrl);
-        }
-    }
+    console.log("Bukti Base64 ada?", buktiBase64 ? "YA (panjang: " + buktiBase64.length + ")" : "TIDAK");
     
-    console.log("Bukti URL yang akan dikirim:", buktiUrl);
-    
-    // Kirim ke Discord
-    await sendInvoiceToDiscord(currentOrder, currentPaymentMethod, buktiUrl);
+    // Kirim ke Discord (tanpa base64 karena kepanjangan)
+    await sendInvoiceToDiscord(currentOrder, currentPaymentMethod, buktiBase64, buktiNama);
     
     // Kirim ke WhatsApp
     let methodText = '';
@@ -690,33 +644,43 @@ async function confirmToWA() {
     message += `💰 Tribute: Rp ${currentOrder.price.toLocaleString('id-ID')}\n`;
     message += `📱 Payment Method: ${methodText}\n\n`;
     
-    // KALAU ADA BUKTI, TAMBAHKAN KE PESAN
-    if (buktiUrl && buktiUrl !== null && buktiUrl !== '') {
-        message += `📸 *PROOF OF TRANSFER:*\n${buktiUrl}\n\n`;
-        showToast("✅ Bukti transfer sudah termasuk dalam pesan WA!");
+    // KALAU ADA BUKTI, TAMBAHKAN KE PESAN (BASE64)
+    if (buktiBase64 && buktiBase64 !== null) {
+        message += `📸 *BUKTI TRANSFER:*\n${buktiBase64}\n\n`;
+        message += `📎 *Nama File:* ${buktiNama || 'bukti_transfer.jpg'}\n\n`;
+        showToast("✅ Bukti transfer (Base64) sudah termasuk dalam pesan!");
     } else {
         message += `📸 *BUKTI TRANSFER:*\nTidak ada bukti yang dilampirkan\n\n`;
-        showToast("⚠️ Tidak ada bukti transfer, kirim manual nanti");
+        showToast("⚠️ Tidak ada bukti transfer!");
     }
     
     message += `Hail to the King! I have completed the royal tribute. Please process my order.`;
     
+    // Cek panjang pesan (WhatsApp ada batasan)
+    if (message.length > 65000) {
+        showToast("⚠️ Ukuran bukti terlalu besar! Kompres gambarnya.");
+        return;
+    }
+    
     // Buka WhatsApp
     window.open(`https://api.whatsapp.com/send?phone=${CONFIG.wa}&text=${encodeURIComponent(message)}`);
     
-    // Reset setelah kirim (tapi jangan hapus localStorage dulu)
-    currentFileBukti = null;
+    // Reset setelah kirim
+    currentBuktiBase64 = null;
+    currentBuktiNama = null;
+    
     const indicator = document.getElementById('buktiIndicator');
     if (indicator) indicator.classList.add('hidden');
+    
+    const preview = document.getElementById('buktiPreview');
+    if (preview) preview.classList.add('hidden');
+    
     const btnAttach = document.getElementById('btnAttachBukti');
     if (btnAttach) {
         btnAttach.innerHTML = '<i class="fas fa-camera mr-2"></i> LAMPIRKAN BUKTI TRANSFER';
         btnAttach.style.background = '';
         btnAttach.style.borderColor = '';
     }
-    
-    // Hapus localStorage setelah terkirim (opsional)
-    // localStorage.removeItem('buktiTransfer');
     
     setTimeout(() => {
         closePayment();
@@ -725,7 +689,7 @@ async function confirmToWA() {
 }
 
 // ============================================
-// OPEN PAYMENT MODAL - FIXED FOR MOBILE
+// OPEN PAYMENT MODAL
 // ============================================
 function openPayment(id) {
     const p = PRODUCTS.find(x => x.id === id);
@@ -735,7 +699,8 @@ function openPayment(id) {
     }
     
     currentOrder = { ...p, orderId: 'ROYAL' + Date.now().toString().slice(-8) };
-    currentFileBukti = null;
+    currentBuktiBase64 = null;
+    currentBuktiNama = null;
     
     const payProduct = document.getElementById('pay-product');
     const payAmount = document.getElementById('pay-amount');
@@ -765,15 +730,16 @@ function openPayment(id) {
     // Reset indikator bukti
     const indicator = document.getElementById('buktiIndicator');
     if (indicator) indicator.classList.add('hidden');
+    
+    const preview = document.getElementById('buktiPreview');
+    if (preview) preview.classList.add('hidden');
+    
     const btnAttach = document.getElementById('btnAttachBukti');
     if (btnAttach) {
         btnAttach.innerHTML = '<i class="fas fa-camera mr-2"></i> LAMPIRKAN BUKTI TRANSFER';
         btnAttach.style.background = '';
         btnAttach.style.borderColor = '';
     }
-    
-    // Hapus localStorage bukti lama
-    localStorage.removeItem('buktiTransfer');
     
     // FORCE SHOW MODAL
     modal.classList.remove('hidden');
@@ -801,7 +767,6 @@ function closePayment() {
     modal.style.display = 'none';
     document.body.style.overflow = 'auto';
     document.body.style.position = 'relative';
-    // Jangan hapus currentFileBukti biar bisa dipake lagi
 }
 
 // ============================================
