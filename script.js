@@ -626,7 +626,7 @@ async function sendInvoiceToDiscord(order, method, buktiUrl = null) {
                 username: "XFOURTEEN ROYAL BANK",
                 avatar_url: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
                 embeds: [embed],
-                content: "@everyone **ADA PEMBELIAN BARU!** 👑"
+                content: "@Owner **ADA PEMBELIAN BARU!** 👑"
             })
         });
         console.log("✅ Invoice sent to PURCHASE webhook");
