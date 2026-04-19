@@ -1,6 +1,6 @@
 /**
  * XFOURTEEN CORPORATION - GOLDEN ROYAL EDITION
- * FULL SCRIPT.JS - PAKAI BASE64 (NO UPLOAD)
+ * FULL SCRIPT.JS - PAKAI IMGBB UPLOAD + FIX REDIRECT WA
  */
 
 // Configuration
@@ -8,6 +8,7 @@ const CONFIG = {
     wa: "628895823757",
     webhookSupport: "https://discord.com/api/webhooks/1462093167619997953/YJoFvj1-gmkeDDT49akVa-gVTGxJr1SMLWni91-Pdtt0FiaZKxat7u4d8n-KaFI4lTit",
     webhookPurchase: "https://discord.com/api/webhooks/1475714335698583665/gxT7VHmtRVBRo-y-teUpdAK-MVewgopxdUnzTq8XL4QozIXNXgoUb2PkMXOrCiJ5_ObD",
+    imgbbApiKey: "bd950527de06c220d16c04e0f75658a8", // GANTI DENGAN API KEY DARI IMGBB.COM
     paymentNumbers: {
         dana: "08895823757",
         gopay: "MAINTANCE",
@@ -25,7 +26,7 @@ const PRODUCTS = [
     { id: 6, name: 'XIV - BASIC', cat: 'PC', price: 25000, img: 'assets/banner-pc.jpg', features: ['Reg Mouse', 'Keybin/Mapping', 'Best Emulator'], description: 'Basic royal settings for reliable performance.', bestseller: false },
     { id: 7, name: 'XIV V-ONE', cat: 'PC', price: 50000, img: 'assets/banner-pc.jpg', features: ['Golden Mouse', 'Elite Optimization', 'Royal Emulator'], description: 'Basic royal settings for reliable performance.', bestseller: false },
     { id: 8, name: 'XIV V-TWO', cat: 'PC', price: 75000, img: 'assets/banner-pc.jpg', features: ['Royal Settings', 'Elite Pack', 'Crown Aim'], description: 'The ultimate royal configuration.', bestseller: false },
-    { id: 9, name: 'XIV X-CHEATS', cat: 'PC', price: 109000, img: 'assets/banner-pc.jpg', features: ['AimBot Head/Neck', 'NoRecoil', 'AimFov'], description: 'The ultimate royal configuration.', bestseller: false }
+    { id: 9, name: 'XIV X-CHEATS', cat: 'PC', price: 100000, img: 'assets/banner-pc.jpg', features: ['AimBot Head/Neck', 'NoRecoil', 'AimFov'], description: 'The ultimate royal configuration.', bestseller: false }
 ];
 
 const FEATURES = [
@@ -41,7 +42,7 @@ const TEAM = [
 // Global variables
 let currentOrder = null;
 let currentPaymentMethod = 'qris';
-let currentBuktiBase64 = null; // Menyimpan base64 bukti
+let currentBuktiUrl = null;
 let currentBuktiNama = null;
 
 // ============================================
@@ -471,10 +472,59 @@ function switchPaymentTab(method) {
 }
 
 // ============================================
-// ATTACH BUKTI - PAKAI BASE64 (NO UPLOAD)
+// UPLOAD BUKTI KE IMGBB
+// ============================================
+async function uploadBukti(file) {
+    if (!file) {
+        showToast("❌ Tidak ada file yang dipilih!");
+        return null;
+    }
+    
+    if (file.size > 5 * 1024 * 1024) {
+        showToast("❌ Ukuran file terlalu besar! Max 5MB");
+        return null;
+    }
+    
+    if (!file.type.startsWith('image/')) {
+        showToast("❌ Hanya file gambar yang diperbolehkan!");
+        return null;
+    }
+    
+    showToast("📸 Mengupload PROOF...");
+    
+    const formData = new FormData();
+    formData.append('image', file);
+    
+    try {
+        const response = await fetch(`https://api.imgbb.com/1/upload?key=${CONFIG.imgbbApiKey}`, {
+            method: 'POST',
+            body: formData
+        });
+        
+        if (!response.ok) {
+            throw new Error('Upload failed');
+        }
+        
+        const result = await response.json();
+        
+        if (result && result.data && result.data.url) {
+            showToast("✅ Bukti berhasil diupload!");
+            return result.data.url;
+        } else {
+            throw new Error('Invalid response');
+        }
+        
+    } catch (error) {
+        console.log("Upload error:", error);
+        showToast("⚠️ Upload gagal, kirim manual via WhatsApp");
+        return null;
+    }
+}
+
+// ============================================
+// ATTACH BUKTI
 // ============================================
 function attachBukti() {
-    // Cek apakah ada pesanan
     if (!currentOrder) {
         showToast("❌ Pilih produk terlebih dahulu!");
         return;
@@ -489,35 +539,24 @@ function attachBukti() {
         fileInput.style.display = 'none';
         document.body.appendChild(fileInput);
         
-        fileInput.addEventListener('change', (e) => {
+        fileInput.addEventListener('change', async (e) => {
             const file = e.target.files[0];
             if (!file) return;
             
-            // Cek ukuran (max 2MB untuk base64 biar ga kepanjangan)
-            if (file.size > 2 * 1024 * 1024) {
-                showToast("❌ Ukuran file terlalu besar! Max 2MB untuk bukti transfer");
-                return;
-            }
+            const url = await uploadBukti(file);
             
-            showToast("📸 Memproses bukti transfer...");
+            console.log("Hasil upload URL:", url);
             
-            const reader = new FileReader();
-            reader.onload = function(evt) {
-                const base64 = evt.target.result;
-                currentBuktiBase64 = base64;
+            if (url) {
+                currentBuktiUrl = url;
                 currentBuktiNama = file.name;
                 
-                console.log("Base64 length:", base64.length);
-                console.log("Bukti berhasil disimpan sebagai base64");
-                
-                // Tampilkan indikator
                 const indicator = document.getElementById('buktiIndicator');
                 if (indicator) {
                     indicator.classList.remove('hidden');
                     indicator.innerHTML = '<span class="text-xs text-green-500"><i class="fas fa-check-circle"></i> Bukti sudah dilampirkan (' + file.name + ')</span>';
                 }
                 
-                // Ganti teks tombol upload
                 const btnAttach = document.getElementById('btnAttachBukti');
                 if (btnAttach) {
                     btnAttach.innerHTML = '<i class="fas fa-check-circle mr-2"></i> BUKTI TERLAMPIR ✓';
@@ -525,22 +564,23 @@ function attachBukti() {
                     btnAttach.style.borderColor = '#10b981';
                 }
                 
-                // Preview gambar kecil (opsional)
                 const preview = document.getElementById('buktiPreview');
                 if (!preview) {
                     const previewDiv = document.createElement('div');
                     previewDiv.id = 'buktiPreview';
                     previewDiv.className = 'mt-2';
-                    previewDiv.innerHTML = `<img src="${base64}" class="w-full h-24 object-cover rounded-lg border border-gold-500/30">`;
+                    previewDiv.innerHTML = `<img src="${url}" class="w-full h-24 object-cover rounded-lg border border-gold-500/30">`;
                     indicator.parentElement.insertBefore(previewDiv, indicator.nextSibling);
                 } else {
-                    preview.innerHTML = `<img src="${base64}" class="w-full h-24 object-cover rounded-lg border border-gold-500/30">`;
+                    preview.innerHTML = `<img src="${url}" class="w-full h-24 object-cover rounded-lg border border-gold-500/30">`;
                     preview.classList.remove('hidden');
                 }
                 
-                showToast('✅ Bukti transfer berhasil dilampirkan!');
-            };
-            reader.readAsDataURL(file);
+                showToast('✅ PROOF berhasil dilampirkan!');
+            } else {
+                currentBuktiUrl = null;
+                showToast('❌ Gagal upload bukti, kirim manual via WA nanti');
+            }
         });
     }
     
@@ -548,9 +588,9 @@ function attachBukti() {
 }
 
 // ============================================
-// KIRIM INVOICE KE WEBHOOK PEMBELIAN (DENGAN BASE64)
+// KIRIM INVOICE KE WEBHOOK PEMBELIAN
 // ============================================
-async function sendInvoiceToDiscord(order, method, buktiBase64 = null, buktiNama = null) {
+async function sendInvoiceToDiscord(order, method, buktiUrl = null, buktiNama = null) {
     let methodText = '';
     let methodEmoji = '';
     
@@ -582,9 +622,9 @@ async function sendInvoiceToDiscord(order, method, buktiBase64 = null, buktiNama
         timestamp: new Date().toISOString()
     };
     
-    if (buktiBase64) {
-        // Untuk Discord, kita kasih link (tapi base64 ga bisa langsung, jadi kasih info aja)
-        embed.fields.push({ name: "📸 BUKTI TRANSFER", value: `Bukti transfer sudah dilampirkan di pesan WhatsApp (${buktiNama || 'gambar'})`, inline: false });
+    if (buktiUrl) {
+        embed.image = { url: buktiUrl };
+        embed.fields.push({ name: "📸 PROOF", value: `[KLIK LIHAT BUKTI](${buktiUrl})`, inline: false });
     }
     
     try {
@@ -595,7 +635,7 @@ async function sendInvoiceToDiscord(order, method, buktiBase64 = null, buktiNama
                 username: "XFOURTEEN ROYAL BANK",
                 avatar_url: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
                 embeds: [embed],
-                content: "@everyone **ADA PEMBELIAN BARU!** 👑"
+                content: "@Owner **ADA PEMBELIAN BARU!** 👑"
             })
         });
         console.log("✅ Invoice sent to PURCHASE webhook");
@@ -607,7 +647,7 @@ async function sendInvoiceToDiscord(order, method, buktiBase64 = null, buktiNama
 }
 
 // ============================================
-// CONFIRM TO WA - PAKAI BASE64 LANGSUNG
+// CONFIRM TO WA - FIXED REDIRECT
 // ============================================
 async function confirmToWA() {
     if (!currentOrder) {
@@ -617,16 +657,13 @@ async function confirmToWA() {
     
     showToast("📤 Mengirim konfirmasi...");
     
-    // Ambil base64 bukti
-    let buktiBase64 = currentBuktiBase64;
+    let buktiUrl = currentBuktiUrl;
     let buktiNama = currentBuktiNama;
     
-    console.log("Bukti Base64 ada?", buktiBase64 ? "YA (panjang: " + buktiBase64.length + ")" : "TIDAK");
+    console.log("Bukti URL:", buktiUrl);
     
-    // Kirim ke Discord (tanpa base64 karena kepanjangan)
-    await sendInvoiceToDiscord(currentOrder, currentPaymentMethod, buktiBase64, buktiNama);
+    await sendInvoiceToDiscord(currentOrder, currentPaymentMethod, buktiUrl, buktiNama);
     
-    // Kirim ke WhatsApp
     let methodText = '';
     if (currentPaymentMethod === 'qris') {
         methodText = 'QRIS (Scan Barcode)';
@@ -644,29 +681,21 @@ async function confirmToWA() {
     message += `💰 Tribute: Rp ${currentOrder.price.toLocaleString('id-ID')}\n`;
     message += `📱 Payment Method: ${methodText}\n\n`;
     
-    // KALAU ADA BUKTI, TAMBAHKAN KE PESAN (BASE64)
-    if (buktiBase64 && buktiBase64 !== null) {
-        message += `📸 *BUKTI TRANSFER:*\n${buktiBase64}\n\n`;
-        message += `📎 *Nama File:* ${buktiNama || 'bukti_transfer.jpg'}\n\n`;
-        showToast("✅ Bukti transfer (Base64) sudah termasuk dalam pesan!");
+    if (buktiUrl && buktiUrl !== null) {
+        message += `📸 *PROOF:*\n${buktiUrl}\n\n`;
+        showToast("✅ Link PROOF sudah termasuk dalam pesan!");
     } else {
-        message += `📸 *BUKTI TRANSFER:*\nTidak ada bukti yang dilampirkan\n\n`;
-        showToast("⚠️ Tidak ada bukti transfer!");
+        message += `📸 *PROOF:*\nTidak ada bukti yang dilampirkan\n\n`;
+        showToast("⚠️ Tidak ada PROOF!");
     }
     
     message += `Hail to the King! I have completed the royal tribute. Please process my order.`;
     
-    // Cek panjang pesan (WhatsApp ada batasan)
-    if (message.length > 65000) {
-        showToast("⚠️ Ukuran bukti terlalu besar! Kompres gambarnya.");
-        return;
-    }
+    // FIX: Pake window.location.href biar pasti redirect
+    const waUrl = `https://wa.me/${CONFIG.wa}?text=${encodeURIComponent(message)}`;
+    window.open(waUrl, '_blank');
     
-    // Buka WhatsApp
-    window.open(`https://api.whatsapp.com/send?phone=${CONFIG.wa}&text=${encodeURIComponent(message)}`);
-    
-    // Reset setelah kirim
-    currentBuktiBase64 = null;
+    currentBuktiUrl = null;
     currentBuktiNama = null;
     
     const indicator = document.getElementById('buktiIndicator');
@@ -677,14 +706,14 @@ async function confirmToWA() {
     
     const btnAttach = document.getElementById('btnAttachBukti');
     if (btnAttach) {
-        btnAttach.innerHTML = '<i class="fas fa-camera mr-2"></i> LAMPIRKAN BUKTI TRANSFER';
+        btnAttach.innerHTML = '<i class="fas fa-camera mr-2"></i> LAMPIRKAN PROOF';
         btnAttach.style.background = '';
         btnAttach.style.borderColor = '';
     }
     
     setTimeout(() => {
         closePayment();
-        showToast("✅ Konfirmasi terkirim! Tunggu proses dari Royal Team.");
+        showToast("✅ Konfirmasi terkirim! Tunggu proses dari XIV Team.");
     }, 1500);
 }
 
@@ -699,7 +728,7 @@ function openPayment(id) {
     }
     
     currentOrder = { ...p, orderId: 'ROYAL' + Date.now().toString().slice(-8) };
-    currentBuktiBase64 = null;
+    currentBuktiUrl = null;
     currentBuktiNama = null;
     
     const payProduct = document.getElementById('pay-product');
@@ -727,7 +756,6 @@ function openPayment(id) {
         return;
     }
     
-    // Reset indikator bukti
     const indicator = document.getElementById('buktiIndicator');
     if (indicator) indicator.classList.add('hidden');
     
@@ -736,12 +764,11 @@ function openPayment(id) {
     
     const btnAttach = document.getElementById('btnAttachBukti');
     if (btnAttach) {
-        btnAttach.innerHTML = '<i class="fas fa-camera mr-2"></i> LAMPIRKAN BUKTI TRANSFER';
+        btnAttach.innerHTML = '<i class="fas fa-camera mr-2"></i> LAMPIRKAN PROOF';
         btnAttach.style.background = '';
         btnAttach.style.borderColor = '';
     }
     
-    // FORCE SHOW MODAL
     modal.classList.remove('hidden');
     modal.classList.add('flex');
     modal.style.display = 'flex';
