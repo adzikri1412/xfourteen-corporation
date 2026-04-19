@@ -25,7 +25,7 @@ const PRODUCTS = [
     { id: 6, name: 'XIV - BASIC', cat: 'PC', price: 25000, img: 'assets/banner-pc.jpg', features: ['Reg Mouse', 'Keybin/Mapping', 'Best Emulator'], description: 'Basic royal settings for reliable performance.', bestseller: false },
     { id: 7, name: 'XIV V-ONE', cat: 'PC', price: 50000, img: 'assets/banner-pc.jpg', features: ['Golden Mouse', 'Elite Optimization', 'Royal Emulator'], description: 'Basic royal settings for reliable performance.', bestseller: false },
     { id: 8, name: 'XIV V-TWO', cat: 'PC', price: 75000, img: 'assets/banner-pc.jpg', features: ['Royal Settings', 'Elite Pack', 'Crown Aim'], description: 'The ultimate royal configuration.', bestseller: false },
-    { id: 9, name: 'XIV X-CHEATS', cat: 'PC', price: 10000, img: 'assets/banner-pc.jpg', features: ['AimBot Head/Neck', 'NoRecoil', 'AimFov'], description: 'The ultimate royal configuration.', bestseller: false }
+    { id: 9, name: 'XIV X-CHEATS', cat: 'PC', price: 100000, img: 'assets/banner-pc.jpg', features: ['AimBot Head/Neck', 'NoRecoil', 'AimFov'], description: 'The ultimate royal configuration.', bestseller: false }
 ];
 
 const FEATURES = [
