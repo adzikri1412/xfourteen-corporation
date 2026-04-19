@@ -1,6 +1,6 @@
 /**
  * XFOURTEEN CORPORATION - GOLDEN ROYAL EDITION
- * FULL SCRIPT.JS - MOBILE FIX + UPLOAD BUKTI + 2 WEBHOOKS
+ * FULL SCRIPT.JS - MOBILE FIX + UPLOAD BUKTI TELEGRAPH + 2 WEBHOOKS
  */
 
 // Configuration
@@ -41,7 +41,7 @@ const TEAM = [
 // Global variables
 let currentOrder = null;
 let currentPaymentMethod = 'qris';
-let currentFileBukti = null;
+let currentFileBukti = null; // Menyimpan URL bukti yang sudah diupload
 
 // ============================================
 // GOLD DUST PARTICLE SYSTEM
@@ -470,43 +470,76 @@ function switchPaymentTab(method) {
 }
 
 // ============================================
-// UPLOAD BUKTI KE CATBOX
+// UPLOAD BUKTI KE TELEGRAPH (STABIL)
 // ============================================
 async function uploadBukti(file) {
+    // Validasi file
+    if (!file) {
+        showToast("❌ Tidak ada file yang dipilih!");
+        return null;
+    }
+    
+    // Cek ukuran file (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+        showToast("❌ Ukuran file terlalu besar! Max 5MB");
+        return null;
+    }
+    
+    // Cek tipe file
+    if (!file.type.startsWith('image/')) {
+        showToast("❌ Hanya file gambar yang diperbolehkan!");
+        return null;
+    }
+    
+    showToast("📸 Mengupload bukti transfer...");
+    
     const formData = new FormData();
-    formData.append('image', file);
+    formData.append('file', file);
     
     try {
-        showToast('📸 Mengupload bukti...');
-        const response = await fetch('https://catbox.moe/user/api.php', {
+        // Pake Telegra.ph (gratis, stabil, no API key)
+        const response = await fetch('https://telegra.ph/upload', {
             method: 'POST',
             body: formData
         });
         
-        const url = await response.text();
-        if (url.startsWith('http')) {
-            showToast('✅ Bukti terupload!');
-            return url;
-        } else {
+        if (!response.ok) {
             throw new Error('Upload failed');
         }
-    } catch(e) {
-        console.log('Upload gagal:', e);
-        showToast('❌ Upload gagal, kirim manual via WA');
+        
+        const result = await response.json();
+        
+        if (result && result[0] && result[0].src) {
+            const url = 'https://telegra.ph' + result[0].src;
+            showToast("✅ Bukti berhasil diupload!");
+            return url;
+        } else {
+            throw new Error('Invalid response');
+        }
+        
+    } catch (error) {
+        console.log("Upload error:", error);
+        showToast("⚠️ Upload gagal, kirim manual via WhatsApp");
         return null;
     }
 }
 
 // ============================================
-// ATTACH BUKTI
+// ATTACH BUKTI - FIXED
 // ============================================
 function attachBukti() {
+    // Cek apakah ada pesanan
+    if (!currentOrder) {
+        showToast("❌ Pilih produk terlebih dahulu!");
+        return;
+    }
+    
     let fileInput = document.getElementById('hidden-file-input');
     if (!fileInput) {
         fileInput = document.createElement('input');
         fileInput.type = 'file';
         fileInput.id = 'hidden-file-input';
-        fileInput.accept = 'image/*';
+        fileInput.accept = 'image/jpeg, image/png, image/jpg, image/webp';
         fileInput.style.display = 'none';
         document.body.appendChild(fileInput);
         
@@ -514,23 +547,31 @@ function attachBukti() {
             const file = e.target.files[0];
             if (!file) return;
             
-            currentFileBukti = file;
+            // Langsung upload
+            const url = await uploadBukti(file);
             
-            // Tampilkan indikator
-            const indicator = document.getElementById('buktiIndicator');
-            if (indicator) {
-                indicator.classList.remove('hidden');
+            if (url) {
+                currentFileBukti = url; // Simpan URL, bukan file
+                
+                // Tampilkan indikator
+                const indicator = document.getElementById('buktiIndicator');
+                if (indicator) {
+                    indicator.classList.remove('hidden');
+                }
+                
+                // Ganti teks tombol upload
+                const btnAttach = document.getElementById('btnAttachBukti');
+                if (btnAttach) {
+                    btnAttach.innerHTML = '<i class="fas fa-check-circle mr-2"></i> BUKTI TERLAMPIR';
+                    btnAttach.style.background = 'rgba(16, 185, 129, 0.2)';
+                    btnAttach.style.borderColor = '#10b981';
+                }
+                
+                showToast('✅ Bukti transfer berhasil dilampirkan!');
+            } else {
+                currentFileBukti = null;
+                showToast('❌ Gagal upload bukti, kirim manual via WA nanti');
             }
-            
-            // Ganti teks tombol upload
-            const btnAttach = document.getElementById('btnAttachBukti');
-            if (btnAttach) {
-                btnAttach.innerHTML = '<i class="fas fa-check-circle mr-2"></i> BUKTI TERLAMPIR';
-                btnAttach.style.background = 'rgba(16, 185, 129, 0.2)';
-                btnAttach.style.borderColor = '#10b981';
-            }
-            
-            showToast('✅ Bukti transfer sudah dilampirkan!');
         });
     }
     
@@ -597,37 +638,7 @@ async function sendInvoiceToDiscord(order, method, buktiUrl = null) {
 }
 
 // ============================================
-// KIRIM KE WHATSAPP
-// ============================================
-function sendToWhatsAppWithProof(order, method, buktiText = '') {
-    let methodText = '';
-    if (method === 'qris') {
-        methodText = 'QRIS (Scan Barcode)';
-    } else if (method === 'dana') {
-        methodText = `DANA (${CONFIG.paymentNumbers.dana})`;
-    } else if (method === 'gopay') {
-        methodText = `GoPay (${CONFIG.paymentNumbers.gopay})`;
-    } else if (method === 'seabank') {
-        methodText = `SeaBank (${CONFIG.paymentNumbers.seabank})`;
-    }
-    
-    let message = `*ROYAL CONFIRMATION - XFOURTEEN CORPORATION*\n\n`;
-    message += `👑 Order ID: #${order.orderId}\n`;
-    message += `🏆 Royal Item: ${order.name}\n`;
-    message += `💰 Tribute: Rp ${order.price.toLocaleString('id-ID')}\n`;
-    message += `📱 Payment Method: ${methodText}\n\n`;
-    
-    if (buktiText) {
-        message += `📸 *BUKTI TRANSFER:*\n${buktiText}\n\n`;
-    }
-    
-    message += `Hail to the King! I have completed the royal tribute. Please process my order.`;
-    
-    window.open(`https://api.whatsapp.com/send?phone=${CONFIG.wa}&text=${encodeURIComponent(message)}`);
-}
-
-// ============================================
-// CONFIRM TO WA
+// CONFIRM TO WA - DENGAN BUKTI YANG UDAH DIUPLOAD
 // ============================================
 async function confirmToWA() {
     if (!currentOrder) {
@@ -637,28 +648,51 @@ async function confirmToWA() {
     
     showToast("📤 Mengirim konfirmasi...");
     
-    let buktiUrl = null;
+    let buktiUrl = currentFileBukti; // Langsung pake URL yang udah diupload
     
-    if (currentFileBukti) {
-        buktiUrl = await uploadBukti(currentFileBukti);
-    }
-    
+    // Kirim ke Discord
     await sendInvoiceToDiscord(currentOrder, currentPaymentMethod, buktiUrl);
     
-    let buktiText = '';
-    if (buktiUrl) {
-        buktiText = buktiUrl;
-    } else if (currentFileBukti) {
-        buktiText = 'Bukti transfer sudah dilampirkan (upload gagal, kirim manual via chat)';
+    // Kirim ke WhatsApp
+    let methodText = '';
+    if (currentPaymentMethod === 'qris') {
+        methodText = 'QRIS (Scan Barcode)';
+    } else if (currentPaymentMethod === 'dana') {
+        methodText = `DANA (${CONFIG.paymentNumbers.dana})`;
+    } else if (currentPaymentMethod === 'gopay') {
+        methodText = `GoPay (${CONFIG.paymentNumbers.gopay})`;
+    } else if (currentPaymentMethod === 'seabank') {
+        methodText = `SeaBank (${CONFIG.paymentNumbers.seabank})`;
     }
     
-    sendToWhatsAppWithProof(currentOrder, currentPaymentMethod, buktiText);
+    let message = `*ROYAL CONFIRMATION - XFOURTEEN CORPORATION*\n\n`;
+    message += `👑 Order ID: #${currentOrder.orderId}\n`;
+    message += `🏆 Royal Item: ${currentOrder.name}\n`;
+    message += `💰 Tribute: Rp ${currentOrder.price.toLocaleString('id-ID')}\n`;
+    message += `📱 Payment Method: ${methodText}\n\n`;
     
+    if (buktiUrl) {
+        message += `📸 *BUKTI TRANSFER:*\n${buktiUrl}\n\n`;
+    }
+    
+    message += `Hail to the King! I have completed the royal tribute. Please process my order.`;
+    
+    window.open(`https://api.whatsapp.com/send?phone=${CONFIG.wa}&text=${encodeURIComponent(message)}`);
+    
+    // Reset
     currentFileBukti = null;
+    const indicator = document.getElementById('buktiIndicator');
+    if (indicator) indicator.classList.add('hidden');
+    const btnAttach = document.getElementById('btnAttachBukti');
+    if (btnAttach) {
+        btnAttach.innerHTML = '<i class="fas fa-camera mr-2"></i> LAMPIRKAN BUKTI TRANSFER';
+        btnAttach.style.background = '';
+        btnAttach.style.borderColor = '';
+    }
     
     setTimeout(() => {
         closePayment();
-        showToast("✅ Konfirmasi terkirim! Tunggu proses dari XIV Team.");
+        showToast("✅ Konfirmasi terkirim! Tunggu proses dari Royal Team.");
     }, 1500);
 }
 
@@ -700,6 +734,16 @@ function openPayment(id) {
         return;
     }
     
+    // Reset indikator bukti
+    const indicator = document.getElementById('buktiIndicator');
+    if (indicator) indicator.classList.add('hidden');
+    const btnAttach = document.getElementById('btnAttachBukti');
+    if (btnAttach) {
+        btnAttach.innerHTML = '<i class="fas fa-camera mr-2"></i> LAMPIRKAN BUKTI TRANSFER';
+        btnAttach.style.background = '';
+        btnAttach.style.borderColor = '';
+    }
+    
     // FORCE SHOW MODAL
     modal.classList.remove('hidden');
     modal.classList.add('flex');
@@ -709,25 +753,6 @@ function openPayment(id) {
     document.body.style.overflow = 'hidden';
     document.body.style.position = 'fixed';
     document.body.style.width = '100%';
-    
-    // Tambah tombol attach bukti (cek dulu biar ga dobel)
-    const existingBtn = document.querySelector('#payment-modal .btn-royal-primary');
-    if (existingBtn && !existingBtn.getAttribute('data-modified')) {
-        const wrapper = existingBtn.parentElement;
-        const existingAttach = wrapper.querySelector('.btn-attach');
-        if (!existingAttach) {
-            const newBtn = document.createElement('button');
-            newBtn.innerHTML = '<i class="fas fa-camera mr-2"></i> LAMPIRKAN BUKTI';
-            newBtn.className = 'btn-attach w-full bg-royal-dark border border-gold-500/50 hover:border-gold-500 text-gold-400 py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all duration-300 mt-3 text-sm';
-            newBtn.onclick = (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                attachBukti();
-            };
-            wrapper.appendChild(newBtn);
-        }
-        existingBtn.setAttribute('data-modified', 'true');
-    }
     
     showToast(`✅ ${p.name} added to Royal Treasury`);
     console.log("Modal opened");
