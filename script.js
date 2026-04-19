@@ -1,13 +1,14 @@
 /**
  * XFOURTEEN CORPORATION - GOLDEN ROYAL EDITION
  * FULL SCRIPT.JS - MOBILE FIX + UPLOAD BUKTI TELEGRAPH + 2 WEBHOOKS
+ * FIXED: BUKTI TRANSFER MASUK KE WHATSAPP
  */
 
 // Configuration
 const CONFIG = {
     wa: "628895823757",
     webhookSupport: "https://discord.com/api/webhooks/1462093167619997953/YJoFvj1-gmkeDDT49akVa-gVTGxJr1SMLWni91-Pdtt0FiaZKxat7u4d8n-KaFI4lTit",
-    webhookPurchase: "https://discord.com/api/webhooks/1475714335698583665/gxT7VHmtRVBRo-y-teUpdAK-MVewgopxdUnzTq8XL4QozIXNXgoUb2PkMXOrCiJ5_ObD",
+    webhookPurchase: "https://discord.com/api/webhooks/1462093167619997953/YJoFvj1-gmkeDDT49akVa-gVTGxJr1SMLWni91-Pdtt0FiaZKxat7u4d8n-KaFI4lTit",
     paymentNumbers: {
         dana: "08895823757",
         gopay: "MAINTANCE",
@@ -525,7 +526,7 @@ async function uploadBukti(file) {
 }
 
 // ============================================
-// ATTACH BUKTI - FIXED
+// ATTACH BUKTI - FIXED (Pastikan URL tersimpan)
 // ============================================
 function attachBukti() {
     // Cek apakah ada pesanan
@@ -547,22 +548,26 @@ function attachBukti() {
             const file = e.target.files[0];
             if (!file) return;
             
-            // Langsung upload
+            // Upload ke Telegraph
             const url = await uploadBukti(file);
             
-            if (url) {
-                currentFileBukti = url; // Simpan URL, bukan file
+            console.log("Hasil upload URL:", url);
+            
+            if (url && url !== null) {
+                currentFileBukti = url; // Simpan URL
+                console.log("currentFileBukti sekarang:", currentFileBukti);
                 
-                // Tampilkan indikator
+                // Tampilkan indikator dengan URL pendek
                 const indicator = document.getElementById('buktiIndicator');
                 if (indicator) {
                     indicator.classList.remove('hidden');
+                    indicator.innerHTML = '<span class="text-xs text-green-500"><i class="fas fa-check-circle"></i> Bukti sudah dilampirkan ✓</span>';
                 }
                 
                 // Ganti teks tombol upload
                 const btnAttach = document.getElementById('btnAttachBukti');
                 if (btnAttach) {
-                    btnAttach.innerHTML = '<i class="fas fa-check-circle mr-2"></i> BUKTI TERLAMPIR';
+                    btnAttach.innerHTML = '<i class="fas fa-check-circle mr-2"></i> BUKTI TERLAMPIR ✓';
                     btnAttach.style.background = 'rgba(16, 185, 129, 0.2)';
                     btnAttach.style.borderColor = '#10b981';
                 }
@@ -613,7 +618,7 @@ async function sendInvoiceToDiscord(order, method, buktiUrl = null) {
         timestamp: new Date().toISOString()
     };
     
-    if (buktiUrl) {
+    if (buktiUrl && buktiUrl !== null) {
         embed.image = { url: buktiUrl };
         embed.fields.push({ name: "📸 BUKTI TRANSFER", value: `[KLIK LIHAT BUKTI](${buktiUrl})`, inline: false });
     }
@@ -638,7 +643,7 @@ async function sendInvoiceToDiscord(order, method, buktiUrl = null) {
 }
 
 // ============================================
-// CONFIRM TO WA - DENGAN BUKTI YANG UDAH DIUPLOAD
+// CONFIRM TO WA - DENGAN BUKTI YANG UDAH DIUPLOAD (FIXED)
 // ============================================
 async function confirmToWA() {
     if (!currentOrder) {
@@ -648,7 +653,10 @@ async function confirmToWA() {
     
     showToast("📤 Mengirim konfirmasi...");
     
-    let buktiUrl = currentFileBukti; // Langsung pake URL yang udah diupload
+    // Ambil URL bukti dari variable global
+    let buktiUrl = currentFileBukti;
+    
+    console.log("Bukti URL yang akan dikirim:", buktiUrl);
     
     // Kirim ke Discord
     await sendInvoiceToDiscord(currentOrder, currentPaymentMethod, buktiUrl);
@@ -671,15 +679,20 @@ async function confirmToWA() {
     message += `💰 Tribute: Rp ${currentOrder.price.toLocaleString('id-ID')}\n`;
     message += `📱 Payment Method: ${methodText}\n\n`;
     
-    if (buktiUrl) {
+    // KALAU ADA BUKTI, TAMBAHKAN KE PESAN
+    if (buktiUrl && buktiUrl !== null) {
         message += `📸 *BUKTI TRANSFER:*\n${buktiUrl}\n\n`;
+        showToast("✅ Bukti transfer sudah termasuk dalam pesan!");
+    } else {
+        message += `📸 *BUKTI TRANSFER:*\nTidak ada bukti yang dilampirkan\n\n`;
     }
     
     message += `Hail to the King! I have completed the royal tribute. Please process my order.`;
     
+    // Buka WhatsApp
     window.open(`https://api.whatsapp.com/send?phone=${CONFIG.wa}&text=${encodeURIComponent(message)}`);
     
-    // Reset
+    // Reset setelah kirim
     currentFileBukti = null;
     const indicator = document.getElementById('buktiIndicator');
     if (indicator) indicator.classList.add('hidden');
