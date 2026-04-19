@@ -1,13 +1,20 @@
 /**
  * XFOURTEEN CORPORATION - GOLDEN ROYAL EDITION
  * Premium Royal Animations & Effects
+ * Final Version - QRIS Statis + Mobile Friendly E-Wallet Pages
+ * DENGAN 2 WEBHOOK TERPISAH (SUPPORT + PEMBELIAN)
  */
 
 // Configuration
 const CONFIG = {
-    qris: "assets/qris.jpg",
     wa: "628895823757",
-    webhook: "https://discord.com/api/webhooks/1462093167619997953/YJoFvj1-gmkeDDT49akVa-gVTGxJr1SMLWni91-Pdtt0FiaZKxat7u4d8n-KaFI4lTit"
+    webhookSupport: "https://discord.com/api/webhooks/1462093167619997953/YJoFvj1-gmkeDDT49akVa-gVTGxJr1SMLWni91-Pdtt0FiaZKxat7u4d8n-KaFI4lTit",
+    webhookPurchase: "https://discord.com/api/webhooks/1475714335698583665/gxT7VHmtRVBRo-y-teUpdAK-MVewgopxdUnzTq8XL4QozIXNXgoUb2PkMXOrCiJ5_ObD",
+    paymentNumbers: {
+        dana: "08895823757",
+        gopay: "MAINTANCE",
+        seabank: "901255902220"
+    }
 };
 
 // Data Master
@@ -363,20 +370,450 @@ function addRippleEffect(element) {
 }
 
 // ============================================
-// DYNAMIC QRIS GENERATOR (STATIC TAPI NOMINAL DINAMIS)
+// GENERATE QRIS STATIS
 // ============================================
-function generateDynamicQRIS(amount) {
-    // Ini simulasi QRIS statis dengan nominal dinamis
-    // Dalam implementasi nyata, ini akan generate QRIS string dengan nominal tertentu
-    // Untuk demo, kita tetap pake gambar QRIS statis tapi dengan overlay text nominal
-    const qrisImg = document.getElementById('qris-img');
-    if (qrisImg) {
-        // Tetap pakai gambar QRIS statis dari assets
-        qrisImg.src = 'assets/qris.jpg';
-        qrisImg.alt = `QRIS - Rp ${amount.toLocaleString('id-ID')}`;
+function generateStaticQRIS(amount, productName) {
+    const container = document.getElementById('payment-content');
+    
+    container.innerHTML = `
+        <div class="text-center">
+            <p class="text-gold-400/70 text-[10px] md:text-xs uppercase tracking-wider mb-3">Scan QRIS with your e-wallet</p>
+            <div id="qris-static-container" class="inline-block">
+                <img src="assets/qris.jpg" alt="QRIS" class="mx-auto" onerror="this.src='https://placehold.co/200x200/d4af37/1a1a1a?text=QRIS'">
+            </div>
+            <p class="text-gold-300/50 text-[10px] mt-3">Nominal: <span class="text-gold-400 font-bold">Rp ${amount.toLocaleString('id-ID')}</span></p>
+            <p class="text-gold-400/40 text-[8px] mt-2">*Screenshot & send as proof to WhatsApp</p>
+        </div>
+    `;
+}
+
+// ============================================
+// GENERATE HALAMAN E-WALLET
+// ============================================
+function generateEWalletPage(type, amount) {
+    const container = document.getElementById('payment-content');
+    const numbers = CONFIG.paymentNumbers;
+    
+    let logoClass = '';
+    let logoIcon = '';
+    let title = '';
+    let number = '';
+    
+    if (type === 'dana') {
+        logoClass = 'dana';
+        logoIcon = 'fas fa-mobile-alt';
+        title = 'DANA';
+        number = numbers.dana;
+    } else if (type === 'gopay') {
+        logoClass = 'gopay';
+        logoIcon = 'fas fa-wallet';
+        title = 'GoPay';
+        number = numbers.gopay;
+    } else if (type === 'seabank') {
+        logoClass = 'seabank';
+        logoIcon = 'fas fa-water';
+        title = 'SeaBank';
+        number = numbers.seabank;
+    }
+    
+    container.innerHTML = `
+        <div class="text-center">
+            <div class="payment-logo ${logoClass}">
+                <i class="${logoIcon}"></i>
+            </div>
+            <p class="text-white font-bold text-base md:text-lg mb-1">${title}</p>
+            <p class="text-gold-400/70 text-[9px] md:text-[10px] uppercase tracking-wider mb-3">Transfer to this number</p>
+            
+            <div class="account-number-box">
+                <div class="number">${number}</div>
+                <button onclick="copyToClipboard('${number}')" class="btn-copy">
+                    <i class="far fa-copy"></i> Salin Nomor
+                </button>
+            </div>
+            
+            <div class="tribute-info-box">
+                <p class="uppercase tracking-wider">Total Tribute</p>
+                <p class="text-gold-400 font-bold">Rp ${amount.toLocaleString('id-ID')}</p>
+            </div>
+            
+            <p class="text-gold-400/40 text-[7px] md:text-[8px] mt-3">*Transfer sesuai nominal & konfirmasi via WhatsApp</p>
+        </div>
+    `;
+}
+
+// ============================================
+// COPY TO CLIPBOARD
+// ============================================
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+        showToast('✅ Nomor berhasil disalin!');
+    }).catch(() => {
+        showToast('❌ Gagal menyalin nomor');
+    });
+}
+
+// ============================================
+// SWITCH PAYMENT TAB
+// ============================================
+let currentPaymentMethod = 'qris';
+
+function switchPaymentTab(method) {
+    currentPaymentMethod = method;
+    
+    document.querySelectorAll('.payment-tab').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    document.getElementById(`tab-${method}`).classList.add('active');
+    
+    if (!currentOrder) return;
+    
+    if (method === 'qris') {
+        generateStaticQRIS(currentOrder.price, currentOrder.name);
+    } else {
+        generateEWalletPage(method, currentOrder.price);
+    }
+}
+
+// ============================================
+// KIRIM INVOICE KE WEBHOOK PEMBELIAN (TERPISAH)
+// ============================================
+async function sendInvoiceToDiscord(order, method, buktiUrl = null) {
+    let methodText = '';
+    let methodEmoji = '';
+    
+    if (method === 'qris') {
+        methodText = 'QRIS (Scan QRIS)';
+        methodEmoji = '📱';
+    } else if (method === 'dana') {
+        methodText = 'DANA';
+        methodEmoji = '💜';
+    } else if (method === 'gopay') {
+        methodText = 'GoPay';
+        methodEmoji = '💚';
+    } else if (method === 'seabank') {
+        methodText = 'SeaBank';
+        methodEmoji = '💙';
+    }
+    
+    const embed = {
+        title: "💰 NEW ROYAL PURCHASE! 💰",
+        color: 0xd4af37,
+        fields: [
+            { name: "👑 ORDER ID", value: `\`${order.orderId}\``, inline: false },
+            { name: "🏆 ROYAL ITEM", value: `${order.name}`, inline: true },
+            { name: "💎 TRIBUTE", value: `Rp ${order.price.toLocaleString('id-ID')}`, inline: true },
+            { name: `${methodEmoji} PAYMENT METHOD`, value: methodText, inline: true },
+            { name: "⏰ TIME", value: `<t:${Math.floor(Date.now()/1000)}:F>`, inline: false }
+        ],
+        footer: { text: "XFOURTEEN CORPORATION • ROYAL TREASURY • WAIT FOR PROOF" },
+        timestamp: new Date().toISOString()
+    };
+    
+    // Kalau ada bukti transfer (URL gambar), tambahin image field
+    if (buktiUrl) {
+        embed.image = { url: buktiUrl };
+        embed.fields.push({ name: "📸 BUKTI TRANSFER", value: "[KLIK LIHAT BUKTI](" + buktiUrl + ")", inline: false });
+    }
+    
+    try {
+        await fetch(CONFIG.webhookPurchase, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                username: "XFOURTEEN ROYAL BANK",
+                avatar_url: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
+                embeds: [embed],
+                content: "@everyone **ADA PEMBELIAN BARU!** 👑"
+            })
+        });
+        console.log("✅ Invoice sent to PURCHASE webhook");
+        return true;
+    } catch(e) {
+        console.log("❌ Failed to send invoice:", e);
+        return false;
+    }
+}
+
+// ============================================
+// KIRIM PESAN KE WHATSAPP DENGAN BUKTI
+// ============================================
+function sendToWhatsAppWithProof(order, method, buktiText = '') {
+    let methodText = '';
+    if (method === 'qris') {
+        methodText = 'QRIS (Scan Barcode)';
+    } else if (method === 'dana') {
+        methodText = `DANA (${CONFIG.paymentNumbers.dana})`;
+    } else if (method === 'gopay') {
+        methodText = `GoPay (${CONFIG.paymentNumbers.gopay})`;
+    } else if (method === 'seabank') {
+        methodText = `SeaBank (${CONFIG.paymentNumbers.seabank})`;
+    }
+    
+    let message = `*ROYAL CONFIRMATION - XFOURTEEN CORPORATION*\n\n`;
+    message += `👑 Order ID: #${order.orderId}\n`;
+    message += `🏆 Royal Item: ${order.name}\n`;
+    message += `💰 Tribute: Rp ${order.price.toLocaleString('id-ID')}\n`;
+    message += `📱 Payment Method: ${methodText}\n\n`;
+    
+    if (buktiText) {
+        message += `📸 *BUKTI TRANSFER:*\n${buktiText}\n\n`;
+    }
+    
+    message += `Hail to the King! I have completed the royal tribute. Please process my order.`;
+    
+    window.open(`https://api.whatsapp.com/send?phone=${CONFIG.wa}&text=${encodeURIComponent(message)}`);
+}
+
+// ============================================
+// UPLOAD BUKTI KE TEMPORARY IMAGE HOSTING
+// ============================================
+async function uploadBukti(file) {
+    // Pake Catbox.moe atau ImgBB (free, no login)
+    const formData = new FormData();
+    formData.append('image', file);
+    
+    try {
+        // Upload ke Catbox (simple, gratis)
+        const response = await fetch('https://catbox.moe/user/api.php', {
+            method: 'POST',
+            body: formData
+        });
         
-        // Tambahkan tooltip atau efek visual bahwa nominal sudah sesuai
-        qrisImg.title = `Total: Rp ${amount.toLocaleString('id-ID')}`;
+        const url = await response.text();
+        if (url.startsWith('http')) {
+            return url;
+        } else {
+            throw new Error('Upload failed');
+        }
+    } catch(e) {
+        console.log('Upload gagal:', e);
+        return null;
+    }
+}
+
+// ============================================
+// HANDLE BUKTI TRANSFER DARI USER
+// ============================================
+let currentFileBukti = null;
+
+function attachBukti() {
+    // Buat input file tersembunyi
+    let fileInput = document.getElementById('hidden-file-input');
+    if (!fileInput) {
+        fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.id = 'hidden-file-input';
+        fileInput.accept = 'image/*';
+        fileInput.style.display = 'none';
+        document.body.appendChild(fileInput);
+        
+        fileInput.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            showToast('📸 Mengupload bukti transfer...');
+            currentFileBukti = file;
+            
+            // Preview dulu
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                showToast('✅ Bukti terupload! Klik "SEND PROOF TO THRONE" lagi untuk konfirmasi');
+                // Tambah indikator visual
+                const btn = document.querySelector('#payment-modal .btn-royal-primary');
+                if (btn) {
+                    btn.innerHTML = '<i class="fas fa-check-circle mr-2"></i> BUKTI TERLAMPIR - KIRIM';
+                    btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+                }
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+    
+    fileInput.click();
+}
+
+// ============================================
+// CONFIRM TO WA DENGAN BUKTI TRANSFER
+// ============================================
+async function confirmToWA() {
+    if (!currentOrder) {
+        showToast("❌ Tidak ada pesanan!");
+        return;
+    }
+    
+    showToast("📤 Mengirim konfirmasi...");
+    
+    let buktiUrl = null;
+    
+    // Kalau ada bukti transfer, upload dulu
+    if (currentFileBukti) {
+        showToast("📸 Mengupload bukti transfer...");
+        buktiUrl = await uploadBukti(currentFileBukti);
+        if (buktiUrl) {
+            showToast("✅ Bukti terupload!");
+        } else {
+            showToast("⚠️ Upload bukti gagal, tetap kirim tanpa bukti");
+        }
+    }
+    
+    let paymentMethodText = '';
+    if (currentPaymentMethod === 'qris') {
+        paymentMethodText = 'QRIS (Scan Barcode)';
+    } else if (currentPaymentMethod === 'dana') {
+        paymentMethodText = `DANA (${CONFIG.paymentNumbers.dana})`;
+    } else if (currentPaymentMethod === 'gopay') {
+        paymentMethodText = `GoPay (${CONFIG.paymentNumbers.gopay})`;
+    } else if (currentPaymentMethod === 'seabank') {
+        paymentMethodText = `SeaBank (${CONFIG.paymentNumbers.seabank})`;
+    }
+    
+    // 1. KIRIM KE WEBHOOK DISCORD PEMBELIAN (TERPISAH)
+    await sendInvoiceToDiscord(currentOrder, currentPaymentMethod, buktiUrl);
+    
+    // 2. KIRIM KE WHATSAPP (BISA DENGAN BUKTI)
+    let buktiText = '';
+    if (buktiUrl) {
+        buktiText = buktiUrl;
+    } else if (currentFileBukti) {
+        buktiText = 'Bukti transfer sudah dilampirkan (upload gagal, kirim manual via chat)';
+    }
+    
+    sendToWhatsAppWithProof(currentOrder, currentPaymentMethod, buktiText);
+    
+    // Reset
+    currentFileBukti = null;
+    
+    // Tutup modal setelah delay
+    setTimeout(() => {
+        closePayment();
+        showToast("✅ Konfirmasi terkirim! Tunggu proses dari Royal Team.");
+    }, 1500);
+}
+
+// ============================================
+// MODIFIKASI MODAL - TAMBAH TOMBOL UPLOAD BUKTI
+// ============================================
+function openPayment(id) {
+    const p = PRODUCTS.find(x => x.id === id);
+    if (!p) return;
+    currentOrder = { ...p, orderId: 'ROYAL' + Date.now().toString().slice(-8) };
+    currentFileBukti = null;
+    
+    document.getElementById('pay-product').innerText = p.name;
+    document.getElementById('pay-amount').innerHTML = "Rp " + p.price.toLocaleString('id-ID');
+    
+    currentPaymentMethod = 'qris';
+    document.querySelectorAll('.payment-tab').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    document.getElementById('tab-qris').classList.add('active');
+    
+    generateStaticQRIS(p.price, p.name);
+    
+    const modal = document.getElementById('payment-modal');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+    
+    // Modifikasi tombol di modal untuk nambahin upload bukti
+    const existingBtn = document.querySelector('#payment-modal .btn-royal-primary');
+    if (existingBtn && !existingBtn.getAttribute('data-modified')) {
+        const wrapper = existingBtn.parentElement;
+        const newBtn = document.createElement('button');
+        newBtn.innerHTML = '<i class="fas fa-camera mr-2"></i> LAMPIRKAN BUKTI';
+        newBtn.className = 'w-full bg-royal-dark border border-gold-500/50 hover:border-gold-500 text-gold-400 py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all duration-300 mt-3 text-sm';
+        newBtn.onclick = () => attachBukti();
+        wrapper.appendChild(newBtn);
+        existingBtn.setAttribute('data-modified', 'true');
+    }
+    
+    showToast(`Added ${p.name} to Royal Treasury`);
+}
+
+function closePayment() {
+    const modal = document.getElementById('payment-modal');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    document.body.style.overflow = 'auto';
+    currentFileBukti = null;
+}
+
+function showToast(msg) {
+    const toast = document.getElementById('toast');
+    const toastMsg = document.getElementById('toast-message');
+    if (!toast || !toastMsg) return;
+    toastMsg.textContent = msg;
+    toast.classList.remove('hide');
+    toast.style.transform = 'translateX(0)';
+    setTimeout(() => {
+        toast.classList.add('hide');
+        setTimeout(() => {
+            toast.style.transform = 'translateX(100%)';
+        }, 400);
+    }, 3000);
+}
+
+function scrollToSection(id) {
+    const section = document.getElementById(id);
+    if (section) window.scrollTo({ top: section.offsetTop - 70, behavior: 'smooth' });
+}
+
+function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ============================================
+// SEND TO DISCORD SUPPORT (TETAP JALAN)
+// ============================================
+async function sendToDiscord() {
+    const name = document.getElementById('webhook-name');
+    const phone = document.getElementById('webhook-phone');
+    const msg = document.getElementById('webhook-msg');
+    const btn = document.getElementById('webhook-btn');
+    
+    if (!name.value.trim() || !phone.value.trim() || !msg.value.trim()) {
+        showToast("Please fill in all fields, noble one!");
+        return;
+    }
+    
+    const original = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i> SENDING ROYAL MESSAGE...`;
+    
+    try {
+        const res = await fetch(CONFIG.webhookSupport, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                username: "XFOURTEEN ROYAL COURT",
+                avatar_url: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
+                embeds: [{
+                    title: "👑 Royal Audience Request",
+                    color: 0xd4af37,
+                    fields: [
+                        { name: "🏰 Noble Name", value: `\`\`\`${name.value}\`\`\``, inline: true },
+                        { name: "📱 Royal Contact", value: `\`\`\`${phone.value}\`\`\``, inline: true },
+                        { name: "📜 Royal Message", value: msg.value.substring(0, 1000), inline: false }
+                    ],
+                    footer: { text: "XFOURTEEN ROYAL COURT • " + new Date().toLocaleString('id-ID') },
+                    timestamp: new Date().toISOString()
+                }]
+            })
+        });
+        
+        if (res.ok) {
+            showToast("Royal message delivered! The court will respond.");
+            name.value = "";
+            phone.value = "";
+            msg.value = "";
+        } else {
+            throw new Error();
+        }
+    } catch (e) {
+        showToast("Failed to deliver message. Send directly to Royal WhatsApp.");
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = original;
     }
 }
 
@@ -562,109 +999,3 @@ function filterProducts(cat) {
 }
 
 let currentOrder = null;
-
-function openPayment(id) {
-    const p = PRODUCTS.find(x => x.id === id);
-    if (!p) return;
-    currentOrder = { ...p, orderId: 'ROYAL' + Date.now().toString().slice(-8) };
-    
-    // Generate QRIS dinamis sesuai nominal
-    generateDynamicQRIS(p.price);
-    
-    document.getElementById('pay-product').innerText = p.name;
-    document.getElementById('pay-amount').innerHTML = "Rp " + p.price.toLocaleString('id-ID');
-    const modal = document.getElementById('payment-modal');
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
-    document.body.style.overflow = 'hidden';
-    showToast(`Added ${p.name} to Royal Treasury`);
-}
-
-function closePayment() {
-    const modal = document.getElementById('payment-modal');
-    modal.classList.add('hidden');
-    modal.classList.remove('flex');
-    document.body.style.overflow = 'auto';
-}
-
-function confirmToWA() {
-    if (!currentOrder) return;
-    const text = `*ROYAL CONFIRMATION - XFOURTEEN CORPORATION*\n\n👑 Order ID: #${currentOrder.orderId}\n🏆 Royal Item: ${currentOrder.name}\n💰 Tribute: Rp ${currentOrder.price.toLocaleString('id-ID')}\n\nHail to the King! I have completed the royal tribute. Please process my order.`;
-    window.open(`https://api.whatsapp.com/send?phone=${CONFIG.wa}&text=${encodeURIComponent(text)}`);
-}
-
-function showToast(msg) {
-    const toast = document.getElementById('toast');
-    const toastMsg = document.getElementById('toast-message');
-    if (!toast || !toastMsg) return;
-    toastMsg.textContent = msg;
-    toast.classList.remove('hide');
-    toast.style.transform = 'translateX(0)';
-    setTimeout(() => {
-        toast.classList.add('hide');
-        setTimeout(() => {
-            toast.style.transform = 'translateX(100%)';
-        }, 400);
-    }, 3000);
-}
-
-function scrollToSection(id) {
-    const section = document.getElementById(id);
-    if (section) window.scrollTo({ top: section.offsetTop - 70, behavior: 'smooth' });
-}
-
-function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-async function sendToDiscord() {
-    const name = document.getElementById('webhook-name');
-    const phone = document.getElementById('webhook-phone');
-    const msg = document.getElementById('webhook-msg');
-    const btn = document.getElementById('webhook-btn');
-    
-    if (!name.value.trim() || !phone.value.trim() || !msg.value.trim()) {
-        showToast("Please fill in all fields, noble one!");
-        return;
-    }
-    
-    const original = btn.innerHTML;
-    btn.disabled = true;
-    btn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i> SENDING ROYAL MESSAGE...`;
-    
-    try {
-        const res = await fetch(CONFIG.webhook, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                username: "XFOURTEEN ROYAL COURT",
-                avatar_url: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
-                embeds: [{
-                    title: "👑 Royal Audience Request",
-                    color: 0xd4af37,
-                    fields: [
-                        { name: "🏰 Noble Name", value: `\`\`\`${name.value}\`\`\``, inline: true },
-                        { name: "📱 Royal Contact", value: `\`\`\`${phone.value}\`\`\``, inline: true },
-                        { name: "📜 Royal Message", value: msg.value.substring(0, 1000), inline: false }
-                    ],
-                    footer: { text: "XFOURTEEN ROYAL COURT • " + new Date().toLocaleString('id-ID') },
-                    timestamp: new Date().toISOString()
-                }]
-            })
-        });
-        
-        if (res.ok) {
-            showToast("Royal message delivered! The court will respond.");
-            name.value = "";
-            phone.value = "";
-            msg.value = "";
-        } else {
-            throw new Error();
-        }
-    } catch (e) {
-        showToast("Failed to deliver message. Send directly to Royal WhatsApp.");
-    } finally {
-        btn.disabled = false;
-        btn.innerHTML = original;
-    }
-}
