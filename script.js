@@ -8,7 +8,7 @@
 const CONFIG = {
     wa: "628895823757",
     webhookSupport: "https://discord.com/api/webhooks/1462093167619997953/YJoFvj1-gmkeDDT49akVa-gVTGxJr1SMLWni91-Pdtt0FiaZKxat7u4d8n-KaFI4lTit",
-    webhookPurchase: "https://discord.com/api/webhooks/1462093167619997953/YJoFvj1-gmkeDDT49akVa-gVTGxJr1SMLWni91-Pdtt0FiaZKxat7u4d8n-KaFI4lTit",
+    webhookPurchase: "https://discord.com/api/webhooks/1475714335698583665/gxT7VHmtRVBRo-y-teUpdAK-MVewgopxdUnzTq8XL4QozIXNXgoUb2PkMXOrCiJ5_ObD",
     paymentNumbers: {
         dana: "08895823757",
         gopay: "MAINTANCE",
