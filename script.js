@@ -25,7 +25,7 @@ const PRODUCTS = [
     { id: 6, name: 'XIV - BASIC', cat: 'PC', price: 25000, img: 'assets/banner-pc.jpg', features: ['Reg Mouse', 'Keybin/Mapping', 'Best Emulator'], description: 'Basic royal settings for reliable performance.', bestseller: false },
     { id: 7, name: 'XIV V-ONE', cat: 'PC', price: 50000, img: 'assets/banner-pc.jpg', features: ['Golden Mouse', 'Elite Optimization', 'Royal Emulator'], description: 'Basic royal settings for reliable performance.', bestseller: false },
     { id: 8, name: 'XIV V-TWO', cat: 'PC', price: 75000, img: 'assets/banner-pc.jpg', features: ['Royal Settings', 'Elite Pack', 'Crown Aim'], description: 'The ultimate royal configuration.', bestseller: false },
-    { id: 9, name: 'XIV X-CHEATS', cat: 'PC', price: 100000, img: 'assets/banner-pc.jpg', features: ['AimBot Head/Neck', 'NoRecoil', 'AimFov'], description: 'The ultimate royal configuration.', bestseller: false }
+    { id: 9, name: 'XIV X-CHEATS', cat: 'PC', price: 10000, img: 'assets/banner-pc.jpg', features: ['AimBot Head/Neck', 'NoRecoil', 'AimFov'], description: 'The ultimate royal configuration.', bestseller: false }
 ];
 
 const FEATURES = [
@@ -385,9 +385,6 @@ function generateStaticQRIS(amount, productName) {
             <div id="qris-static-container" class="inline-block">
                 <img src="assets/qris.jpg" alt="QRIS" class="mx-auto" onerror="this.src='https://placehold.co/200x200/d4af37/1a1a1a?text=QRIS'">
             </div>
-            <p class="text-gold-300/50 text-[10px] mt-3">Nominal: <span class="text-gold-400 font-bold">Rp ${amount.toLocaleString('id-ID')}</span></p>
-            <p class="text-gold-400/40 text-[8px] mt-2">*Screenshot & send as proof to WhatsApp</p>
-        </div>
     `;
 }
 
@@ -436,14 +433,6 @@ function generateEWalletPage(type, amount) {
                     <i class="far fa-copy"></i> Salin Nomor
                 </button>
             </div>
-            
-            <div class="tribute-info-box">
-                <p class="uppercase tracking-wider">Total Tribute</p>
-                <p class="text-gold-400 font-bold">Rp ${amount.toLocaleString('id-ID')}</p>
-            </div>
-            
-            <p class="text-gold-400/40 text-[7px] md:text-[8px] mt-3">*Transfer sesuai nominal & konfirmasi via WhatsApp</p>
-        </div>
     `;
 }
 
@@ -527,17 +516,21 @@ function attachBukti() {
             
             currentFileBukti = file;
             
-            // Preview
-            const reader = new FileReader();
-            reader.onload = function(evt) {
-                showToast('✅ Bukti siap! Klik "SEND PROOF TO THRONE"');
-                const btn = document.querySelector('#payment-modal .btn-royal-primary');
-                if (btn) {
-                    btn.innerHTML = '<i class="fas fa-check-circle mr-2"></i> BUKTI TERLAMPIR - KIRIM';
-                    btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
-                }
-            };
-            reader.readAsDataURL(file);
+            // Tampilkan indikator
+            const indicator = document.getElementById('buktiIndicator');
+            if (indicator) {
+                indicator.classList.remove('hidden');
+            }
+            
+            // Ganti teks tombol upload
+            const btnAttach = document.getElementById('btnAttachBukti');
+            if (btnAttach) {
+                btnAttach.innerHTML = '<i class="fas fa-check-circle mr-2"></i> BUKTI TERLAMPIR';
+                btnAttach.style.background = 'rgba(16, 185, 129, 0.2)';
+                btnAttach.style.borderColor = '#10b981';
+            }
+            
+            showToast('✅ Bukti transfer sudah dilampirkan!');
         });
     }
     
@@ -589,10 +582,10 @@ async function sendInvoiceToDiscord(order, method, buktiUrl = null) {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                username: "XFOURTEEN ROYAL TRANSACTION",
+                username: "XFOURTEEN ROYAL BANK",
                 avatar_url: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
                 embeds: [embed],
-                content: "@Owner **ADA PEMBELIAN BARU!** 👑"
+                content: "@everyone **ADA PEMBELIAN BARU!** 👑"
             })
         });
         console.log("✅ Invoice sent to PURCHASE webhook");
