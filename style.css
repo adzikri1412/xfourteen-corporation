@@ -1,6 +1,6 @@
 /* ============================================
    XFOURTEEN CORPORATION - GOLDEN ROYAL EDITION
-   FINAL CSS
+   FINAL CSS - WITH MOBILE PAYMENT OPTIMIZATION
    ============================================ */
 
 /* Import Fonts */
@@ -58,6 +58,11 @@ body {
 /* Utility Classes */
 .no-scrollbar::-webkit-scrollbar {
     display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 .font-cormorant {
@@ -769,6 +774,171 @@ nav .font-montserrat {
 .stagger-item:nth-child(4) { animation-delay: 0.26s; }
 .stagger-item:nth-child(5) { animation-delay: 0.33s; }
 .stagger-item:nth-child(6) { animation-delay: 0.4s; }
+
+/* ============================================
+   PAYMENT TABS - MOBILE FRIENDLY
+   ============================================ */
+.payment-tab {
+    background: transparent;
+    color: #d4c5a0;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-bottom: none;
+    font-size: 10px;
+}
+
+@media (min-width: 768px) {
+    .payment-tab {
+        font-size: 12px;
+    }
+}
+
+.payment-tab.active {
+    background: linear-gradient(135deg, #d4af37, #b8860b);
+    color: #080505;
+    border-color: #d4af37;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+}
+
+.payment-tab:hover:not(.active) {
+    color: #ffea8a;
+    background: rgba(212, 175, 55, 0.15);
+    border-color: rgba(212, 175, 55, 0.4);
+}
+
+/* ============================================
+   QRIS STATIS CONTAINER
+   ============================================ */
+#qris-static-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    padding: 1rem;
+    border-radius: 1rem;
+    margin-bottom: 0.5rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    border: 2px solid rgba(212, 175, 55, 0.3);
+}
+
+#qris-static-container img {
+    width: 160px;
+    height: 160px;
+    object-fit: contain;
+}
+
+@media (min-width: 768px) {
+    #qris-static-container img {
+        width: 200px;
+        height: 200px;
+    }
+}
+
+/* ============================================
+   E-WALLET PAGE - MOBILE OPTIMIZED
+   ============================================ */
+.payment-logo {
+    font-size: 2rem;
+    margin-bottom: 0.25rem;
+}
+
+@media (min-width: 768px) {
+    .payment-logo {
+        font-size: 2.5rem;
+    }
+}
+
+.payment-logo.dana { color: #4A90E2; }
+.payment-logo.gopay { color: #00AAE4; }
+.payment-logo.seabank { color: #10B981; }
+
+.account-number-box {
+    background: rgba(8, 5, 5, 0.9);
+    border: 2px solid rgba(212, 175, 55, 0.3);
+    border-radius: 16px;
+    padding: 1.25rem 1rem;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.account-number-box .number {
+    font-family: 'Courier New', monospace;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #ffea8a;
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+    word-break: break-all;
+    line-height: 1.4;
+}
+
+@media (min-width: 768px) {
+    .account-number-box .number {
+        font-size: 1.6rem;
+    }
+}
+
+.btn-copy {
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.5);
+    color: #ffea8a;
+    padding: 0.6rem 1.5rem;
+    border-radius: 40px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto;
+    display: inline-block;
+}
+
+@media (min-width: 768px) {
+    .btn-copy {
+        font-size: 0.85rem;
+        padding: 0.7rem 2rem;
+    }
+}
+
+.btn-copy:hover {
+    background: rgba(212, 175, 55, 0.3);
+    border-color: #d4af37;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2);
+}
+
+.btn-copy:active {
+    transform: translateY(0);
+}
+
+.btn-copy i {
+    margin-right: 8px;
+}
+
+/* Info Tribute di E-Wallet */
+.tribute-info-box {
+    background: rgba(8, 5, 5, 0.6);
+    padding: 0.75rem;
+    border-radius: 12px;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.tribute-info-box p:first-child {
+    font-size: 11px;
+    color: rgba(212, 175, 55, 0.7);
+}
+
+.tribute-info-box p:last-child {
+    font-size: 1.3rem;
+}
+
+@media (min-width: 768px) {
+    .tribute-info-box p:last-child {
+        font-size: 1.5rem;
+    }
+}
 
 /* ============================================
    MODAL, TOAST, BACK TO TOP
