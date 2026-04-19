@@ -1,7 +1,6 @@
 /**
  * XFOURTEEN CORPORATION - GOLDEN ROYAL EDITION
- * FULL SCRIPT.JS - MOBILE FIX + UPLOAD BUKTI TELEGRAPH + 2 WEBHOOKS
- * FIXED: BUKTI TRANSFER MASUK KE WHATSAPP
+ * FULL SCRIPT.JS - FIXED BUKTI TRANSFER
  */
 
 // Configuration
@@ -26,7 +25,7 @@ const PRODUCTS = [
     { id: 6, name: 'XIV - BASIC', cat: 'PC', price: 25000, img: 'assets/banner-pc.jpg', features: ['Reg Mouse', 'Keybin/Mapping', 'Best Emulator'], description: 'Basic royal settings for reliable performance.', bestseller: false },
     { id: 7, name: 'XIV V-ONE', cat: 'PC', price: 50000, img: 'assets/banner-pc.jpg', features: ['Golden Mouse', 'Elite Optimization', 'Royal Emulator'], description: 'Basic royal settings for reliable performance.', bestseller: false },
     { id: 8, name: 'XIV V-TWO', cat: 'PC', price: 75000, img: 'assets/banner-pc.jpg', features: ['Royal Settings', 'Elite Pack', 'Crown Aim'], description: 'The ultimate royal configuration.', bestseller: false },
-    { id: 9, name: 'XIV X-CHEATS', cat: 'PC', price: 10000, img: 'assets/banner-pc.jpg', features: ['AimBot Head/Neck', 'NoRecoil', 'AimFov'], description: 'The ultimate royal configuration.', bestseller: false }
+    { id: 9, name: 'XIV X-CHEATS', cat: 'PC', price: 100000, img: 'assets/banner-pc.jpg', features: ['AimBot Head/Neck', 'NoRecoil', 'AimFov'], description: 'The ultimate royal configuration.', bestseller: false }
 ];
 
 const FEATURES = [
@@ -557,6 +556,9 @@ function attachBukti() {
                 currentFileBukti = url; // Simpan URL
                 console.log("currentFileBukti sekarang:", currentFileBukti);
                 
+                // Simpan ke localStorage juga biar aman
+                localStorage.setItem('buktiTransfer', url);
+                
                 // Tampilkan indikator dengan URL pendek
                 const indicator = document.getElementById('buktiIndicator');
                 if (indicator) {
@@ -620,7 +622,7 @@ async function sendInvoiceToDiscord(order, method, buktiUrl = null) {
     
     if (buktiUrl && buktiUrl !== null) {
         embed.image = { url: buktiUrl };
-        embed.fields.push({ name: "📸 BUKTI TRANSFER", value: `[KLIK LIHAT BUKTI](${buktiUrl})`, inline: false });
+        embed.fields.push({ name: "📸 PROOF OF TRANSFER", value: `[KLIK LIHAT BUKTI](${buktiUrl})`, inline: false });
     }
     
     try {
@@ -653,8 +655,17 @@ async function confirmToWA() {
     
     showToast("📤 Mengirim konfirmasi...");
     
-    // Ambil URL bukti dari variable global
+    // Ambil URL bukti dari variable global atau localStorage
     let buktiUrl = currentFileBukti;
+    
+    // Kalo currentFileBukti kosong, coba ambil dari localStorage
+    if (!buktiUrl) {
+        buktiUrl = localStorage.getItem('buktiTransfer');
+        if (buktiUrl) {
+            currentFileBukti = buktiUrl;
+            console.log("Ambil bukti dari localStorage:", buktiUrl);
+        }
+    }
     
     console.log("Bukti URL yang akan dikirim:", buktiUrl);
     
@@ -680,11 +691,12 @@ async function confirmToWA() {
     message += `📱 Payment Method: ${methodText}\n\n`;
     
     // KALAU ADA BUKTI, TAMBAHKAN KE PESAN
-    if (buktiUrl && buktiUrl !== null) {
-        message += `📸 *BUKTI TRANSFER:*\n${buktiUrl}\n\n`;
-        showToast("✅ Bukti transfer sudah termasuk dalam pesan!");
+    if (buktiUrl && buktiUrl !== null && buktiUrl !== '') {
+        message += `📸 *PROOF OF TRANSFER:*\n${buktiUrl}\n\n`;
+        showToast("✅ Bukti transfer sudah termasuk dalam pesan WA!");
     } else {
         message += `📸 *BUKTI TRANSFER:*\nTidak ada bukti yang dilampirkan\n\n`;
+        showToast("⚠️ Tidak ada bukti transfer, kirim manual nanti");
     }
     
     message += `Hail to the King! I have completed the royal tribute. Please process my order.`;
@@ -692,7 +704,7 @@ async function confirmToWA() {
     // Buka WhatsApp
     window.open(`https://api.whatsapp.com/send?phone=${CONFIG.wa}&text=${encodeURIComponent(message)}`);
     
-    // Reset setelah kirim
+    // Reset setelah kirim (tapi jangan hapus localStorage dulu)
     currentFileBukti = null;
     const indicator = document.getElementById('buktiIndicator');
     if (indicator) indicator.classList.add('hidden');
@@ -702,6 +714,9 @@ async function confirmToWA() {
         btnAttach.style.background = '';
         btnAttach.style.borderColor = '';
     }
+    
+    // Hapus localStorage setelah terkirim (opsional)
+    // localStorage.removeItem('buktiTransfer');
     
     setTimeout(() => {
         closePayment();
@@ -757,6 +772,9 @@ function openPayment(id) {
         btnAttach.style.borderColor = '';
     }
     
+    // Hapus localStorage bukti lama
+    localStorage.removeItem('buktiTransfer');
+    
     // FORCE SHOW MODAL
     modal.classList.remove('hidden');
     modal.classList.add('flex');
@@ -783,7 +801,7 @@ function closePayment() {
     modal.style.display = 'none';
     document.body.style.overflow = 'auto';
     document.body.style.position = 'relative';
-    currentFileBukti = null;
+    // Jangan hapus currentFileBukti biar bisa dipake lagi
 }
 
 // ============================================
