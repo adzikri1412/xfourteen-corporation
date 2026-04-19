@@ -589,10 +589,10 @@ async function sendInvoiceToDiscord(order, method, buktiUrl = null) {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                username: "XFOURTEEN ROYAL BANK",
+                username: "XFOURTEEN ROYAL TRANSACTION",
                 avatar_url: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
                 embeds: [embed],
-                content: "@everyone **ADA PEMBELIAN BARU!** 👑"
+                content: "@Owner **ADA PEMBELIAN BARU!** 👑"
             })
         });
         console.log("✅ Invoice sent to PURCHASE webhook");
