@@ -1,405 +1,602 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>XFOURTEEN CORPORATION</title>
-    <link rel="icon" type="assets/png" sizes="32x32" href="assets/icx14.png">
-    <link rel="icon" type="assets/png" sizes="16x16" href="assets/icx14.png">
-    <link rel="apple-touch-icon" href="assets/icx14.png">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <!-- Library QR Code Generator -->
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>XFOURTEEN CORPORATION</title>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/iconrmv.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/iconrmv.png">
+<link rel="apple-touch-icon" href="assets/iconrmv.png">
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<link rel="stylesheet" href="style.css">
+
+<script>
+(function() {
+    // ==================== BLOCK ALL CONTEXT MENU ====================
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    });
+
+    // ==================== BLOCK ALL DEVTOOLS SHORTCUTS ====================
+    document.addEventListener('keydown', function(e) {
+        // F12
+        if (e.key === 'F12' || e.keyCode === 123) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        }
+        // Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C
+        if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        }
+        // Ctrl+U (view source)
+        if (e.ctrlKey && e.keyCode === 85) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        }
+        // Ctrl+S (save)
+        if (e.ctrlKey && e.keyCode === 83) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        }
+        // Ctrl+P (print)
+        if (e.ctrlKey && e.keyCode === 80) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        }
+        // Ctrl+Shift+R (hard reload)
+        if (e.ctrlKey && e.shiftKey && e.keyCode === 82) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        }
+        // Ctrl+R (reload)
+        if (e.ctrlKey && e.keyCode === 82) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        }
+        // F5 (reload)
+        if (e.key === 'F5' || e.keyCode === 116) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        }
+        // Ctrl+E (search)
+        if (e.ctrlKey && e.keyCode === 69) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        }
+        // Ctrl+Shift+Delete (clear cache)
+        if (e.ctrlKey && e.shiftKey && e.keyCode === 46) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        }
+        // Ctrl+Shift+N (incognito)
+        if (e.ctrlKey && e.shiftKey && e.keyCode === 78) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        }
+        // Ctrl+N (new window)
+        if (e.ctrlKey && e.keyCode === 78) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        }
+    });
+
+    // ==================== BLOCK COPY/CUT/PASTE/SELECT ====================
+    document.addEventListener('copy', function(e) {
+        e.preventDefault();
+        return false;
+    });
+
+    document.addEventListener('cut', function(e) {
+        e.preventDefault();
+        return false;
+    });
+
+    document.addEventListener('paste', function(e) {
+        e.preventDefault();
+        return false;
+    });
+
+    document.addEventListener('selectstart', function(e) {
+        e.preventDefault();
+        return false;
+    });
+
+    document.addEventListener('dragstart', function(e) {
+        e.preventDefault();
+        return false;
+    });
+
+    // ==================== CSS ANTI SELECT ====================
+    const style = document.createElement('style');
+    style.textContent = `
+        * {
+            user-select: none !important;
+            -webkit-user-select: none !important;
+            -moz-user-select: none !important;
+            -ms-user-select: none !important;
+            -webkit-touch-callout: none !important;
+        }
+        img, video, iframe, canvas {
+            pointer-events: none !important;
+            -webkit-user-drag: none !important;
+            user-drag: none !important;
+        }
+        body {
+            -webkit-touch-callout: none !important;
+        }
+        .btn-royal-primary, .btn-royal-secondary, .tab-royal, .contact-royal, #product-grid > div {
+            pointer-events: auto !important;
+        }
+    `;
+    document.head.appendChild(style);
+
+    // ==================== DEVTOOLS DETECTION (BRUTAL) ====================
+    function detectDevTools() {
+        const before = new Date().getTime();
+        debugger;
+        const after = new Date().getTime();
+        if (after - before > 100) {
+            document.body.innerHTML = `
+                <div style="background: black; color: red; text-align: center; padding: 50px; font-family: monospace; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                    <h1 style="font-size: 48px;">💀 DEVTOOLS DETECTED! 💀</h1>
+                    <p style="font-size: 24px; margin-top: 20px;">Lu pikir bisa inspect website XFOURTEEN CORPORATION?</p>
+                    <p style="font-size: 20px; color: #ff6666;">BALIK SEKOLAH DULU GOBLOK! 🖕</p>
+                    <button onclick="location.reload()" style="margin-top: 30px; padding: 10px 20px; background: red; color: white; border: none; cursor: pointer; border-radius: 5px;">RELOAD</button>
+                </div>
+            `;
+            document.body.style.overflow = 'hidden';
+            throw new Error('DevTools detected');
+        }
+        setTimeout(detectDevTools, 500);
+    }
+    setTimeout(detectDevTools, 1000);
+
+    // ==================== OVERRIDE CONSOLE METHODS ====================
+    const noop = function() {};
+    window.console.log = noop;
+    window.console.info = noop;
+    window.console.warn = noop;
+    window.console.error = noop;
+    window.console.debug = noop;
+    window.console.table = noop;
+    window.console.trace = noop;
+    window.console.group = noop;
+    window.console.groupEnd = noop;
+    window.console.groupCollapsed = noop;
+
+    // ==================== DISABLE RIGHT CLICK ON IMAGES DYNAMIC ====================
+    function disableImageContext() {
+        const images = document.querySelectorAll('img');
+        images.forEach(img => {
+            img.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            img.setAttribute('draggable', 'false');
+        });
+    }
+    document.addEventListener('DOMContentLoaded', disableImageContext);
+    setTimeout(disableImageContext, 500);
+
+    // ==================== PREVENT DEBUGGER BYPASS ====================
+    setInterval(function() {
+        debugger;
+    }, 100);
+
+    // ==================== RATE LIMITING ANTI DDOS ====================
+    let requestCount = 0;
+    let lastReset = Date.now();
+    
+    setInterval(function() {
+        requestCount = 0;
+        lastReset = Date.now();
+    }, 60000);
+    
+    const originalFetch = window.fetch;
+    window.fetch = function() {
+        requestCount++;
+        if (requestCount > 100) {
+            return Promise.reject('Rate limit exceeded');
+        }
+        return originalFetch.apply(this, arguments);
+    };
+    
+    const originalOpen = XMLHttpRequest.prototype.open;
+    XMLHttpRequest.prototype.open = function() {
+        requestCount++;
+        if (requestCount > 100) {
+            return;
+        }
+        return originalOpen.apply(this, arguments);
+    };
+
+    // ==================== BLOCK VIEW-SOURCE ====================
+    if (window.location.protocol === 'view-source:') {
+        window.location.href = 'about:blank';
+    }
+
+    // ==================== ANTI CLICKJACKING ====================
+    if (top !== self) {
+        top.location = self.location;
+    }
+})();
+</script>
 </head>
-<body class="bg-royal-dark text-gold-100 overflow-x-hidden">
+<body class="overflow-x-hidden">
 
-    <!-- Canvas Effects -->
-    <canvas id="goldDustCanvas" class="fixed inset-0 -z-10"></canvas>
-    <canvas id="particleCanvas" class="fixed inset-0 -z-5"></canvas>
-    <canvas id="mouseTrailCanvas" class="fixed inset-0 -z-5 pointer-events-none"></canvas>
+<canvas id="goldDustCanvas" class="fixed inset-0"></canvas>
+<canvas id="particleCanvas" class="fixed inset-0"></canvas>
+<canvas id="mouseTrailCanvas" class="fixed inset-0 pointer-events-none"></canvas>
 
-    <!-- Royal Loading Screen -->
-    <div id="loader" class="fixed inset-0 z-[100] bg-royal-darkest flex flex-col items-center justify-center transition-all duration-1000">
-        <div class="text-center relative">
-            <div class="relative mb-10">
-                <div class="absolute inset-0 bg-gradient-to-r from-gold-500/30 via-amber-500/30 to-gold-600/30 rounded-full blur-2xl animate-pulse-gold"></div>
-                <div class="relative w-28 h-28 md:w-32 md:h-32 mx-auto">
-                    <div class="absolute inset-0 border-2 border-gold-500/30 rounded-full animate-ping-slow"></div>
-                    <div class="absolute inset-0 border-2 border-gold-500 rounded-full animate-spin-slow"></div>
-                    <div class="absolute inset-2 border border-gold-400/50 rounded-full animate-spin-reverse"></div>
-                    <div class="absolute inset-0 flex items-center justify-center">
-                        <div class="w-20 h-20 md:w-24 md:h-24 bg-gradient-to-br from-gold-600 to-amber-700 rounded-full flex items-center justify-center shadow-2xl shadow-gold-500/40 animate-royal-glow overflow-hidden">
-                            <img src="assets/icx14.png" class="w-full h-full object-cover" alt="logo">
-                        </div>
+<div id="loader" class="fixed inset-0 z-[100] bg-[#020000] flex flex-col items-center justify-center transition-all duration-1000">
+    <div class="text-center relative">
+        <div class="relative mb-10">
+            <div class="absolute inset-0 bg-gradient-to-r from-[#ff1a1a]/30 via-[#cc0000]/30 to-[#ff1a1a]/30 rounded-full blur-2xl animate-pulse-gold"></div>
+            <div class="relative w-28 h-28 md:w-32 md:h-32 mx-auto">
+                <div class="absolute inset-0 border-2 border-[#ff1a1a]/30 rounded-full animate-ping-slow"></div>
+                <div class="absolute inset-0 border-2 border-[#ff1a1a] rounded-full animate-spin-slow"></div>
+                <div class="absolute inset-2 border border-[#ff6666]/50 rounded-full animate-spin-reverse"></div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="w-20 h-20 md:w-24 md:h-24 bg-transparent rounded-full flex items-center justify-center shadow-2xl shadow-[#ff1a1a]/40 animate-royal-glow overflow-hidden">
+                        <img src="assets/icon.png" class="w-full h-full object-cover" alt="logo" style="background: transparent;">
                     </div>
                 </div>
-                <div class="absolute -bottom-6 left-1/2 -translate-x-1/2 w-24 h-px bg-gradient-to-r from-transparent via-gold-500 to-transparent"></div>
             </div>
-            
-            <h2 class="text-2xl md:text-3xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-gold-400 via-amber-400 to-gold-500 uppercase font-cormorant mb-4">
-                XFOURTEEN CORPORATION
-            </h2>
-            
-            <div class="relative w-48 h-0.5 bg-gold-900/50 rounded-full overflow-hidden mx-auto my-6">
-                <div id="loadingBar" class="absolute inset-0 w-0 bg-gradient-to-r from-gold-500 to-amber-500 rounded-full transition-all duration-300"></div>
+            <div class="absolute -bottom-6 left-1/2 -translate-x-1/2 w-24 h-px bg-gradient-to-r from-transparent via-[#ff1a1a] to-transparent"></div>
+        </div>
+        
+        <h2 class="text-2xl md:text-3xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-[#ff6666] via-[#ff1a1a] to-[#ff6666] uppercase font-playfair mb-4">
+            XFOURTEEN CORPORATION
+        </h2>
+        
+        <div class="relative w-48 h-0.5 bg-[#ff1a1a]/50 rounded-full overflow-hidden mx-auto my-6">
+            <div id="loadingBar" class="absolute inset-0 w-0 bg-gradient-to-r from-[#ff1a1a] to-[#cc0000] rounded-full transition-all duration-300"></div>
+        </div>
+        
+        <p class="text-[#ff6666]/70 text-xs tracking-[0.3em] uppercase font-montserrat animate-pulse-gentle">Preparing Experience</p>
+        
+        <div class="absolute -top-10 -left-10 w-20 h-20 border border-[#ff1a1a]/20 rounded-full"></div>
+        <div class="absolute -bottom-10 -right-10 w-20 h-20 border border-[#ff1a1a]/20 rounded-full"></div>
+    </div>
+</div>
+
+<nav id="mainNav" class="fixed top-0 w-full z-50 royal-nav transform -translate-y-full transition-all duration-700">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-3 cursor-pointer group" onclick="scrollToTop()">
+            <div class="relative">
+                <div class="absolute inset-0 bg-[#ff1a1a]/30 blur-md rounded-lg group-hover:blur-xl transition-all duration-500"></div>
+                <div class="relative w-10 h-10 bg-transparent rounded-lg flex items-center justify-center shadow-lg overflow-hidden">
+                    <img src="assets/iconrmv.png" class="w-full h-full object-cover" alt="logo" style="background: transparent;">
+                </div>
             </div>
-            
-            <p class="text-gold-400/70 text-xs tracking-[0.3em] uppercase font-montserrat animate-pulse-gentle">Preparing XFourteen Experience</p>
-            
-            <div class="absolute -top-10 -left-10 w-20 h-20 border border-gold-500/20 rounded-full"></div>
-            <div class="absolute -bottom-10 -right-10 w-20 h-20 border border-gold-500/20 rounded-full"></div>
+            <span class="text-lg md:text-xl font-bold tracking-tight text-white font-montserrat group-hover:text-[#ff6666] transition-colors duration-300">
+                XFOURTEEN<span class="text-[#ff1a1a]"> CORPORATION</span>
+            </span>
+        </div>
+        
+        <div class="hidden md:flex items-center gap-10">
+            <a href="#" onclick="scrollToSection('home')" class="royal-link text-sm font-medium text-[#ffcccc]/80 hover:text-[#ff6666] transition-all duration-300">Home</a>
+            <a href="#" onclick="scrollToSection('products')" class="royal-link text-sm font-medium text-[#ffcccc]/80 hover:text-[#ff6666] transition-all duration-300">Products</a>
+            <a href="#" onclick="scrollToSection('about-us')" class="royal-link text-sm font-medium text-[#ffcccc]/80 hover:text-[#ff6666] transition-all duration-300">About</a>
+            <a href="#" onclick="scrollToSection('contact-us')" class="royal-link text-sm font-medium text-[#ffcccc]/80 hover:text-[#ff6666] transition-all duration-300">Contact</a>
+        </div>
+        
+        <button id="mobileMenuBtn" class="md:hidden text-[#ff9999] hover:text-[#ff6666] text-xl transition-colors">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+    
+    <div id="mobileMenu" class="md:hidden absolute top-full left-0 w-full bg-[#050000]/95 backdrop-blur-xl border-t border-[#ff1a1a]/20 py-5 px-6 transform translate-y-[-100%] opacity-0 transition-all duration-400">
+        <div class="flex flex-col gap-4">
+            <a href="#" onclick="scrollToSection('home')" class="text-[#ff9999] hover:text-[#ff6666] py-2 font-medium transition-colors">Home</a>
+            <a href="#" onclick="scrollToSection('products')" class="text-[#ff9999] hover:text-[#ff6666] py-2 font-medium transition-colors">Products</a>
+            <a href="#" onclick="scrollToSection('about-us')" class="text-[#ff9999] hover:text-[#ff6666] py-2 font-medium transition-colors">About</a>
+            <a href="#" onclick="scrollToSection('contact-us')" class="text-[#ff9999] hover:text-[#ff6666] py-2 font-medium transition-colors">Contact</a>
         </div>
     </div>
+</nav>
 
-    <!-- Royal Navigation -->
-    <nav id="mainNav" class="fixed top-0 w-full z-50 royal-nav transform -translate-y-full transition-all duration-700">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-3 cursor-pointer group" onclick="scrollToTop()">
-                <div class="relative">
-                    <div class="absolute inset-0 bg-gold-500/30 blur-md rounded-lg group-hover:blur-xl transition-all duration-500"></div>
-                    <div class="relative w-10 h-10 bg-gradient-to-br from-gold-600 to-amber-700 rounded-lg flex items-center justify-center shadow-lg overflow-hidden">
-                        <img src="assets/icx14.png" class="w-full h-full object-cover" alt="logo">
-                    </div>
-                </div>
-                <span class="text-lg md:text-xl font-bold tracking-tight text-white font-montserrat group-hover:text-gold-400 transition-colors duration-300">
-                    XFOURTEEN<span class="text-gold-500"> CORPORATION</span>
-                </span>
+<header id="home" class="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-20 pb-16 overflow-hidden">
+    <div class="absolute inset-0">
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-[#ff1a1a]/5 rounded-full blur-3xl animate-pulse-gold"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#cc0000]/5 rounded-full blur-3xl animate-pulse-gold delay-1000"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-r from-[#ff1a1a]/5 to-[#cc0000]/5 rounded-full blur-[100px]"></div>
+    </div>
+    
+    <div class="royal-crown-wrapper mb-8">
+        <div class="royal-crown-inner">
+            <div class="relative w-28 h-28 md:w-36 md:h-36 bg-transparent rounded-full flex items-center justify-center shadow-2xl border border-[#ff1a1a]/30 overflow-hidden">
+                <img src="assets/icon.png" alt="XFOURTEEN Logo" class="w-full h-full object-cover" style="background: transparent;">
             </div>
-            
-            <div class="hidden md:flex items-center gap-10">
-                <a href="#" onclick="scrollToSection('home')" class="royal-link text-sm font-medium text-gold-200/80 hover:text-gold-400 transition-all duration-300">Home</a>
-                <a href="#" onclick="scrollToSection('products')" class="royal-link text-sm font-medium text-gold-200/80 hover:text-gold-400 transition-all duration-300">Products</a>
-                <a href="#" onclick="scrollToSection('about-us')" class="royal-link text-sm font-medium text-gold-200/80 hover:text-gold-400 transition-all duration-300">About</a>
-                <a href="#" onclick="scrollToSection('contact-us')" class="royal-link text-sm font-medium text-gold-200/80 hover:text-gold-400 transition-all duration-300">Contact</a>
-            </div>
-            
-            <button id="mobileMenuBtn" class="md:hidden text-gold-300 hover:text-gold-400 text-xl transition-colors">
-                <i class="fas fa-bars"></i>
-            </button>
-        </div>
-        
-        <div id="mobileMenu" class="md:hidden absolute top-full left-0 w-full bg-royal-darkest/95 backdrop-blur-xl border-t border-gold-500/20 py-5 px-6 transform translate-y-[-100%] opacity-0 transition-all duration-400">
-            <div class="flex flex-col gap-4">
-                <a href="#" onclick="scrollToSection('home')" class="text-gold-300 hover:text-gold-400 py-2 font-medium transition-colors">Home</a>
-                <a href="#" onclick="scrollToSection('products')" class="text-gold-300 hover:text-gold-400 py-2 font-medium transition-colors">Products</a>
-                <a href="#" onclick="scrollToSection('about-us')" class="text-gold-300 hover:text-gold-400 py-2 font-medium transition-colors">About</a>
-                <a href="#" onclick="scrollToSection('contact-us')" class="text-gold-300 hover:text-gold-400 py-2 font-medium transition-colors">Contact</a>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <header id="home" class="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-20 pb-16 overflow-hidden">
-        <div class="absolute inset-0">
-            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-gold-500/5 rounded-full blur-3xl animate-pulse-gold"></div>
-            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl animate-pulse-gold delay-1000"></div>
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-r from-gold-500/5 to-amber-500/5 rounded-full blur-[100px]"></div>
-        </div>
-        
-        <div class="royal-crown-wrapper mb-8">
-            <div class="royal-crown-inner">
-                <div class="relative w-28 h-28 md:w-36 md:h-36 bg-white rounded-full flex items-center justify-center shadow-2xl border border-gold-500/30 overflow-hidden">
-                    <img src="assets/iconx14.png" alt="XFOURTEEN Logo" class="w-full h-full object-cover">
-                </div>
-            </div>
-        </div>
-        
-        <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold mb-4 tracking-tight transform translate-y-10 opacity-0 animate-text-reveal font-cormorant">
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 via-amber-400 to-gold-500">XFOURTEEN</span>
-            <br>
-            <span class="text-white text-2xl md:text-3xl lg:text-4xl tracking-wider font-montserrat">CORPORATION</span>
-        </h1>
-        
-        <p class="text-xl md:text-2xl font-semibold text-gold-300 mb-4 transform translate-y-10 opacity-0 animate-text-reveal-delay">
-            <span id="typewriter-text" class="font-montserrat"></span>
-            <span class="typewriter-cursor"></span>
-        </p>
-        
-        <p class="text-gold-300/60 max-w-2xl mx-auto mb-10 text-base md:text-lg leading-relaxed transform translate-y-10 opacity-0 animate-text-reveal-delay2">
-            Available for iOS and Android. The finest sensitivity settings crafted for royalty. Elevate your Free Fire experience to throne level.
-        </p>
-        
-        <div class="flex flex-col sm:flex-row gap-5 transform translate-y-10 opacity-0 animate-text-reveal-delay3">
-            <a href="#products" class="btn-royal-primary group">
-                <span>View Collection</span>
-                <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform duration-300"></i>
-            </a>
-            <a href="#contact-us" class="btn-royal-secondary group">
-                <span>Royal Contact</span>
-                <i class="far fa-comment-dots ml-2 group-hover:scale-110 transition-transform duration-300"></i>
-            </a>
-        </div>
-        
-        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce-gold">
-            <div class="text-gold-500/50 text-xs tracking-[0.3em] uppercase font-montserrat font-semibold">SCROLL</div>
-            <div class="w-px h-10 bg-gradient-to-b from-gold-500 to-transparent mx-auto mt-1"></div>
-        </div>
-    </header>
-
-    <!-- Products Section -->
-    <section id="products" class="py-24 relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-b from-royal-dark via-royal-darker to-royal-dark"></div>
-        <div class="max-w-7xl mx-auto px-6 relative z-10">
-            <div class="text-center mb-16">
-                <div class="inline-block mb-4">
-                    <span class="text-gold-500 font-semibold uppercase text-xs tracking-[0.3em] border border-gold-500/30 px-4 py-1.5 rounded-full font-montserrat">Royal Product</span>
-                </div>
-                <h2 class="section-title-gold">Our <span>Product</span></h2>
-                <div class="royal-divider"></div>
-            </div>
-            
-            <div class="mb-12 flex justify-center overflow-x-auto no-scrollbar">
-                <div class="inline-flex gap-2 bg-royal-darker/60 p-1.5 rounded-full backdrop-blur-sm border border-gold-500/20">
-                    <button onclick="filterProducts('ANDROID')" id="tab-ANDROID" class="tab-royal active">
-                        <i class="fab fa-android mr-2"></i> Android
-                    </button>
-                    <button onclick="filterProducts('IOS')" id="tab-IOS" class="tab-royal">
-                        <i class="fab fa-apple mr-2"></i> iOS
-                    </button>
-                    <button onclick="filterProducts('PC')" id="tab-PC" class="tab-royal">
-                        <i class="fas fa-desktop mr-2"></i> PC
-                    </button>
-                </div>
-            </div>
-            
-            <div id="product-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="py-24 bg-royal-darker relative overflow-hidden">
-        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gold-500 to-transparent"></div>
-        <div class="max-w-7xl mx-auto px-6 relative z-10">
-            <div class="text-center mb-16">
-                <div class="inline-block mb-4">
-                    <span class="text-gold-500 font-semibold uppercase text-xs tracking-[0.3em] border border-gold-500/30 px-4 py-1.5 rounded-full font-montserrat">Why We're The Best</span>
-                </div>
-                <h2 class="section-title-gold">Why <span>Choose Us</span></h2>
-                <div class="royal-divider"></div>
-            </div>
-            <div id="features-container" class="grid md:grid-cols-3 gap-8"></div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about-us" class="py-24 relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-b from-royal-dark via-royal-darker to-royal-dark"></div>
-        <div class="max-w-7xl mx-auto px-6 relative z-10">
-            <div class="grid lg:grid-cols-2 gap-16 items-center">
-                <div class="relative group order-2 lg:order-1">
-                    <div class="absolute -inset-4 bg-gradient-to-r from-gold-500/20 via-amber-500/20 to-gold-600/20 rounded-3xl blur-2xl group-hover:blur-3xl transition-all duration-700"></div>
-                    <div class="relative rounded-2xl overflow-hidden border border-gold-500/30 shadow-2xl shadow-gold-500/10">
-                        <img src="assets/prdc.jpeg" alt="About XFOURTEEN" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" onerror="this.src='https://placehold.co/800x600/1a1a1a/d4af37?text=XFOURTEEN'">
-                        <div class="absolute inset-0 bg-gradient-to-t from-royal-darker/80 via-transparent to-transparent"></div>
-                    </div>
-                </div>
-                <div class="space-y-6 order-1 lg:order-2">
-                    <div class="text-center w-full">
-                        <div class="inline-block mb-3">
-                            <span class="text-gold-500 font-semibold uppercase text-xs tracking-[0.3em] border border-gold-500/30 px-4 py-1.5 rounded-full font-montserrat">Our Story</span>
-                        </div>
-                    </div>
-                    
-                    <div class="text-center">
-                        <h2 class="about-title-fixed">
-                            About <span class="about-xfourteen-fixed">XFOURTEEN</span>
-                        </h2>
-                        <div class="w-16 h-0.5 bg-gradient-to-r from-gold-500 to-amber-500 rounded-full mx-auto"></div>
-                    </div>
-                    
-                    <p class="text-gold-300/70 leading-relaxed text-base md:text-lg text-center">
-                        <span class="text-gold-500 font-bold">XFOURTEEN CORPORATION</span> is the pinnacle of Free Fire game settings optimization. Crafted for those who demand nothing but excellence. Every setting is meticulously calibrated for royal precision.
-                    </p>
-                    
-                    <div class="pl-5 border-l-4 border-gold-500 py-3 bg-gradient-to-r from-gold-500/5 to-transparent rounded-r-xl mx-auto" style="max-width: 90%;">
-                        <p class="text-gold-300 italic font-cormorant font-bold text-xl text-center">"Excellence is not an act, but a habit. Forge your throne with precision."</p>
-                    </div>
-                    
-                    <div class="grid sm:grid-cols-2 gap-6">
-                        <div class="p-5 rounded-xl bg-royal-darker/50 border border-gold-500/10 hover:border-gold-500/30 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg hover:shadow-gold-500/10 text-center">
-                            <h4 class="text-gold-500 font-bold uppercase text-xs tracking-wider mb-2">our vision</h4>
-                            <p class="text-gold-300/60 text-sm leading-relaxed">To become the golden standard for professional players worldwide.</p>
-                        </div>
-                        <div class="p-5 rounded-xl bg-royal-darker/50 border border-gold-500/10 hover:border-gold-500/30 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg hover:shadow-amber-500/10 text-center">
-                            <h4 class="text-gold-500 font-bold uppercase text-xs tracking-wider mb-2">our mission</h4>
-                            <p class="text-gold-300/60 text-sm leading-relaxed">Delivering premium, safe, and legal optimization for the elite gaming community.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Team Section -->
-    <section id="our-team" class="py-24 bg-royal-darker relative overflow-hidden">
-        <div class="max-w-7xl mx-auto px-6 relative z-10">
-            <div class="text-center mb-16">
-                <div class="inline-block mb-4">
-                    <span class="text-gold-500 font-semibold uppercase text-xs tracking-[0.3em] border border-gold-500/30 px-4 py-1.5 rounded-full font-montserrat">The Royal Council</span>
-                </div>
-                <h2 class="section-title-gold">Our <span>Nobles</span></h2>
-                <div class="royal-divider"></div>
-            </div>
-            <div id="team-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact-us" class="py-24 relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-t from-royal-dark via-royal-darker to-royal-dark"></div>
-        <div class="max-w-7xl mx-auto px-6 relative z-10">
-            <div class="text-center mb-16">
-                <div class="inline-block mb-4">
-                    <span class="text-gold-500 font-semibold uppercase text-xs tracking-[0.3em] border border-gold-500/30 px-4 py-1.5 rounded-full font-montserrat">Get In Touch</span>
-                </div>
-                <h2 class="section-title-gold">Contact <span>The Throne</span></h2>
-                <div class="royal-divider"></div>
-            </div>
-            
-            <div class="grid lg:grid-cols-2 gap-10 max-w-5xl mx-auto">
-                <div class="space-y-5">
-                    <div class="contact-royal group">
-                        <div class="contact-icon-royal bg-gold-500/10 text-gold-500 group-hover:bg-gold-500 group-hover:text-royal-dark transition-all duration-500">
-                            <i class="fab fa-whatsapp text-xl"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-white font-bold text-lg font-montserrat">X14 Channel</h3>
-                            <a href="https://whatsapp.com/channel/0029Vacu3BN9Gv7OILrZIX0i" target="_blank" class="text-gold-500 text-sm font-medium group-hover:text-gold-400 transition-colors">JOIN THE CHAMBER →</a>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-royal group">
-                        <div class="contact-icon-royal bg-gold-500/10 text-gold-500 group-hover:bg-gold-500 group-hover:text-royal-dark transition-all duration-500">
-                            <i class="fab fa-discord text-xl"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-white font-bold text-lg font-montserrat">X14 Discord</h3>
-                            <a href="https://discord.gg/bekkmRDQXX" target="_blank" class="text-gold-500 text-sm font-medium group-hover:text-gold-400 transition-colors">ENTER THE HALL →</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-royal-darker/60 p-8 rounded-2xl border border-gold-500/20 backdrop-blur-sm shadow-2xl hover:border-gold-500/40 transition-all duration-500">
-                    <h3 class="text-xl font-bold mb-5 text-white flex items-center gap-3 font-montserrat">
-                        <div class="w-10 h-10 rounded-full bg-gradient-to-r from-gold-500/20 to-amber-500/20 flex items-center justify-center">
-                            <i class="fas fa-feather-alt text-gold-500"></i>
-                        </div>
-                        Send Royal Message
-                    </h3>
-                    <div class="space-y-4">
-                        <input type="text" id="webhook-name" placeholder="Your Noble Name" class="form-royal" required>
-                        <input type="tel" id="webhook-phone" placeholder="Royal Contact (WhatsApp)" class="form-royal" required>
-                        <textarea id="webhook-msg" placeholder="Your Royal Message..." rows="4" class="form-royal" required></textarea>
-                        <button onclick="sendToDiscord()" id="webhook-btn" class="w-full btn-royal-primary justify-center">
-                            <i class="fas fa-paper-plane mr-2"></i> Deliver Message
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========== PAYMENT MODAL - DENGAN TOMBOL UPLOAD BUKTI ========== -->
-    <div id="payment-modal" class="fixed inset-0 z-[99999] bg-black/95 backdrop-blur-md hidden items-center justify-center p-4" style="display: none;">
-        <div class="bg-gradient-to-br from-royal-darker to-royal-dark w-full max-w-md rounded-2xl border border-gold-500/30 p-5 md:p-6 text-center relative shadow-2xl" style="max-height: 90vh; overflow-y: auto;">
-            <button onclick="closePayment()" class="absolute top-4 right-4 text-gold-500/50 hover:text-gold-500 transition-all z-20">
-                <i class="fas fa-times text-xl"></i>
-            </button>
-            
-            <div class="flex justify-center mb-3">
-                <div class="relative w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-gold-600 to-amber-700 rounded-lg flex items-center justify-center shadow-lg overflow-hidden">
-                    <img src="assets/icx14.png" class="w-full h-full object-cover" alt="logo">
-                </div>
-            </div>
-            
-            <h3 class="text-xl md:text-2xl font-bold mb-1 text-white font-cormorant">ROYAL TREASURY</h3>
-            <p class="text-gold-400/60 text-[10px] md:text-xs mb-4 uppercase tracking-wider">COMPLETE YOUR TRIBUTE</p>
-            
-            <!-- Info Pesanan -->
-            <div class="bg-royal-dark/50 p-3 md:p-4 rounded-xl mb-4 text-left space-y-2 border border-gold-500/20">
-                <div class="flex justify-between text-xs text-gold-400/70 font-medium">
-                    <span>ROYAL ITEM:</span><span id="pay-product" class="text-gold-500 font-semibold"></span>
-                </div>
-                <div class="flex justify-between font-bold text-lg md:text-xl">
-                    <span class="text-gold-400">TRIBUTE:</span>
-                    <span id="pay-amount" class="payment-total-fixed"></span>
-                </div>
-            </div>
-
-            <!-- Tab Navigasi Metode Bayar -->
-            <div class="flex gap-1 mb-4 border-b border-gold-500/30 pb-2 overflow-x-auto no-scrollbar">
-                <button onclick="switchPaymentTab('qris')" id="tab-qris" class="payment-tab active flex-1 py-2 px-1 text-[10px] md:text-xs font-bold uppercase tracking-wider rounded-t-lg transition-all whitespace-nowrap">
-                    <i class="fas fa-qrcode mr-1"></i> QRIS
-                </button>
-                <button onclick="switchPaymentTab('dana')" id="tab-dana" class="payment-tab flex-1 py-2 px-1 text-[10px] md:text-xs font-bold uppercase tracking-wider rounded-t-lg transition-all whitespace-nowrap">
-                    <i class="fas fa-mobile-alt mr-1"></i> DANA
-                </button>
-                <button onclick="switchPaymentTab('gopay')" id="tab-gopay" class="payment-tab flex-1 py-2 px-1 text-[10px] md:text-xs font-bold uppercase tracking-wider rounded-t-lg transition-all whitespace-nowrap">
-                    <i class="fas fa-wallet mr-1"></i> GOPAY
-                </button>
-                <button onclick="switchPaymentTab('seabank')" id="tab-seabank" class="payment-tab flex-1 py-2 px-1 text-[10px] md:text-xs font-bold uppercase tracking-wider rounded-t-lg transition-all whitespace-nowrap">
-                    <i class="fas fa-water mr-1"></i> SEABANK
-                </button>
-            </div>
-
-            <!-- Konten Dinamis per Metode Bayar -->
-            <div id="payment-content" class="min-h-[260px] md:min-h-[280px] flex flex-col justify-center">
-                <!-- Konten akan diganti via JavaScript -->
-            </div>
-            
-            <!-- ========== TOMBOL UPLOAD BUKTI ========== -->
-            <button onclick="attachBukti()" id="btnAttachBukti" class="w-full bg-royal-dark border border-gold-500/50 hover:border-gold-500 text-gold-400 py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all duration-300 mt-3 text-sm">
-                <i class="fas fa-camera mr-2"></i> LAMPIRKAN BUKTI TRANSFER
-            </button>
-            
-            <!-- Indikator Bukti Terlampir -->
-            <div id="buktiIndicator" class="hidden mt-2 text-center">
-                <span class="text-xs text-green-500"><i class="fas fa-check-circle"></i> Bukti sudah dilampirkan</span>
-            </div>
-            
-            <!-- Tombol Kirim ke WA -->
-            <button onclick="confirmToWA()" class="w-full bg-gradient-to-r from-gold-600 to-amber-600 hover:from-gold-500 hover:to-amber-500 text-royal-dark py-3 rounded-xl font-bold flex items-center justify-center gap-2 md:gap-3 transition-all duration-300 shadow-lg shadow-gold-500/30 mt-3 text-sm md:text-base">
-                <i class="fab fa-whatsapp text-lg md:text-xl"></i> SEND PROOF TO THRONE
-            </button>
         </div>
     </div>
-
-    <!-- Back to Top Button -->
-    <button id="backToTop" class="fixed bottom-6 right-6 z-50 w-12 h-12 bg-gradient-to-br from-gold-600 to-amber-600 rounded-full flex items-center justify-center text-royal-dark shadow-2xl shadow-gold-500/30 opacity-0 transition-all duration-500 hover:scale-110 hover:shadow-gold-500/50">
-        <i class="fas fa-chevron-up"></i>
-    </button>
-
-    <!-- Toast Notification -->
-    <div id="toast" class="fixed bottom-6 right-6 z-[100] transform translate-x-full transition-all duration-500">
-        <div class="bg-gradient-to-r from-gold-600 to-amber-600 rounded-lg px-5 py-3 shadow-2xl flex items-center gap-2">
-            <i class="fas fa-crown text-royal-dark text-sm"></i>
-            <span id="toast-message" class="text-royal-dark text-sm font-bold"></span>
-        </div>
+    
+    <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold mb-4 tracking-tight transform translate-y-10 opacity-0 animate-text-reveal font-playfair">
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#ff6666] via-[#ff1a1a] to-[#cc0000]">XFOURTEEN</span>
+        <br>
+        <span class="text-white text-2xl md:text-3xl lg:text-4xl tracking-wider font-montserrat">CORPORATION</span>
+    </h1>
+    
+    <p class="text-xl md:text-2xl font-semibold text-[#ff6666] mb-4 transform translate-y-10 opacity-0 animate-text-reveal-delay">
+        <span id="typewriter-text" class="font-montserrat"></span>
+        <span class="typewriter-cursor"></span>
+    </p>
+    
+    <p class="text-[#ff9999] max-w-2xl mx-auto mb-10 text-base md:text-lg leading-relaxed transform translate-y-10 opacity-0 animate-text-reveal-delay2">
+        Available for multiple platforms. The best sensitivity settings designed for the best. Elevate your Free Fire experience to the next level.
+    </p>
+    
+    <div class="flex flex-col sm:flex-row gap-5 transform translate-y-10 opacity-0 animate-text-reveal-delay3">
+        <a href="#products" class="btn-royal-primary group">
+            <span>View Collection</span>
+            <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform duration-300"></i>
+        </a>
+        <a href="#contact-us" class="btn-royal-secondary group">
+            <span>Contact Us </span>
+            <i class="far fa-comment-dots ml-2 group-hover:scale-110 transition-transform duration-300"></i>
+        </a>
     </div>
+    
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce-gold">
+        <div class="text-[#ff1a1a]/50 text-xs tracking-[0.3em] uppercase font-montserrat font-semibold">SCROLL</div>
+        <div class="w-px h-10 bg-gradient-to-b from-[#ff1a1a] to-transparent mx-auto mt-1"></div>
+    </div>
+</header>
 
-    <footer class="py-10 text-center border-t border-gold-500/20 bg-royal-darker">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
-                <div class="flex items-center gap-2">
-                    <div class="w-8 h-8 bg-gradient-to-br from-gold-600 to-amber-600 rounded-lg flex items-center justify-center">
-                        <i class="fas fa-crown text-royal-dark text-xs"></i>
-                    </div>
-                    <span class="text-sm md:text-base font-bold tracking-tight text-white font-montserrat">XFOURTEEN<span class="text-gold-500"> CORPORATION</span></span>
-                </div>
-                <div class="flex gap-6">
-                    <a href="#" onclick="scrollToSection('home')" class="text-gold-400/50 hover:text-gold-400 text-xs uppercase tracking-wider font-medium transition-colors">Home</a>
-                    <a href="#" onclick="scrollToSection('products')" class="text-gold-400/50 hover:text-gold-400 text-xs uppercase tracking-wider font-medium transition-colors">Products</a>
-                    <a href="#" onclick="scrollToSection('about-us')" class="text-gold-400/50 hover:text-gold-400 text-xs uppercase tracking-wider font-medium transition-colors">About</a>
-                    <a href="#" onclick="scrollToSection('contact-us')" class="text-gold-400/50 hover:text-gold-400 text-xs uppercase tracking-wider font-medium transition-colors">Contact</a>
+<section id="products" class="py-24 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-[#0a0000] via-[#050000] to-[#0a0000]"></div>
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+        <div class="text-center mb-16">
+            <div class="inline-block mb-4">
+                <span class="text-[#ff1a1a] font-semibold uppercase text-xs tracking-[0.3em] border border-[#ff1a1a]/30 px-4 py-1.5 rounded-full font-montserrat">Royal Product</span>
+            </div>
+            <h2 class="section-title-gold">Our <span>Product</span></h2>
+            <div class="royal-divider"></div>
+        </div>
+        
+        <div class="mb-12 flex justify-center overflow-x-auto no-scrollbar">
+            <div class="inline-flex gap-2 bg-[#050000]/60 p-1.5 rounded-full backdrop-blur-sm border border-[#ff1a1a]/20">
+                <button onclick="filterProducts('ANDROID')" id="tab-ANDROID" class="tab-royal active">
+                    <i class="fab fa-android mr-2"></i> Android
+                </button>
+                <button onclick="filterProducts('IOS')" id="tab-IOS" class="tab-royal">
+                    <i class="fab fa-apple mr-2"></i> iOS
+                </button>
+                <button onclick="filterProducts('PC')" id="tab-PC" class="tab-royal">
+                    <i class="fas fa-desktop mr-2"></i> PC
+                </button>
+            </div>
+        </div>
+        
+        <div id="product-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+    </div>
+</section>
+
+<section class="py-24 bg-[#050000] relative overflow-hidden">
+    <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#ff1a1a] to-transparent"></div>
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+        <div class="text-center mb-16">
+            <div class="inline-block mb-4">
+                <span class="text-[#ff1a1a] font-semibold uppercase text-xs tracking-[0.3em] border border-[#ff1a1a]/30 px-4 py-1.5 rounded-full font-montserrat">Why We're The Best</span>
+            </div>
+            <h2 class="section-title-gold">Why <span>Choose Us</span></h2>
+            <div class="royal-divider"></div>
+        </div>
+        <div id="features-container" class="grid md:grid-cols-3 gap-8"></div>
+    </div>
+</section>
+
+<section id="about-us" class="py-24 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-[#0a0000] via-[#050000] to-[#0a0000]"></div>
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+            <div class="relative group order-2 lg:order-1">
+                <div class="absolute -inset-4 bg-gradient-to-r from-[#ff1a1a]/20 via-[#cc0000]/20 to-[#ff1a1a]/20 rounded-3xl blur-2xl group-hover:blur-3xl transition-all duration-700"></div>
+                <div class="relative rounded-2xl overflow-hidden border border-[#ff1a1a]/30 shadow-2xl shadow-[#ff1a1a]/10">
+                    <img src="assets/poster.png" alt="About XFOURTEEN" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" onerror="this.src='https://placehold.co/800x600/1a1a1a/ff1a1a?text=XFOURTEEN'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#050000]/80 via-transparent to-transparent"></div>
                 </div>
             </div>
-            <p class="text-gold-500/30 text-[10px] tracking-wider uppercase font-medium">&copy; 2026 XFOURTEEN CORPORATION. All Rights Reserved. Forged in Royalty.</p>
+            <div class="space-y-6 order-1 lg:order-2">
+                <div class="text-center w-full">
+                    <div class="inline-block mb-3">
+                        <span class="text-[#ff1a1a] font-semibold uppercase text-xs tracking-[0.3em] border border-[#ff1a1a]/30 px-4 py-1.5 rounded-full font-montserrat">Our Story</span>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <h2 class="about-title-fixed">
+                        About <span class="about-xfourteen-fixed">XFOURTEEN</span>
+                    </h2>
+                    <div class="w-16 h-0.5 bg-gradient-to-r from-[#ff1a1a] to-[#cc0000] rounded-full mx-auto"></div>
+                </div>
+                
+                <p class="text-[#ff9999] leading-relaxed text-base md:text-lg text-center">
+                    <span class="text-[#ff1a1a] font-bold">XFOURTEEN CORPORATION</span> is the pinnacle of Free Fire game settings optimization. Crafted for those who demand nothing but excellence. Every setting is meticulously calibrated for royal precision.
+                </p>
+                
+                <div class="pl-5 border-l-4 border-[#ff1a1a] py-3 bg-gradient-to-r from-[#ff1a1a]/5 to-transparent rounded-r-xl mx-auto" style="max-width: 90%;">
+                    <p class="text-[#ff9999] italic font-playfair font-bold text-xl text-center">"Excellence is not an act, but a habit. Forge your throne with precision."</p>
+                </div>
+                
+                <div class="grid sm:grid-cols-2 gap-6">
+                    <div class="p-5 rounded-xl bg-[#050000]/50 border border-[#ff1a1a]/10 hover:border-[#ff1a1a]/30 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg hover:shadow-[#ff1a1a]/10 text-center">
+                        <h4 class="text-[#ff1a1a] font-bold uppercase text-xs tracking-wider mb-2">our vision</h4>
+                        <p class="text-[#ff9999] text-sm leading-relaxed">To become the golden standard for professional players worldwide.</p>
+                    </div>
+                    <div class="p-5 rounded-xl bg-[#050000]/50 border border-[#ff1a1a]/10 hover:border-[#ff1a1a]/30 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg hover:shadow-[#cc0000]/10 text-center">
+                        <h4 class="text-[#ff1a1a] font-bold uppercase text-xs tracking-wider mb-2">our mission</h4>
+                        <p class="text-[#ff9999] text-sm leading-relaxed">Delivering premium, safe, and legal optimization for the elite gaming community.</p>
+                    </div>
+                </div>
+            </div>
         </div>
-    </footer>
+    </div>
+</section>
 
-    <script src="script.js"></script>
+<section id="our-team" class="py-24 bg-[#050000] relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+        <div class="text-center mb-16">
+            <div class="inline-block mb-4">
+                <span class="text-[#ff1a1a] font-semibold uppercase text-xs tracking-[0.3em] border border-[#ff1a1a]/30 px-4 py-1.5 rounded-full font-montserrat">The Royal Council</span>
+            </div>
+            <h2 class="section-title-gold">Our <span>Team</span></h2>
+            <div class="royal-divider"></div>
+        </div>
+        <div id="team-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+    </div>
+</section>
+
+<section id="contact-us" class="py-24 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-t from-[#0a0000] via-[#050000] to-[#0a0000]"></div>
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+        <div class="text-center mb-16">
+            <div class="inline-block mb-4">
+                <span class="text-[#ff1a1a] font-semibold uppercase text-xs tracking-[0.3em] border border-[#ff1a1a]/30 px-4 py-1.5 rounded-full font-montserrat">Get In Touch</span>
+            </div>
+            <h2 class="section-title-gold">Contact <span>The Throne</span></h2>
+            <div class="royal-divider"></div>
+        </div>
+        
+        <div class="grid lg:grid-cols-2 gap-10 max-w-5xl mx-auto">
+            <div class="space-y-5">
+                <div class="contact-royal group">
+                    <div class="contact-icon-royal">
+                        <i class="fab fa-whatsapp text-xl text-[#ff1a1a] group-hover:text-white transition-colors"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-white font-bold text-lg font-montserrat">X14 Channel</h3>
+                        <a href="https://whatsapp.com/channel/0029Vacu3BN9Gv7OILrZIX0i" target="_blank" class="text-[#ff1a1a] text-sm font-medium group-hover:text-[#ff6666] transition-colors">JOIN THE CHAMBER →</a>
+                    </div>
+                </div>
+                
+                <div class="contact-royal group">
+                    <div class="contact-icon-royal">
+                        <i class="fab fa-discord text-xl text-[#ff1a1a] group-hover:text-white transition-colors"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-white font-bold text-lg font-montserrat">X14 Discord</h3>
+                        <a href="https://discord.gg/GZx4FEw9AE" target="_blank" class="text-[#ff1a1a] text-sm font-medium group-hover:text-[#ff6666] transition-colors">ENTER THE HALL →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-[#050000]/60 p-8 rounded-2xl border border-[#ff1a1a]/20 backdrop-blur-sm shadow-2xl hover:border-[#ff1a1a]/40 transition-all duration-500">
+                <h3 class="text-xl font-bold mb-5 text-white flex items-center gap-3 font-montserrat">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-r from-[#ff1a1a]/20 to-[#cc0000]/20 flex items-center justify-center">
+                        <i class="fas fa-feather-alt text-[#ff1a1a]"></i>
+                    </div>
+                    Send Message
+                </h3>
+                <div class="space-y-4">
+                    <input type="text" id="webhook-name" placeholder="Your Noble Name" class="form-royal" required>
+                    <input type="tel" id="webhook-phone" placeholder="Royal Contact (WhatsApp)" class="form-royal" required>
+                    <textarea id="webhook-msg" placeholder="Your Royal Message..." rows="4" class="form-royal" required></textarea>
+                    <button onclick="sendToDiscord()" id="webhook-btn" class="w-full btn-royal-primary justify-center">
+                        <i class="fas fa-paper-plane mr-2"></i> Deliver Message
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div id="payment-modal" class="fixed inset-0 z-[99999] bg-black/95 backdrop-blur-md hidden items-center justify-center p-4" style="display: none;">
+    <div class="bg-gradient-to-br from-[#0a0000] to-[#050000] w-full max-w-md rounded-2xl border border-[#ff1a1a]/30 p-5 md:p-6 text-center relative shadow-2xl" style="max-height: 90vh; overflow-y: auto;">
+        <button onclick="closePayment()" class="absolute top-4 right-4 text-[#ff1a1a]/50 hover:text-[#ff1a1a] transition-all z-20">
+            <i class="fas fa-times text-xl"></i>
+        </button>
+        
+        <div class="flex justify-center mb-3">
+            <div class="relative w-14 h-14 md:w-16 md:h-16 bg-transparent rounded-lg flex items-center justify-center shadow-lg overflow-hidden">
+                <img src="assets/icon.png" class="w-full h-full object-cover" alt="logo" style="background: transparent;">
+            </div>
+        </div>
+        
+        <h3 class="text-xl md:text-2xl font-bold mb-1 text-white font-playfair">PAYMENT</h3>
+        <p class="text-[#ff1a1a]/60 text-[10px] md:text-xs mb-4 uppercase tracking-wider">COMPLETE YOUR TRIBUTE</p>
+        
+        <div class="bg-[#0a0000]/50 p-3 md:p-4 rounded-xl mb-4 text-left space-y-2 border border-[#ff1a1a]/20">
+            <div class="flex justify-between text-xs text-[#ff6666]/70 font-medium">
+                <span>ITEM:</span><span id="pay-product" class="text-[#ff1a1a] font-semibold"></span>
+            </div>
+            <div class="flex justify-between font-bold text-lg md:text-xl">
+                <span class="text-[#ff6666]">TOTAL:</span>
+                <span id="pay-amount" class="payment-total-fixed"></span>
+            </div>
+        </div>
+
+        <div class="mb-4 text-center">
+            <div class="inline-block px-4 py-1 rounded-full bg-[#ff1a1a]/20 border border-[#ff1a1a]/50 text-[#ff1a1a] text-xs font-bold uppercase tracking-wider">
+                <i class="fas fa-qrcode mr-1"></i> QRIS
+            </div>
+        </div>
+
+        <div id="payment-content" class="min-h-[260px] md:min-h-[280px] flex flex-col justify-center"></div>
+        
+        <button onclick="attachBukti()" id="btnAttachBukti" class="w-full bg-[#0a0000] border border-[#ff1a1a]/50 hover:border-[#ff1a1a] text-[#ff6666] py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all duration-300 mt-3 text-sm">
+            <i class="fas fa-camera mr-2"></i> ATTACH PROOF
+        </button>
+        
+        <div id="buktiIndicator" class="hidden mt-2 text-center">
+            <span class="text-xs text-green-500"><i class="fas fa-check-circle"></i> Evidence has been attached</span>
+        </div>
+        
+        <button onclick="confirmToWA()" class="w-full bg-gradient-to-r from-[#ff1a1a] to-[#cc0000] hover:from-[#ff4444] hover:to-[#ff0000] text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 md:gap-3 transition-all duration-300 shadow-lg shadow-[#ff1a1a]/30 mt-3 text-sm md:text-base">
+            <i class="fab fa-whatsapp text-lg md:text-xl"></i> SEND PROOF
+        </button>
+    </div>
+</div>
+
+<button id="backToTop" class="fixed bottom-6 right-6 z-50 w-12 h-12 bg-gradient-to-br from-[#ff1a1a] to-[#cc0000] rounded-full flex items-center justify-center text-white shadow-2xl shadow-[#ff1a1a]/30 opacity-0 transition-all duration-500 hover:scale-110 hover:shadow-[#ff1a1a]/50">
+    <i class="fas fa-chevron-up"></i>
+</button>
+
+<div id="toast" class="fixed bottom-6 right-6 z-[100] transform translate-x-full transition-all duration-500">
+    <div class="bg-gradient-to-r from-[#ff1a1a] to-[#cc0000] rounded-lg px-5 py-3 shadow-2xl flex items-center gap-2">
+        <i class="fas fa-crown text-white text-sm"></i>
+        <span id="toast-message" class="text-white text-sm font-bold"></span>
+    </div>
+</div>
+
+<footer class="py-10 text-center border-t border-[#ff1a1a]/20 bg-[#050000]">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-gradient-to-br from-[#ff1a1a] to-[#cc0000] rounded-lg flex items-center justify-center">
+                    <i class="fas fa-crown text-white text-xs"></i>
+                </div>
+                <span class="text-sm md:text-base font-bold tracking-tight text-white font-montserrat">XFOURTEEN<span class="text-[#ff1a1a]"> CORPORATION</span></span>
+            </div>
+            <div class="flex gap-6">
+                <a href="#" onclick="scrollToSection('home')" class="text-[#ff6666]/50 hover:text-[#ff6666] text-xs uppercase tracking-wider font-medium transition-colors">Home</a>
+                <a href="#" onclick="scrollToSection('products')" class="text-[#ff6666]/50 hover:text-[#ff6666] text-xs uppercase tracking-wider font-medium transition-colors">Products</a>
+                <a href="#" onclick="scrollToSection('about-us')" class="text-[#ff6666]/50 hover:text-[#ff6666] text-xs uppercase tracking-wider font-medium transition-colors">About</a>
+                <a href="#" onclick="scrollToSection('contact-us')" class="text-[#ff6666]/50 hover:text-[#ff6666] text-xs uppercase tracking-wider font-medium transition-colors">Contact</a>
+            </div>
+        </div>
+        <p class="text-[#ff1a1a]/30 text-[10px] tracking-wider uppercase font-medium">&copy; 2026 XFOURTEEN CORPORATION. All Rights Reserved. Forged in Royalty.</p>
+    </div>
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
