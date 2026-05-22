@@ -245,7 +245,7 @@
 <canvas id="goldDustCanvas" class="fixed inset-0"></canvas>
 <canvas id="particleCanvas" class="fixed inset-0"></canvas>
 <canvas id="mouseTrailCanvas" class="fixed inset-0 pointer-events-none"></canvas>
-<audio id="welcomeSound" src="assets/welcome.mp3" preload="auto"></audio>
+
 <div id="loader" class="fixed inset-0 z-[100] bg-[#020000] flex flex-col items-center justify-center transition-all duration-1000">
     <div class="text-center relative">
         <div class="relative mb-10">
@@ -597,6 +597,71 @@
     </div>
 </footer>
 
+<!-- Audio Element untuk Sound Autoplay saat Loading Selesai -->
+<audio id="welcomeSound" preload="auto" style="display: none;">
+    <source src="assets/welcome.mp3" type="audio/mpeg">
+    Browser Anda tidak mendukung audio.
+</audio>
+
 <script src="script.js"></script>
+<script>
+// ==================== FUNGSI AUTOPLAY SOUND SETELAH LOADING SELESAI ====================
+function playWelcomeSound() {
+    const audio = document.getElementById('welcomeSound');
+    if (audio) {
+        // Set volume ke 70% agar tidak terlalu kencang
+        audio.volume = 0.7;
+        
+        // Promise play untuk menangani autoplay restriction
+        const playPromise = audio.play();
+        
+        if (playPromise !== undefined) {
+            playPromise.catch(error => {
+                console.log("Autoplay ditolak browser, mencoba lagi dengan interaksi user...");
+                // Fallback: jika autoplay diblokir, mainkan saat user pertama kali klik di mana saja
+                const playOnInteraction = () => {
+                    audio.play().catch(e => console.log("Gagal memutar sound:", e));
+                    document.removeEventListener('click', playOnInteraction);
+                    document.removeEventListener('touchstart', playOnInteraction);
+                };
+                document.addEventListener('click', playOnInteraction);
+                document.addEventListener('touchstart', playOnInteraction);
+            });
+        }
+    }
+}
+
+// Override fungsi loader completion yang ada di DOMContentLoaded
+// Kita simpan referensi interval loader asli dan modifikasi sedikit
+document.addEventListener('DOMContentLoaded', function() {
+    // Cek apakah loader sudah dihandle oleh script.js
+    // Kita akan menambahkan observer untuk memantau loader hilang
+    const loader = document.getElementById('loader');
+    if (loader) {
+        // Gunakan MutationObserver untuk mendeteksi ketika loader display menjadi none
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+                    if (loader.style.display === 'none') {
+                        // Loader sudah hilang, play sound!
+                        playWelcomeSound();
+                        observer.disconnect(); // Stop observing
+                    }
+                }
+            });
+        });
+        observer.observe(loader, { attributes: true });
+        
+        // Juga cek setiap 100ms untuk backup (jika MutationObserver gagal)
+        const checkInterval = setInterval(function() {
+            if (loader.style.display === 'none') {
+                playWelcomeSound();
+                clearInterval(checkInterval);
+                observer.disconnect();
+            }
+        }, 100);
+    }
+});
+</script>
 </body>
 </html>
