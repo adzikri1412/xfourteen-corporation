@@ -552,9 +552,8 @@ window.addEventListener('scroll', () => { if (backToTop) { backToTop.style.opaci
 if (backToTop) backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 document.querySelectorAll('a[href^="#"]').forEach(anchor => { anchor.addEventListener('click', (e) => { e.preventDefault(); const target = document.querySelector(anchor.getAttribute('href')); if (target) window.scrollTo({ top: target.offsetTop - 70, behavior: 'smooth' }); }); });
 
-// ==================== MODIFIED LOADER WITH SOUND ====================
+// ==================== MODIFIED LOADER WITH AUTO SOUND (REPLACE THIS PART ONLY) ====================
 const loader = document.getElementById('loader');
-const welcomeSound = document.getElementById('welcomeSound');
 if (loader) { 
     let width = 0; 
     const loadingBar = document.getElementById('loadingBar'); 
@@ -567,11 +566,14 @@ if (loader) {
                     loader.style.display = 'none'; 
                     if (nav) nav.style.transform = 'translateY(0)';
                     
-                    // PLAY WELCOME SOUND AFTER LOADER FINISHES
-                    if (welcomeSound) {
-                        welcomeSound.volume = 0.7;
-                        welcomeSound.play()
+                    // LANGSUNG BUNYI OTOMATIS, GA USAH KLIK
+                    const sound = document.getElementById('welcomeSound');
+                    if (sound) {
+                        sound.volume = 0.7;
+                        sound.muted = false;
+                        sound.play();
                     }
+                    
                 }, 500); 
             }, 500); 
         } else { 
@@ -580,5 +582,4 @@ if (loader) {
             if (loadingBar) loadingBar.style.width = width + '%'; 
         } 
     }, 150); 
-}
-});
+}});
