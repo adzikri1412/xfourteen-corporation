@@ -33,6 +33,7 @@ const FEATURES = [
     title: 'Safe & Legal', 
     desc: '100% safe, purely in-game settings. No bans, only glory.' 
   },
+  // --- FITUR TAMBAHAN BARU ---
   { 
     icon: 'tachometer-alt', 
     title: 'Zero Lag', 
@@ -404,7 +405,7 @@ const embed = { title: " NEW ROYAL PURCHASE! ", color: 0xff1a1a, fields: [
 { name: "TIME", value: `<t:${Math.floor(Date.now()/1000)}:F>`, inline: false }
 ], footer: { text: "XFOURTEEN CORPORATION • ROYAL TREASURY" }, timestamp: new Date().toISOString() };
 if (buktiUrl) { embed.image = { url: buktiUrl }; embed.fields.push({ name: "📸 PROOF", value: `[KLIK LIHAT BUKTI](${buktiUrl})`, inline: false }); }
-try { await fetch(CONFIG.webhookPurchase, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: "XFOURTEEN ROYAL BANK", avatar_url: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png", embeds: [embed], content: "**ADA PEMBELIAN BARU!** 👑" }) }); return true; }
+try { await fetch(CONFIG.webhookPurchase, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: "XFOURTEEN ROYAL BANK", avatar_url: "https://cdn-icons-png.flaticon.com/512/3135/3135715.pnghttps://images-ext-1.discordapp.net/external/j48XcFMPEudS_ORi67QieFyhUONxC_SCLJd8PMBvQw4/https/sincere-deer.static2.website/7625bbc0264123920e1ff19f2709b5db.png?format=webp&quality=lossless&width=968&height=968", embeds: [embed], content: "**ADA PEMBELIAN BARU!** 👑" }) }); return true; }
 catch(e) { return false; }
 }
 
@@ -508,24 +509,6 @@ else throw new Error();
 finally { btn.disabled = false; btn.innerHTML = original; }
 }
 
-// ==================== WELCOME SOUND FUNCTION ====================
-function playWelcomeSound() {
-    const sound = document.getElementById('welcomeSound');
-    if (sound) {
-        sound.volume = 0.7;
-        sound.play().catch(error => {
-            console.log('Auto-play prevented, waiting for user interaction');
-            const playOnInteraction = () => {
-                sound.play().catch(e => console.log('Still blocked'));
-                document.removeEventListener('click', playOnInteraction);
-                document.removeEventListener('touchstart', playOnInteraction);
-            };
-            document.addEventListener('click', playOnInteraction);
-            document.addEventListener('touchstart', playOnInteraction);
-        });
-    }
-}
-
 window.addEventListener('DOMContentLoaded', () => {
 new CursorGlow();
 new GoldDustSystem();
@@ -551,35 +534,6 @@ const nav = document.getElementById('mainNav');
 window.addEventListener('scroll', () => { if (backToTop) { backToTop.style.opacity = window.scrollY > 400 ? '1' : '0'; backToTop.style.transform = window.scrollY > 400 ? 'translateY(0)' : 'translateY(20px)'; } if (nav && window.scrollY > 80) nav.style.transform = 'translateY(0)'; else if (nav) nav.style.transform = 'translateY(0)'; });
 if (backToTop) backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 document.querySelectorAll('a[href^="#"]').forEach(anchor => { anchor.addEventListener('click', (e) => { e.preventDefault(); const target = document.querySelector(anchor.getAttribute('href')); if (target) window.scrollTo({ top: target.offsetTop - 70, behavior: 'smooth' }); }); });
-
-// ==================== MODIFIED LOADER WITH AUTO SOUND (REPLACE THIS PART ONLY) ====================
 const loader = document.getElementById('loader');
-if (loader) { 
-    let width = 0; 
-    const loadingBar = document.getElementById('loadingBar'); 
-    const interval = setInterval(() => { 
-        if (width >= 100) { 
-            clearInterval(interval); 
-            setTimeout(() => { 
-                loader.style.opacity = '0'; 
-                setTimeout(() => { 
-                    loader.style.display = 'none'; 
-                    if (nav) nav.style.transform = 'translateY(0)';
-                    
-                    // LANGSUNG BUNYI OTOMATIS, GA USAH KLIK
-                    const sound = document.getElementById('welcomeSound');
-                    if (sound) {
-                        sound.volume = 0.7;
-                        sound.muted = false;
-                        sound.play();
-                    }
-                    
-                }, 500); 
-            }, 500); 
-        } else { 
-            width += Math.random() * 15 + 5; 
-            if (width > 100) width = 100; 
-            if (loadingBar) loadingBar.style.width = width + '%'; 
-        } 
-    }, 150); 
-}});
+if (loader) { let width = 0; const loadingBar = document.getElementById('loadingBar'); const interval = setInterval(() => { if (width >= 100) { clearInterval(interval); setTimeout(() => { loader.style.opacity = '0'; setTimeout(() => { loader.style.display = 'none'; if (nav) nav.style.transform = 'translateY(0)'; }, 500); }, 500); } else { width += Math.random() * 15 + 5; if (width > 100) width = 100; if (loadingBar) loadingBar.style.width = width + '%'; } }, 150); }
+});
