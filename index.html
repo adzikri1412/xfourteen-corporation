@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -15,82 +15,68 @@
 
 <script>
 (function() {
-    // ==================== BLOCK ALL CONTEXT MENU ====================
     document.addEventListener('contextmenu', function(e) {
         e.preventDefault();
         e.stopPropagation();
         return false;
     });
 
-    // ==================== BLOCK ALL DEVTOOLS SHORTCUTS ====================
     document.addEventListener('keydown', function(e) {
-        // F12
         if (e.key === 'F12' || e.keyCode === 123) {
             e.preventDefault();
             e.stopPropagation();
             return false;
         }
-        // Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C
         if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) {
             e.preventDefault();
             e.stopPropagation();
             return false;
         }
-        // Ctrl+U (view source)
         if (e.ctrlKey && e.keyCode === 85) {
             e.preventDefault();
             e.stopPropagation();
             return false;
         }
-        // Ctrl+S (save)
         if (e.ctrlKey && e.keyCode === 83) {
             e.preventDefault();
             e.stopPropagation();
             return false;
         }
-        // Ctrl+P (print)
         if (e.ctrlKey && e.keyCode === 80) {
             e.preventDefault();
             e.stopPropagation();
             return false;
         }
-        // Ctrl+Shift+R (hard reload)
         if (e.ctrlKey && e.shiftKey && e.keyCode === 82) {
             e.preventDefault();
             e.stopPropagation();
             return false;
         }
-        // Ctrl+R (reload)
         if (e.ctrlKey && e.keyCode === 82) {
             e.preventDefault();
             e.stopPropagation();
             return false;
         }
-        // F5 (reload)
         if (e.key === 'F5' || e.keyCode === 116) {
             e.preventDefault();
             e.stopPropagation();
             return false;
         }
-        // Ctrl+E (search)
         if (e.ctrlKey && e.keyCode === 69) {
             e.preventDefault();
             e.stopPropagation();
             return false;
         }
-        // Ctrl+Shift+Delete (clear cache)
         if (e.ctrlKey && e.shiftKey && e.keyCode === 46) {
             e.preventDefault();
             e.stopPropagation();
             return false;
         }
-        // Ctrl+Shift+N (incognito)
         if (e.ctrlKey && e.shiftKey && e.keyCode === 78) {
             e.preventDefault();
             e.stopPropagation();
             return false;
         }
-        // Ctrl+N (new window)
         if (e.ctrlKey && e.keyCode === 78) {
             e.preventDefault();
             e.stopPropagation();
@@ -98,33 +84,27 @@
         }
     });
 
-    // ==================== BLOCK COPY/CUT/PASTE/SELECT ====================
     document.addEventListener('copy', function(e) {
         e.preventDefault();
         return false;
     });
-
     document.addEventListener('cut', function(e) {
         e.preventDefault();
         return false;
     });
-
     document.addEventListener('paste', function(e) {
         e.preventDefault();
         return false;
     });
-
     document.addEventListener('selectstart', function(e) {
         e.preventDefault();
         return false;
     });
-
     document.addEventListener('dragstart', function(e) {
         e.preventDefault();
         return false;
     });
 
-    // ==================== CSS ANTI SELECT ====================
     const style = document.createElement('style');
     style.textContent = `
         * {
@@ -148,7 +128,6 @@
     `;
     document.head.appendChild(style);
 
-    // ==================== DEVTOOLS DETECTION (BRUTAL) ====================
     function detectDevTools() {
         const before = new Date().getTime();
         debugger;
@@ -169,7 +148,6 @@
     }
     setTimeout(detectDevTools, 1000);
 
-    // ==================== OVERRIDE CONSOLE METHODS ====================
     const noop = function() {};
     window.console.log = noop;
     window.console.info = noop;
@@ -182,7 +160,6 @@
     window.console.groupEnd = noop;
     window.console.groupCollapsed = noop;
 
-    // ==================== DISABLE RIGHT CLICK ON IMAGES DYNAMIC ====================
     function disableImageContext() {
         const images = document.querySelectorAll('img');
         images.forEach(img => {
@@ -196,12 +173,10 @@
     document.addEventListener('DOMContentLoaded', disableImageContext);
     setTimeout(disableImageContext, 500);
 
-    // ==================== PREVENT DEBUGGER BYPASS ====================
     setInterval(function() {
         debugger;
     }, 100);
 
-    // ==================== RATE LIMITING ANTI DDOS ====================
     let requestCount = 0;
     let lastReset = Date.now();
     
@@ -228,12 +203,10 @@
         return originalOpen.apply(this, arguments);
     };
 
-    // ==================== BLOCK VIEW-SOURCE ====================
     if (window.location.protocol === 'view-source:') {
         window.location.href = 'about:blank';
     }
 
-    // ==================== ANTI CLICKJACKING ====================
     if (top !== self) {
         top.location = self.location;
     }
@@ -246,35 +219,36 @@
 <canvas id="particleCanvas" class="fixed inset-0"></canvas>
 <canvas id="mouseTrailCanvas" class="fixed inset-0 pointer-events-none"></canvas>
 
-<div id="loader" class="fixed inset-0 z-[100] bg-[#020000] flex flex-col items-center justify-center transition-all duration-1000">
-    <div class="text-center relative">
-        <div class="relative mb-10">
-            <div class="absolute inset-0 bg-gradient-to-r from-[#ff1a1a]/30 via-[#cc0000]/30 to-[#ff1a1a]/30 rounded-full blur-2xl animate-pulse-gold"></div>
-            <div class="relative w-28 h-28 md:w-32 md:h-32 mx-auto">
-                <div class="absolute inset-0 border-2 border-[#ff1a1a]/30 rounded-full animate-ping-slow"></div>
-                <div class="absolute inset-0 border-2 border-[#ff1a1a] rounded-full animate-spin-slow"></div>
-                <div class="absolute inset-2 border border-[#ff6666]/50 rounded-full animate-spin-reverse"></div>
+<div id="loader" class="fixed inset-0 z-[100] bg-[#0a0000] flex flex-col items-center justify-center transition-all duration-1000">
+    <div class="text-center relative px-6">
+        <div class="relative mb-8">
+            <div class="absolute inset-0 bg-gradient-to-r from-[#ff1a1a]/20 via-[#ff1a1a]/30 to-[#ff1a1a]/20 rounded-full blur-xl animate-pulse-gold"></div>
+            <div class="relative w-24 h-24 md:w-28 md:h-28 mx-auto">
+                <svg class="absolute inset-0 w-full h-full animate-spin-slow" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="#ff1a1a" stroke-width="1.5" stroke-dasharray="70 200" stroke-linecap="round"/>
+                </svg>
+                <svg class="absolute inset-0 w-full h-full animate-spin-reverse" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="35" fill="none" stroke="#ff6666" stroke-width="1" stroke-dasharray="40 160" stroke-linecap="round"/>
+                </svg>
                 <div class="absolute inset-0 flex items-center justify-center">
-                    <div class="w-20 h-20 md:w-24 md:h-24 bg-transparent rounded-full flex items-center justify-center shadow-2xl shadow-[#ff1a1a]/40 animate-royal-glow overflow-hidden">
-                        <img src="assets/icon.png" class="w-full h-full object-cover" alt="logo" style="background: transparent;">
+                    <div class="w-14 h-14 md:w-16 md:h-16 rounded-xl flex items-center justify-center overflow-hidden">
+                        <img src="assets/icon.png" class="w-full h-full object-cover opacity-80" alt="logo">
                     </div>
                 </div>
             </div>
-            <div class="absolute -bottom-6 left-1/2 -translate-x-1/2 w-24 h-px bg-gradient-to-r from-transparent via-[#ff1a1a] to-transparent"></div>
         </div>
         
-        <h2 class="text-2xl md:text-3xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-[#ff6666] via-[#ff1a1a] to-[#ff6666] uppercase font-playfair mb-4">
-            XFOURTEEN CORPORATION
+        <h2 class="text-2xl md:text-3xl font-bold tracking-wide text-white/80 font-playfair mb-2 animate-pulse-gentle">
+            XFOURTEEN
         </h2>
+        <p class="text-[#ff6666]/50 text-[10px] tracking-[0.2em] uppercase font-montserrat mb-6">CORPORATION</p>
         
-        <div class="relative w-48 h-0.5 bg-[#ff1a1a]/50 rounded-full overflow-hidden mx-auto my-6">
-            <div id="loadingBar" class="absolute inset-0 w-0 bg-gradient-to-r from-[#ff1a1a] to-[#cc0000] rounded-full transition-all duration-300"></div>
+        <div class="w-48 h-0.5 bg-[#ff1a1a]/20 rounded-full overflow-hidden mx-auto">
+            <div id="loadingBar" class="h-full w-0 bg-gradient-to-r from-[#ff1a1a] to-[#ff6666] rounded-full transition-all duration-150 ease-out"></div>
         </div>
         
-        <p class="text-[#ff6666]/70 text-xs tracking-[0.3em] uppercase font-montserrat animate-pulse-gentle">Preparing Experience</p>
-        
-        <div class="absolute -top-10 -left-10 w-20 h-20 border border-[#ff1a1a]/20 rounded-full"></div>
-        <div class="absolute -bottom-10 -right-10 w-20 h-20 border border-[#ff1a1a]/20 rounded-full"></div>
+        <!-- LOADING EXPERIENCE text - no background -->
+        <p class="text-[#ff6666]/40 text-[10px] tracking-wider mt-4 font-montserrat animate-pulse-gentle">LOADING EXPERIENCE</p>
     </div>
 </div>
 
@@ -282,20 +256,22 @@
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         <div class="flex items-center gap-3 cursor-pointer group" onclick="scrollToTop()">
             <div class="relative">
-                <div class="absolute inset-0 bg-[#ff1a1a]/30 blur-md rounded-lg group-hover:blur-xl transition-all duration-500"></div>
-                <div class="relative w-10 h-10 bg-transparent rounded-lg flex items-center justify-center shadow-lg overflow-hidden">
-                    <img src="assets/iconrmv.png" class="w-full h-full object-cover" alt="logo" style="background: transparent;">
+                <div class="absolute inset-0 bg-[#ff1a1a]/20 blur-md rounded-lg group-hover:blur-xl transition-all duration-500"></div>
+                <!-- Icon tanpa background, hanya gambar transparan -->
+                <div class="relative w-9 h-9 rounded-lg flex items-center justify-center overflow-hidden">
+                    <img src="assets/iconrmv.png" class="w-full h-full object-cover" alt="logo">
                 </div>
             </div>
-            <span class="text-lg md:text-xl font-bold tracking-tight text-white font-montserrat group-hover:text-[#ff6666] transition-colors duration-300">
+            <span class="text-lg md:text-xl font-bold tracking-tight text-white/90 font-montserrat group-hover:text-[#ff6666] transition-colors duration-300">
                 XFOURTEEN<span class="text-[#ff1a1a]"> CORPORATION</span>
             </span>
         </div>
         
-        <div class="hidden md:flex items-center gap-10">
+        <div class="hidden md:flex items-center gap-8">
             <a href="#" onclick="scrollToSection('home')" class="royal-link text-sm font-medium text-[#ffcccc]/80 hover:text-[#ff6666] transition-all duration-300">Home</a>
             <a href="#" onclick="scrollToSection('products')" class="royal-link text-sm font-medium text-[#ffcccc]/80 hover:text-[#ff6666] transition-all duration-300">Products</a>
             <a href="#" onclick="scrollToSection('about-us')" class="royal-link text-sm font-medium text-[#ffcccc]/80 hover:text-[#ff6666] transition-all duration-300">About</a>
+            <a href="#" onclick="scrollToSection('faq')" class="royal-link text-sm font-medium text-[#ffcccc]/80 hover:text-[#ff6666] transition-all duration-300">FAQ</a>
             <a href="#" onclick="scrollToSection('contact-us')" class="royal-link text-sm font-medium text-[#ffcccc]/80 hover:text-[#ff6666] transition-all duration-300">Contact</a>
         </div>
         
@@ -304,76 +280,75 @@
         </button>
     </div>
     
-    <div id="mobileMenu" class="md:hidden absolute top-full left-0 w-full bg-[#050000]/95 backdrop-blur-xl border-t border-[#ff1a1a]/20 py-5 px-6 transform translate-y-[-100%] opacity-0 transition-all duration-400">
+    <div id="mobileMenu" class="md:hidden absolute top-full left-0 w-full bg-[#0a0000]/95 backdrop-blur-xl border-t border-[#ff1a1a]/20 py-5 px-6 transform translate-y-[-100%] opacity-0 transition-all duration-400">
         <div class="flex flex-col gap-4">
             <a href="#" onclick="scrollToSection('home')" class="text-[#ff9999] hover:text-[#ff6666] py-2 font-medium transition-colors">Home</a>
             <a href="#" onclick="scrollToSection('products')" class="text-[#ff9999] hover:text-[#ff6666] py-2 font-medium transition-colors">Products</a>
             <a href="#" onclick="scrollToSection('about-us')" class="text-[#ff9999] hover:text-[#ff6666] py-2 font-medium transition-colors">About</a>
+            <a href="#" onclick="scrollToSection('faq')" class="text-[#ff9999] hover:text-[#ff6666] py-2 font-medium transition-colors">FAQ</a>
             <a href="#" onclick="scrollToSection('contact-us')" class="text-[#ff9999] hover:text-[#ff6666] py-2 font-medium transition-colors">Contact</a>
         </div>
     </div>
 </nav>
 
-<header id="home" class="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-20 pb-16 overflow-hidden">
-    <div class="absolute inset-0">
-        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-[#ff1a1a]/5 rounded-full blur-3xl animate-pulse-gold"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#cc0000]/5 rounded-full blur-3xl animate-pulse-gold delay-1000"></div>
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-r from-[#ff1a1a]/5 to-[#cc0000]/5 rounded-full blur-[100px]"></div>
-    </div>
+<!-- HOME PAGE -->
+<header id="home" class="relative min-h-screen flex items-center justify-center px-6 pt-20 pb-16 overflow-hidden">
+    <div class="absolute inset-0 bg-glossy"></div>
     
-    <div class="royal-crown-wrapper mb-8">
-        <div class="royal-crown-inner">
-            <div class="relative w-28 h-28 md:w-36 md:h-36 bg-transparent rounded-full flex items-center justify-center shadow-2xl border border-[#ff1a1a]/30 overflow-hidden">
-                <img src="assets/icon.png" alt="XFOURTEEN Logo" class="w-full h-full object-cover" style="background: transparent;">
-            </div>
+    <div class="max-w-6xl mx-auto text-center relative z-10">
+        <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-8 animate-fade-in-up">
+            <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ff1a1a] opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-[#ff1a1a]"></span>
+            </span>
+            <span class="text-[#ff9999]/90 text-xs font-medium tracking-wide">Official Site</span>
+        </div>
+        
+        <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold mb-4 leading-[1.1] animate-title-reveal">
+            <span class="block text-white">XFOURTEEN</span>
+            <span class="gradient-text-red">CORPORATION</span>
+        </h1>
+        
+        <p class="text-xl md:text-2xl font-semibold text-[#ff6666] mb-4">
+            <span id="typewriter-text" class="font-montserrat"></span>
+            <span class="typewriter-cursor"></span>
+        </p>
+        
+        <p class="text-[#ffcccc]/80 text-base md:text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
+            Available for multiple platforms. The best sensitivity settings designed for the best. Elevate your Free Fire experience to the next level.
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="#products" class="btn-royal-primary group">
+                <span>VIEW COLLECTION</span>
+                <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform duration-300"></i>
+            </a>
+            <a href="#contact-us" class="btn-royal-secondary group">
+                <span>CONTACT US</span>
+                <i class="fas fa-phone-alt ml-2 group-hover:scale-110 transition-transform duration-300"></i>
+            </a>
         </div>
     </div>
     
-    <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold mb-4 tracking-tight transform translate-y-10 opacity-0 animate-text-reveal font-playfair">
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#ff6666] via-[#ff1a1a] to-[#cc0000]">XFOURTEEN</span>
-        <br>
-        <span class="text-white text-2xl md:text-3xl lg:text-4xl tracking-wider font-montserrat">CORPORATION</span>
-    </h1>
-    
-    <p class="text-xl md:text-2xl font-semibold text-[#ff6666] mb-4 transform translate-y-10 opacity-0 animate-text-reveal-delay">
-        <span id="typewriter-text" class="font-montserrat"></span>
-        <span class="typewriter-cursor"></span>
-    </p>
-    
-    <p class="text-[#ff9999] max-w-2xl mx-auto mb-10 text-base md:text-lg leading-relaxed transform translate-y-10 opacity-0 animate-text-reveal-delay2">
-        Available for multiple platforms. The best sensitivity settings designed for the best. Elevate your Free Fire experience to the next level.
-    </p>
-    
-    <div class="flex flex-col sm:flex-row gap-5 transform translate-y-10 opacity-0 animate-text-reveal-delay3">
-        <a href="#products" class="btn-royal-primary group">
-            <span>View Collection</span>
-            <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform duration-300"></i>
-        </a>
-        <a href="#contact-us" class="btn-royal-secondary group">
-            <span>Contact Us </span>
-            <i class="far fa-comment-dots ml-2 group-hover:scale-110 transition-transform duration-300"></i>
-        </a>
-    </div>
-    
     <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce-gold">
-        <div class="text-[#ff1a1a]/50 text-xs tracking-[0.3em] uppercase font-montserrat font-semibold">SCROLL</div>
-        <div class="w-px h-10 bg-gradient-to-b from-[#ff1a1a] to-transparent mx-auto mt-1"></div>
+        <div class="text-[#ff1a1a]/40 text-[10px] tracking-[0.3em] uppercase font-montserrat font-semibold">SCROLL</div>
+        <div class="w-px h-8 bg-gradient-to-b from-[#ff1a1a]/50 to-transparent mx-auto mt-1"></div>
     </div>
 </header>
 
-<section id="products" class="py-24 relative overflow-hidden">
+<section id="products" class="py-24 relative overflow-hidden scroll-reveal">
     <div class="absolute inset-0 bg-gradient-to-b from-[#0a0000] via-[#050000] to-[#0a0000]"></div>
     <div class="max-w-7xl mx-auto px-6 relative z-10">
         <div class="text-center mb-16">
             <div class="inline-block mb-4">
-                <span class="text-[#ff1a1a] font-semibold uppercase text-xs tracking-[0.3em] border border-[#ff1a1a]/30 px-4 py-1.5 rounded-full font-montserrat">Royal Product</span>
+                <span class="text-[#ff1a1a] font-semibold uppercase text-xs tracking-[0.3em] border border-[#ff1a1a]/30 bg-white/5 backdrop-blur-sm px-4 py-1.5 rounded-full font-montserrat">Royal Product</span>
             </div>
-            <h2 class="section-title-gold">Our <span>Product</span></h2>
-            <div class="royal-divider"></div>
+            <h2 class="section-title">Our <span class="text-[#ff1a1a]">Product</span></h2>
+            <div class="royal-divider-light"></div>
         </div>
         
         <div class="mb-12 flex justify-center overflow-x-auto no-scrollbar">
-            <div class="inline-flex gap-2 bg-[#050000]/60 p-1.5 rounded-full backdrop-blur-sm border border-[#ff1a1a]/20">
+            <div class="inline-flex gap-2 bg-black/30 backdrop-blur-sm p-1.5 rounded-full border border-white/10">
                 <button onclick="filterProducts('ANDROID')" id="tab-ANDROID" class="tab-royal active">
                     <i class="fab fa-android mr-2"></i> Android
                 </button>
@@ -390,61 +365,60 @@
     </div>
 </section>
 
-<section class="py-24 bg-[#050000] relative overflow-hidden">
-    <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#ff1a1a] to-transparent"></div>
+<!-- WHY CHOOSE US - GLOSSY -->
+<section class="py-24 bg-gradient-to-br from-[#0a0505] to-[#050202] relative overflow-hidden scroll-reveal">
+    <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#ff1a1a]/40 to-transparent"></div>
     <div class="max-w-7xl mx-auto px-6 relative z-10">
         <div class="text-center mb-16">
             <div class="inline-block mb-4">
-                <span class="text-[#ff1a1a] font-semibold uppercase text-xs tracking-[0.3em] border border-[#ff1a1a]/30 px-4 py-1.5 rounded-full font-montserrat">Why We're The Best</span>
+                <span class="text-[#ff1a1a] font-semibold uppercase text-xs tracking-[0.3em] border border-[#ff1a1a]/40 bg-[#1a0505] px-4 py-1.5 rounded-full font-montserrat">Why We're The Best</span>
             </div>
-            <h2 class="section-title-gold">Why <span>Choose Us</span></h2>
-            <div class="royal-divider"></div>
+            <h2 class="section-title-glossy">Why <span class="text-[#ff1a1a]">Choose Us</span></h2>
+            <div class="royal-divider-glossy"></div>
         </div>
         <div id="features-container" class="grid md:grid-cols-3 gap-8"></div>
     </div>
 </section>
 
-<section id="about-us" class="py-24 relative overflow-hidden">
+<section id="about-us" class="py-24 relative overflow-hidden scroll-reveal">
     <div class="absolute inset-0 bg-gradient-to-b from-[#0a0000] via-[#050000] to-[#0a0000]"></div>
     <div class="max-w-7xl mx-auto px-6 relative z-10">
         <div class="grid lg:grid-cols-2 gap-16 items-center">
             <div class="relative group order-2 lg:order-1">
-                <div class="absolute -inset-4 bg-gradient-to-r from-[#ff1a1a]/20 via-[#cc0000]/20 to-[#ff1a1a]/20 rounded-3xl blur-2xl group-hover:blur-3xl transition-all duration-700"></div>
-                <div class="relative rounded-2xl overflow-hidden border border-[#ff1a1a]/30 shadow-2xl shadow-[#ff1a1a]/10">
-                    <img src="assets/poster.png" alt="About XFOURTEEN" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" onerror="this.src='https://placehold.co/800x600/1a1a1a/ff1a1a?text=XFOURTEEN'">
-                    <div class="absolute inset-0 bg-gradient-to-t from-[#050000]/80 via-transparent to-transparent"></div>
+                <div class="absolute -inset-4 bg-gradient-to-r from-[#ff1a1a]/10 via-[#cc0000]/10 to-[#ff1a1a]/10 rounded-3xl blur-2xl group-hover:blur-3xl transition-all duration-700"></div>
+                <div class="relative rounded-2xl overflow-hidden border border-[#ff1a1a]/20 shadow-xl transform transition-all duration-500 group-hover:scale-105">
+                    <img src="assets/poster.png" alt="About XFOURTEEN" class="w-full h-full object-cover transition-all duration-700" onerror="this.src='https://placehold.co/800x600/1a1a1a/ff1a1a?text=XFOURTEEN'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#050000]/60 via-transparent to-transparent"></div>
                 </div>
             </div>
             <div class="space-y-6 order-1 lg:order-2">
                 <div class="text-center w-full">
                     <div class="inline-block mb-3">
-                        <span class="text-[#ff1a1a] font-semibold uppercase text-xs tracking-[0.3em] border border-[#ff1a1a]/30 px-4 py-1.5 rounded-full font-montserrat">Our Story</span>
+                        <span class="text-[#ff1a1a] font-semibold uppercase text-xs tracking-[0.3em] border border-[#ff1a1a]/30 bg-white/5 backdrop-blur-sm px-4 py-1.5 rounded-full font-montserrat">Our Story</span>
                     </div>
                 </div>
                 
                 <div class="text-center">
-                    <h2 class="about-title-fixed">
-                        About <span class="about-xfourteen-fixed">XFOURTEEN</span>
-                    </h2>
-                    <div class="w-16 h-0.5 bg-gradient-to-r from-[#ff1a1a] to-[#cc0000] rounded-full mx-auto"></div>
+                    <h2 class="about-title">About <span class="text-[#ff1a1a]">XFOURTEEN</span></h2>
+                    <div class="w-12 h-0.5 bg-[#ff1a1a] rounded-full mx-auto mt-3"></div>
                 </div>
                 
-                <p class="text-[#ff9999] leading-relaxed text-base md:text-lg text-center">
+                <p class="text-[#ffcccc]/80 leading-relaxed text-base md:text-lg text-center">
                     <span class="text-[#ff1a1a] font-bold">XFOURTEEN CORPORATION</span> is the pinnacle of Free Fire game settings optimization. Crafted for those who demand nothing but excellence. Every setting is meticulously calibrated for royal precision.
                 </p>
                 
                 <div class="pl-5 border-l-4 border-[#ff1a1a] py-3 bg-gradient-to-r from-[#ff1a1a]/5 to-transparent rounded-r-xl mx-auto" style="max-width: 90%;">
-                    <p class="text-[#ff9999] italic font-playfair font-bold text-xl text-center">"Excellence is not an act, but a habit. Forge your throne with precision."</p>
+                    <p class="text-[#ffcccc]/80 italic font-playfair font-semibold text-lg text-center">"Excellence is not an act, but a habit. Forge your throne with precision."</p>
                 </div>
                 
                 <div class="grid sm:grid-cols-2 gap-6">
-                    <div class="p-5 rounded-xl bg-[#050000]/50 border border-[#ff1a1a]/10 hover:border-[#ff1a1a]/30 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg hover:shadow-[#ff1a1a]/10 text-center">
+                    <div class="p-5 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-[#ff1a1a]/30 transition-all duration-300 transform hover:-translate-y-1 text-center">
                         <h4 class="text-[#ff1a1a] font-bold uppercase text-xs tracking-wider mb-2">our vision</h4>
-                        <p class="text-[#ff9999] text-sm leading-relaxed">To become the golden standard for professional players worldwide.</p>
+                        <p class="text-[#ffcccc]/70 text-sm leading-relaxed">To become the golden standard for professional players worldwide.</p>
                     </div>
-                    <div class="p-5 rounded-xl bg-[#050000]/50 border border-[#ff1a1a]/10 hover:border-[#ff1a1a]/30 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg hover:shadow-[#cc0000]/10 text-center">
+                    <div class="p-5 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-[#ff1a1a]/30 transition-all duration-300 transform hover:-translate-y-1 text-center">
                         <h4 class="text-[#ff1a1a] font-bold uppercase text-xs tracking-wider mb-2">our mission</h4>
-                        <p class="text-[#ff9999] text-sm leading-relaxed">Delivering premium, safe, and legal optimization for the elite gaming community.</p>
+                        <p class="text-[#ffcccc]/70 text-sm leading-relaxed">Delivering premium, safe, and legal optimization for the elite gaming community.</p>
                     </div>
                 </div>
             </div>
@@ -452,34 +426,100 @@
     </div>
 </section>
 
-<section id="our-team" class="py-24 bg-[#050000] relative overflow-hidden">
+<!-- OUR TEAM - GLOSSY -->
+<section id="our-team" class="py-24 bg-gradient-to-br from-[#0a0505] to-[#050202] relative overflow-hidden scroll-reveal">
     <div class="max-w-7xl mx-auto px-6 relative z-10">
         <div class="text-center mb-16">
             <div class="inline-block mb-4">
-                <span class="text-[#ff1a1a] font-semibold uppercase text-xs tracking-[0.3em] border border-[#ff1a1a]/30 px-4 py-1.5 rounded-full font-montserrat">The Royal Council</span>
+                <span class="text-[#ff1a1a] font-semibold uppercase text-xs tracking-[0.3em] border border-[#ff1a1a]/40 bg-[#1a0505] px-4 py-1.5 rounded-full font-montserrat">The Royal Council</span>
             </div>
-            <h2 class="section-title-gold">Our <span>Team</span></h2>
-            <div class="royal-divider"></div>
+            <h2 class="section-title-glossy">Our <span class="text-[#ff1a1a]">Team</span></h2>
+            <div class="royal-divider-glossy"></div>
         </div>
         <div id="team-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
     </div>
 </section>
 
-<section id="contact-us" class="py-24 relative overflow-hidden">
+<!-- FAQ SECTION -->
+<section id="faq" class="py-24 relative overflow-hidden scroll-reveal">
     <div class="absolute inset-0 bg-gradient-to-t from-[#0a0000] via-[#050000] to-[#0a0000]"></div>
     <div class="max-w-7xl mx-auto px-6 relative z-10">
         <div class="text-center mb-16">
             <div class="inline-block mb-4">
-                <span class="text-[#ff1a1a] font-semibold uppercase text-xs tracking-[0.3em] border border-[#ff1a1a]/30 px-4 py-1.5 rounded-full font-montserrat">Get In Touch</span>
+                <span class="text-[#ff1a1a] font-semibold uppercase text-xs tracking-[0.3em] border border-[#ff1a1a]/30 bg-white/5 backdrop-blur-sm px-4 py-1.5 rounded-full font-montserrat">FAQ</span>
             </div>
-            <h2 class="section-title-gold">Contact <span>The Throne</span></h2>
-            <div class="royal-divider"></div>
+            <h2 class="section-title">Frequently Asked <span class="text-[#ff1a1a]">Questions</span></h2>
+            <div class="royal-divider-light"></div>
+            <p class="text-[#ffcccc]/50 mt-4 max-w-2xl mx-auto text-sm">Everything you need to know about XFOURTEEN CORPORATION</p>
+        </div>
+        
+        <div class="max-w-3xl mx-auto space-y-4">
+            <div class="faq-item bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden transition-all duration-300 hover:border-[#ff1a1a]/30">
+                <button class="faq-question w-full text-left px-6 py-4 flex justify-between items-center font-medium text-white hover:text-[#ff6666] transition-colors">
+                    <span>What is XFOURTEEN CORPORATION?</span>
+                    <i class="fas fa-chevron-down text-[#ff1a1a] text-sm transition-transform duration-300"></i>
+                </button>
+                <div class="faq-answer max-h-0 overflow-hidden transition-all duration-500 ease-in-out px-6">
+                    <div class="pb-4 text-[#ffcccc]/70 text-sm leading-relaxed border-t border-white/10 pt-4">
+                        XFOURTEEN CORPORATION is a premium provider of Free Fire game settings optimization. We offer scientifically calibrated sensitivity settings and performance tweaks designed for professional and elite players.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="faq-item bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden transition-all duration-300 hover:border-[#ff1a1a]/30">
+                <button class="faq-question w-full text-left px-6 py-4 flex justify-between items-center font-medium text-white hover:text-[#ff6666] transition-colors">
+                    <span>Is this safe to use?</span>
+                    <i class="fas fa-chevron-down text-[#ff1a1a] text-sm transition-transform duration-300"></i>
+                </button>
+                <div class="faq-answer max-h-0 overflow-hidden transition-all duration-500 ease-in-out px-6">
+                    <div class="pb-4 text-[#ffcccc]/70 text-sm leading-relaxed border-t border-white/10 pt-4">
+                        Yes, our products are 100% safe as they only modify in-game settings and do not inject any third-party code. We prioritize security and compliance with game policies.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="faq-item bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden transition-all duration-300 hover:border-[#ff1a1a]/30">
+                <button class="faq-question w-full text-left px-6 py-4 flex justify-between items-center font-medium text-white hover:text-[#ff6666] transition-colors">
+                    <span>How do I get support?</span>
+                    <i class="fas fa-chevron-down text-[#ff1a1a] text-sm transition-transform duration-300"></i>
+                </button>
+                <div class="faq-answer max-h-0 overflow-hidden transition-all duration-500 ease-in-out px-6">
+                    <div class="pb-4 text-[#ffcccc]/70 text-sm leading-relaxed border-t border-white/10 pt-4">
+                        You can reach our support team via WhatsApp channel or Discord server. Links are available in the Contact section. Our team typically responds within 24 hours.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="faq-item bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden transition-all duration-300 hover:border-[#ff1a1a]/30">
+                <button class="faq-question w-full text-left px-6 py-4 flex justify-between items-center font-medium text-white hover:text-[#ff6666] transition-colors">
+                    <span>What platforms are supported?</span>
+                    <i class="fas fa-chevron-down text-[#ff1a1a] text-sm transition-transform duration-300"></i>
+                </button>
+                <div class="faq-answer max-h-0 overflow-hidden transition-all duration-500 ease-in-out px-6">
+                    <div class="pb-4 text-[#ffcccc]/70 text-sm leading-relaxed border-t border-white/10 pt-4">
+                        We support Android, iOS, and PC (emulator) platforms. Each platform has its own optimized settings package tailored for the best performance.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT US - GLOSSY -->
+<section id="contact-us" class="py-24 bg-gradient-to-br from-[#0a0505] to-[#050202] relative overflow-hidden scroll-reveal">
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+        <div class="text-center mb-16">
+            <div class="inline-block mb-4">
+                <span class="text-[#ff1a1a] font-semibold uppercase text-xs tracking-[0.3em] border border-[#ff1a1a]/40 bg-[#1a0505] px-4 py-1.5 rounded-full font-montserrat">Get In Touch</span>
+            </div>
+            <h2 class="section-title-glossy">Contact <span class="text-[#ff1a1a]">The Throne</span></h2>
+            <div class="royal-divider-glossy"></div>
         </div>
         
         <div class="grid lg:grid-cols-2 gap-10 max-w-5xl mx-auto">
             <div class="space-y-5">
-                <div class="contact-royal group">
-                    <div class="contact-icon-royal">
+                <div class="contact-royal-glossy group">
+                    <div class="contact-icon-royal-glossy">
                         <i class="fab fa-whatsapp text-xl text-[#ff1a1a] group-hover:text-white transition-colors"></i>
                     </div>
                     <div>
@@ -488,8 +528,8 @@
                     </div>
                 </div>
                 
-                <div class="contact-royal group">
-                    <div class="contact-icon-royal">
+                <div class="contact-royal-glossy group">
+                    <div class="contact-icon-royal-glossy">
                         <i class="fab fa-discord text-xl text-[#ff1a1a] group-hover:text-white transition-colors"></i>
                     </div>
                     <div>
@@ -499,17 +539,17 @@
                 </div>
             </div>
 
-            <div class="bg-[#050000]/60 p-8 rounded-2xl border border-[#ff1a1a]/20 backdrop-blur-sm shadow-2xl hover:border-[#ff1a1a]/40 transition-all duration-500">
+            <div class="bg-gradient-to-br from-[#1a0505] to-[#0a0000] p-8 rounded-2xl border border-[#ff1a1a]/30 shadow-2xl hover:border-[#ff1a1a]/50 transition-all duration-500">
                 <h3 class="text-xl font-bold mb-5 text-white flex items-center gap-3 font-montserrat">
-                    <div class="w-10 h-10 rounded-full bg-gradient-to-r from-[#ff1a1a]/20 to-[#cc0000]/20 flex items-center justify-center">
+                    <div class="w-10 h-10 rounded-full bg-[#ff1a1a]/20 flex items-center justify-center border border-[#ff1a1a]/30">
                         <i class="fas fa-feather-alt text-[#ff1a1a]"></i>
                     </div>
                     Send Message
                 </h3>
                 <div class="space-y-4">
-                    <input type="text" id="webhook-name" placeholder="Your Noble Name" class="form-royal" required>
-                    <input type="tel" id="webhook-phone" placeholder="Royal Contact (WhatsApp)" class="form-royal" required>
-                    <textarea id="webhook-msg" placeholder="Your Royal Message..." rows="4" class="form-royal" required></textarea>
+                    <input type="text" id="webhook-name" placeholder="Your Noble Name" class="form-royal-glossy" required>
+                    <input type="tel" id="webhook-phone" placeholder="Royal Contact (WhatsApp)" class="form-royal-glossy" required>
+                    <textarea id="webhook-msg" placeholder="Your Royal Message..." rows="4" class="form-royal-glossy" required></textarea>
                     <button onclick="sendToDiscord()" id="webhook-btn" class="w-full btn-royal-primary justify-center">
                         <i class="fas fa-paper-plane mr-2"></i> Deliver Message
                     </button>
@@ -526,7 +566,7 @@
         </button>
         
         <div class="flex justify-center mb-3">
-            <div class="relative w-14 h-14 md:w-16 md:h-16 bg-transparent rounded-lg flex items-center justify-center shadow-lg overflow-hidden">
+            <div class="relative w-14 h-14 md:w-16 md:h-16 bg-white/5 backdrop-blur-sm rounded-lg flex items-center justify-center shadow-lg overflow-hidden border border-white/10">
                 <img src="assets/icon.png" class="w-full h-full object-cover" alt="logo" style="background: transparent;">
             </div>
         </div>
@@ -534,7 +574,7 @@
         <h3 class="text-xl md:text-2xl font-bold mb-1 text-white font-playfair">PAYMENT</h3>
         <p class="text-[#ff1a1a]/60 text-[10px] md:text-xs mb-4 uppercase tracking-wider">COMPLETE YOUR TRIBUTE</p>
         
-        <div class="bg-[#0a0000]/50 p-3 md:p-4 rounded-xl mb-4 text-left space-y-2 border border-[#ff1a1a]/20">
+        <div class="bg-black/30 backdrop-blur-sm p-3 md:p-4 rounded-xl mb-4 text-left space-y-2 border border-white/10">
             <div class="flex justify-between text-xs text-[#ff6666]/70 font-medium">
                 <span>ITEM:</span><span id="pay-product" class="text-[#ff1a1a] font-semibold"></span>
             </div>
@@ -545,14 +585,14 @@
         </div>
 
         <div class="mb-4 text-center">
-            <div class="inline-block px-4 py-1 rounded-full bg-[#ff1a1a]/20 border border-[#ff1a1a]/50 text-[#ff1a1a] text-xs font-bold uppercase tracking-wider">
+            <div class="inline-block px-4 py-1 rounded-full bg-[#ff1a1a]/20 border border-[#ff1a1a]/40 text-[#ff1a1a] text-xs font-bold uppercase tracking-wider backdrop-blur-sm">
                 <i class="fas fa-qrcode mr-1"></i> QRIS
             </div>
         </div>
 
         <div id="payment-content" class="min-h-[260px] md:min-h-[280px] flex flex-col justify-center"></div>
         
-        <button onclick="attachBukti()" id="btnAttachBukti" class="w-full bg-[#0a0000] border border-[#ff1a1a]/50 hover:border-[#ff1a1a] text-[#ff6666] py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all duration-300 mt-3 text-sm">
+        <button onclick="attachBukti()" id="btnAttachBukti" class="w-full bg-black/50 backdrop-blur-sm border border-[#ff1a1a]/40 hover:border-[#ff1a1a] text-[#ff6666] py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all duration-300 mt-3 text-sm">
             <i class="fas fa-camera mr-2"></i> ATTACH PROOF
         </button>
         
@@ -566,7 +606,7 @@
     </div>
 </div>
 
-<button id="backToTop" class="fixed bottom-6 right-6 z-50 w-12 h-12 bg-gradient-to-br from-[#ff1a1a] to-[#cc0000] rounded-full flex items-center justify-center text-white shadow-2xl shadow-[#ff1a1a]/30 opacity-0 transition-all duration-500 hover:scale-110 hover:shadow-[#ff1a1a]/50">
+<button id="backToTop" class="fixed bottom-6 right-6 z-50 w-12 h-12 bg-gradient-to-br from-[#ff1a1a] to-[#cc0000] rounded-full flex items-center justify-center text-white shadow-xl opacity-0 transition-all duration-500 hover:scale-110">
     <i class="fas fa-chevron-up"></i>
 </button>
 
@@ -577,11 +617,11 @@
     </div>
 </div>
 
-<footer class="py-10 text-center border-t border-[#ff1a1a]/20 bg-[#050000]">
+<footer class="py-10 text-center border-t border-white/10 bg-black/30 backdrop-blur-sm">
     <div class="max-w-7xl mx-auto px-6">
         <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
             <div class="flex items-center gap-2">
-                <div class="w-8 h-8 bg-gradient-to-br from-[#ff1a1a] to-[#cc0000] rounded-lg flex items-center justify-center">
+                <div class="w-8 h-8 bg-gradient-to-br from-[#ff1a1a] to-[#cc0000] rounded-lg flex items-center justify-center shadow-md">
                     <i class="fas fa-crown text-white text-xs"></i>
                 </div>
                 <span class="text-sm md:text-base font-bold tracking-tight text-white font-montserrat">XFOURTEEN<span class="text-[#ff1a1a]"> CORPORATION</span></span>
@@ -590,6 +630,7 @@
                 <a href="#" onclick="scrollToSection('home')" class="text-[#ff6666]/50 hover:text-[#ff6666] text-xs uppercase tracking-wider font-medium transition-colors">Home</a>
                 <a href="#" onclick="scrollToSection('products')" class="text-[#ff6666]/50 hover:text-[#ff6666] text-xs uppercase tracking-wider font-medium transition-colors">Products</a>
                 <a href="#" onclick="scrollToSection('about-us')" class="text-[#ff6666]/50 hover:text-[#ff6666] text-xs uppercase tracking-wider font-medium transition-colors">About</a>
+                <a href="#" onclick="scrollToSection('faq')" class="text-[#ff6666]/50 hover:text-[#ff6666] text-xs uppercase tracking-wider font-medium transition-colors">FAQ</a>
                 <a href="#" onclick="scrollToSection('contact-us')" class="text-[#ff6666]/50 hover:text-[#ff6666] text-xs uppercase tracking-wider font-medium transition-colors">Contact</a>
             </div>
         </div>
@@ -597,28 +638,19 @@
     </div>
 </footer>
 
-<!-- Audio Element untuk Sound Autoplay saat Loading Selesai -->
 <audio id="welcomeSound" preload="auto" style="display: none;">
     <source src="assets/welcome.mp3" type="audio/mpeg">
-    Browser Anda tidak mendukung audio.
 </audio>
 
 <script src="script.js"></script>
 <script>
-// ==================== FUNGSI AUTOPLAY SOUND SETELAH LOADING SELESAI ====================
 function playWelcomeSound() {
     const audio = document.getElementById('welcomeSound');
     if (audio) {
-        // Set volume ke 70% agar tidak terlalu kencang
         audio.volume = 0.7;
-        
-        // Promise play untuk menangani autoplay restriction
         const playPromise = audio.play();
-        
         if (playPromise !== undefined) {
             playPromise.catch(error => {
-                console.log("Autoplay ditolak browser, mencoba lagi dengan interaksi user...");
-                // Fallback: jika autoplay diblokir, mainkan saat user pertama kali klik di mana saja
                 const playOnInteraction = () => {
                     audio.play().catch(e => console.log("Gagal memutar sound:", e));
                     document.removeEventListener('click', playOnInteraction);
@@ -631,28 +663,21 @@ function playWelcomeSound() {
     }
 }
 
-// Override fungsi loader completion yang ada di DOMContentLoaded
-// Kita simpan referensi interval loader asli dan modifikasi sedikit
 document.addEventListener('DOMContentLoaded', function() {
-    // Cek apakah loader sudah dihandle oleh script.js
-    // Kita akan menambahkan observer untuk memantau loader hilang
     const loader = document.getElementById('loader');
     if (loader) {
-        // Gunakan MutationObserver untuk mendeteksi ketika loader display menjadi none
         const observer = new MutationObserver(function(mutations) {
             mutations.forEach(function(mutation) {
                 if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
                     if (loader.style.display === 'none') {
-                        // Loader sudah hilang, play sound!
                         playWelcomeSound();
-                        observer.disconnect(); // Stop observing
+                        observer.disconnect();
                     }
                 }
             });
         });
         observer.observe(loader, { attributes: true });
         
-        // Juga cek setiap 100ms untuk backup (jika MutationObserver gagal)
         const checkInterval = setInterval(function() {
             if (loader.style.display === 'none') {
                 playWelcomeSound();
