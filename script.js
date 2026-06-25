@@ -9,17 +9,17 @@ qris: "QRIS_AVAILABLE"
 };
 
 const PRODUCTS = [
-{ id: 1, name: 'TOOLS BASIC', cat: 'ANDROID', price: 30000, img: 'assets/banner.png', features: ['Drag Headshot', 'Aim Assist', 'Sensitivity Screen', 'Sensitivity PPI & Density', 'Crosshairs', 'System Tuning & Utility', 'And So Forth'], description: 'Unlock maximum performance and ultimate control. Here are the core premium features included in this build', bestseller: false },
-{ id: 2, name: 'TOOLS EXOTIC', cat: 'ANDROID', price: 60000, img: 'assets/banner.png', features: ['Drag Headshot', 'Recoil Stability', 'Vertical Drag Assist', 'Crosshair', 'Sensitivity Optimized', 'Sensitivity PPI & DPI', 'System Tuning & Utility'], description: 'Unlock maximum performance and ultimate control. Here are the core premium features included in this build', bestseller: false },
-{ id: 3, name: 'MAINTANCE', cat: 'ANDROID', price: 0, img: 'assets/banner.png', features: ['Drag Headshot', 'Recoil Stability', 'Vertical Drag Assist', 'Crosshair', 'Sensitivity Optimized', 'Sensitivity PPI & DPI', 'System Tuning & Utility'], description: 'Unlock maximum performance and ultimate control. Here are the core premium features included in this build', bestseller: false },
+{ id: 1, name: 'XFOURTEEN BASIC TOOLS', cat: 'ANDROID', price: 30000, img: 'assets/banner.png', features: ['Drag Headshot', 'Aim Assist', 'Sensitivity Screen', 'Sensitivity PPI & Density', 'Crosshairs', 'System Tuning & Utility', 'And So Forth'], description: 'Unlock maximum performance and ultimate control. Here are the core premium features included in this build', bestseller: false },
+{ id: 2, name: 'XFOURTEEN PREMIUM TOOLS', cat: 'ANDROID', price: 60000, img: 'assets/banner.png', features: ['Drag Headshot', 'Recoil Stability', 'Vertical Drag Assist', 'Crosshair', 'Sensitivity Optimized', 'Sensitivity PPI & DPI', 'System Tuning & Utility'], description: 'Unlock maximum performance and ultimate control. Here are the core premium features included in this build', bestseller: false },
+{ id: 3, name: 'COMING SOON', cat: 'ANDROID', price: 0, img: 'assets/banner.png', features: ['Drag Headshot', 'Recoil Stability', 'Vertical Drag Assist', 'Crosshair', 'Sensitivity Optimized', 'Sensitivity PPI & DPI', 'System Tuning & Utility'], description: 'Unlock maximum performance and ultimate control. Here are the core premium features included in this build', bestseller: false },
 { id: 4, name: 'CHEATS iOS', cat: 'IOS', price: 0, img: 'assets/banner.png', features: ['Coming Soon', 'Coming Soon', 'Coming Soon'], description: 'Premium iOS optimization for the elite Coming Soon.', bestseller: false },
-{ id: 5, name: 'SETTINGS BASIC', cat: 'PC', price: 25000, img: 'assets/banner.png', features: ['Reg Mouse', 'Keybin & Mapping', 'Best Emulator', 'Basic Optimizer'], description: 'Basic features available in the XFourteen Settings Menu to maximize your PC performance and game control response', bestseller: false },
-{ id: 6, name: 'TOOLS STABILIZER', cat: 'PC', price: 50000, img: 'assets/banner.png', features: ['Mouse & Aim Optimization', 'Input & Latency Reduction', 'System & Hardware Optimizer', 'Network & Utility'], description: 'Premium features available in the XFourteen Stabilizer Menu to maximize your PC performance and game control response', bestseller: false },
-{ id: 7, name: 'REMOTE PANEL X14', cat: 'PC', price: 100000, img: 'assets/banner.png', features: ['Cheats Menu', 'System & Remote Utilities', 'Security & Advanced Advantages', 'And So Forth'], description: 'Premium Cheats designed to instantly improve gaming performance through optimized controls, mechanic, and high-level security systems.', bestseller: false },
+{ id: 5, name: 'XFOURTEEN BASIC SETTINGS', cat: 'PC', price: 25000, img: 'assets/banner.png', features: ['Reg Mouse', 'Keybin & Mapping', 'Best Emulator', 'Basic Optimizer'], description: 'Basic features available in the XFourteen Settings Menu to maximize your PC performance and game control response', bestseller: false },
+{ id: 6, name: 'XFOURTEEN OPTIMIZATION PRO', cat: 'PC', price: 50000, img: 'assets/banner.png', features: ['Mouse & Aim Optimization', 'Input & Latency Reduction', 'System & Hardware Optimizer', 'Network & Utility'], description: 'Premium features available in the XFourteen Stabilizer Menu to maximize your PC performance and game control response', bestseller: false },
+{ id: 7, name: 'XFOURTEEN REMOTE PANEL', cat: 'PC', price: 100000, img: 'assets/banner.png', features: ['Cheats Menu', 'System & Remote Utilities', 'Security & Advanced Advantages', 'And So Forth'], description: 'Premium Cheats designed to instantly improve gaming performance through optimized controls, mechanic, and high-level security systems.', bestseller: false },
 ];
 
 const FEATURES = [
-  { icon: 'bolt', title: 'Royal Performance', desc: 'Maximum optimization for elite gameplay. Every setting calibrated for royalty.' },
+  { icon: 'bolt', title: 'Best Performance', desc: 'Maximum optimization for elite gameplay. Every setting calibrated for royalty.' },
   { icon: 'crosshairs', title: 'Best Precision', desc: 'Scientific sensitivity calibration for accuracy that befits a king.' },
   { icon: 'shield-alt', title: 'Safe & Legal', desc: '100% safe, purely in-game settings. No bans, only glory.' },
   { icon: 'sync', title: 'Cloud Sync', desc: 'Your premium settings are safely saved and accessible anywhere.' }
@@ -33,7 +33,6 @@ let currentOrder = null;
 let currentBuktiUrl = null;
 let currentBuktiNama = null;
 
-// TypeWriter Class
 class TypeWriter {
 constructor(element, texts, delay = 100, pause = 2500) {
 this.element = element;
@@ -69,18 +68,17 @@ setTimeout(() => this.type(), speed);
 }
 }
 
-// PREMIUM GOLD DUST SYSTEM
-class GoldDustSystem {
+class BloodRainSystem {
 constructor() {
-this.canvas = document.getElementById('goldDustCanvas');
+this.canvas = document.getElementById('bloodRainCanvas');
 if (!this.canvas) return;
 this.ctx = this.canvas.getContext('2d');
-this.particles = [];
+this.drops = [];
 this.init();
 }
 init() {
 this.resize();
-this.createParticles();
+this.createDrops();
 this.animate();
 window.addEventListener('resize', () => this.resize());
 }
@@ -88,136 +86,54 @@ resize() {
 this.canvas.width = window.innerWidth;
 this.canvas.height = window.innerHeight;
 }
-createParticles() {
-const count = Math.min(100, Math.floor((window.innerWidth * window.innerHeight) / 15000));
+createDrops() {
+const count = Math.min(80, Math.floor((window.innerWidth * window.innerHeight) / 20000));
+this.drops = [];
 for (let i = 0; i < count; i++) {
-this.particles.push({
+this.drops.push({
 x: Math.random() * this.canvas.width,
 y: Math.random() * this.canvas.height,
-size: Math.random() * 3 + 1,
-speedY: Math.random() * 0.8 + 0.3,
-opacity: Math.random() * 0.5 + 0.2,
-wiggle: Math.random() * Math.PI * 2,
-glow: Math.random() * 0.5 + 0.3
+size: Math.random() * 2 + 0.5,
+speedY: Math.random() * 1.2 + 0.4,
+speedX: Math.random() * 0.3 - 0.15,
+opacity: Math.random() * 0.4 + 0.15,
+length: Math.random() * 15 + 5,
+glow: Math.random() * 0.5 + 0.2
 });
 }
 }
 animate() {
 this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-this.particles.forEach(p => {
-p.y += p.speedY;
-p.wiggle += 0.03;
-const xOffset = Math.sin(p.wiggle) * 0.8;
-if (p.y > this.canvas.height) {
-p.y = 0;
-p.x = Math.random() * this.canvas.width;
+this.drops.forEach(d => {
+d.y += d.speedY;
+d.x += d.speedX;
+if (d.y > this.canvas.height) {
+d.y = -10;
+d.x = Math.random() * this.canvas.width;
 }
-this.ctx.shadowBlur = p.glow * 8;
-this.ctx.shadowColor = `rgba(255, 26, 26, ${p.opacity * 0.8})`;
+if (d.x < 0) d.x = this.canvas.width;
+if (d.x > this.canvas.width) d.x = 0;
+this.ctx.shadowBlur = d.glow * 6;
+this.ctx.shadowColor = `rgba(139, 0, 0, ${d.opacity * 0.7})`;
 this.ctx.beginPath();
-this.ctx.arc(p.x + xOffset, p.y, p.size, 0, Math.PI * 2);
-this.ctx.fillStyle = `rgba(255, 50, 50, ${p.opacity * 0.8})`;
-this.ctx.fill();
-});
-this.ctx.shadowBlur = 0;
-requestAnimationFrame(() => this.animate());
-}
-}
-
-// PREMIUM PARTICLE SYSTEM
-class ParticleSystem {
-constructor() {
-this.canvas = document.getElementById('particleCanvas');
-if (!this.canvas) return;
-this.ctx = this.canvas.getContext('2d');
-this.particles = [];
-this.mouse = { x: 0, y: 0, radius: 180 };
-this.init();
-}
-init() {
-this.resize();
-this.createParticles();
-this.animate();
-this.bindEvents();
-}
-resize() {
-this.canvas.width = window.innerWidth;
-this.canvas.height = window.innerHeight;
-}
-createParticles() {
-const count = Math.min(120, Math.floor((window.innerWidth * window.innerHeight) / 14000));
-for (let i = 0; i < count; i++) {
-this.particles.push({
-x: Math.random() * this.canvas.width,
-y: Math.random() * this.canvas.height,
-size: Math.random() * 2.5 + 0.8,
-speedX: Math.random() * 0.5 - 0.25,
-speedY: Math.random() * 0.5 - 0.25,
-color: `rgba(255, 50, 50, ${Math.random() * 0.4 + 0.2})`,
-originalX: Math.random() * this.canvas.width,
-originalY: Math.random() * this.canvas.height,
-wiggle: Math.random() * Math.PI * 2,
-glowSize: Math.random() * 5 + 2
-});
-}
-}
-animate() {
-this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-this.particles.forEach(p => {
-p.wiggle += 0.02;
-const xOffset = Math.sin(p.wiggle) * 0.3;
-const yOffset = Math.cos(p.wiggle) * 0.3;
-const dx = this.mouse.x - p.x;
-const dy = this.mouse.y - p.y;
-const dist = Math.sqrt(dx * dx + dy * dy);
-if (dist < this.mouse.radius) {
-const angle = Math.atan2(dy, dx);
-const force = (this.mouse.radius - dist) / this.mouse.radius;
-p.x -= Math.cos(angle) * force * 1.5;
-p.y -= Math.sin(angle) * force * 1.5;
-}
-p.x += (p.originalX - p.x) * 0.05;
-p.y += (p.originalY - p.y) * 0.05;
-p.x += p.speedX + xOffset * 0.1;
-p.y += p.speedY + yOffset * 0.1;
-if (p.x < 0 || p.x > this.canvas.width) p.speedX *= -1;
-if (p.y < 0 || p.y > this.canvas.height) p.speedY *= -1;
-this.ctx.shadowBlur = p.glowSize;
-this.ctx.shadowColor = 'rgba(255, 26, 26, 0.5)';
-this.ctx.beginPath();
-this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-this.ctx.fillStyle = p.color;
-this.ctx.fill();
-this.particles.forEach(other => {
-const dx = p.x - other.x, dy = p.y - other.y;
-const dist = Math.sqrt(dx * dx + dy * dy);
-if (dist < 100 && dist > 0) {
-this.ctx.beginPath();
-this.ctx.strokeStyle = `rgba(255, 50, 50, ${0.1 * (1 - dist / 100)})`;
-this.ctx.lineWidth = 0.5;
-this.ctx.moveTo(p.x, p.y);
-this.ctx.lineTo(other.x, other.y);
+this.ctx.moveTo(d.x, d.y);
+this.ctx.lineTo(d.x + d.speedX * 2, d.y + d.length);
+this.ctx.strokeStyle = `rgba(160, 20, 20, ${d.opacity})`;
+this.ctx.lineWidth = d.size;
 this.ctx.stroke();
-}
-});
 });
 this.ctx.shadowBlur = 0;
 requestAnimationFrame(() => this.animate());
 }
-bindEvents() {
-window.addEventListener('resize', () => { this.resize(); this.createParticles(); });
-window.addEventListener('mousemove', (e) => { this.mouse.x = e.x; this.mouse.y = e.y; });
-}
 }
 
-// PREMIUM MOUSE TRAIL
 class MouseTrail {
 constructor() {
 this.canvas = document.getElementById('mouseTrailCanvas');
 if (!this.canvas) return;
 this.ctx = this.canvas.getContext('2d');
 this.trail = [];
-this.maxTrail = 20;
+this.maxTrail = 15;
 this.init();
 }
 init() {
@@ -237,13 +153,13 @@ animate() {
 this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 for (let i = 0; i < this.trail.length; i++) {
 const p = this.trail[i];
-p.life -= 0.04;
+p.life -= 0.05;
 if (p.life <= 0) { this.trail.splice(i, 1); i--; continue; }
-const radius = 8 * p.life;
+const radius = 10 * p.life;
 const gradient = this.ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, radius);
-gradient.addColorStop(0, `rgba(255, 40, 40, ${0.8 * p.life})`);
-gradient.addColorStop(0.4, `rgba(255, 26, 26, ${0.5 * p.life})`);
-gradient.addColorStop(1, 'rgba(255, 26, 26, 0)');
+gradient.addColorStop(0, `rgba(180, 20, 20, ${0.7 * p.life})`);
+gradient.addColorStop(0.4, `rgba(139, 0, 0, ${0.4 * p.life})`);
+gradient.addColorStop(1, 'rgba(100, 0, 0, 0)');
 this.ctx.beginPath();
 this.ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
 this.ctx.fillStyle = gradient;
@@ -279,12 +195,12 @@ interactiveElements.forEach(el => {
 el.addEventListener('mouseenter', () => {
 this.cursor.style.width = '50px';
 this.cursor.style.height = '50px';
-this.cursor.style.background = 'radial-gradient(circle, rgba(255, 26, 26, 0.6) 0%, rgba(255, 26, 26, 0) 70%)';
+this.cursor.style.background = 'radial-gradient(circle, rgba(200, 0, 0, 0.7) 0%, rgba(139, 0, 0, 0) 70%)';
 });
 el.addEventListener('mouseleave', () => {
 this.cursor.style.width = '30px';
 this.cursor.style.height = '30px';
-this.cursor.style.background = 'radial-gradient(circle, rgba(255, 26, 26, 0.4) 0%, rgba(255, 26, 26, 0) 70%)';
+this.cursor.style.background = 'radial-gradient(circle, rgba(180, 0, 0, 0.5) 0%, rgba(139, 0, 0, 0) 70%)';
 });
 });
 }
@@ -304,7 +220,7 @@ height: ${size}px;
 left: ${x}px;
 top: ${y}px;
 border-radius: 50%;
-background: rgba(255, 26, 26, 0.4);
+background: rgba(180, 0, 0, 0.5);
 transform: scale(0);
 transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1), opacity 0.5s ease;
 pointer-events: none;
@@ -326,33 +242,33 @@ const container = document.getElementById('payment-content');
 if (!container) return;
 container.innerHTML = `
 <div class="text-center">
-<p class="text-[#ff6666]/70 text-[10px] uppercase tracking-wider mb-3">Scan QRIS with your e-wallet</p>
+<p class="text-red-500/60 text-[10px] uppercase tracking-wider mb-3">Scan QRIS with your e-wallet</p>
 <div class="inline-block bg-white p-3 rounded-xl shadow-lg">
 <img src="assets/qris.jpg" alt="QRIS" class="mx-auto w-40 h-40 object-contain" onerror="this.src='https://placehold.co/200x200/ffffff/ff1a1a?text=QRIS'">
 </div>
-<p class="text-[#ff9999]/50 text-[9px] mt-3">Royal Tribute: Rp ${amount.toLocaleString('id-ID')}</p>
+<p class="text-red-600/40 text-[9px] mt-3">Royal Tribute: Rp ${amount.toLocaleString('id-ID')}</p>
 </div>
 `;
 }
 
 async function uploadBukti(file) {
-if (!file) { showToast("❌ No file selected!"); return null; }
-if (file.size > 5 * 1024 * 1024) { showToast("❌ File too large! Max 5MB"); return null; }
-if (!file.type.startsWith('image/')) { showToast("❌ Only image files allowed!"); return null; }
-showToast("📸 Uploading proof...");
+if (!file) { showToast("No file selected!"); return null; }
+if (file.size > 5 * 1024 * 1024) { showToast("File too large! Max 5MB"); return null; }
+if (!file.type.startsWith('image/')) { showToast("Only image files allowed!"); return null; }
+showToast("Uploading proof...");
 const formData = new FormData();
 formData.append('image', file);
 try {
 const response = await fetch(`https://api.imgbb.com/1/upload?key=${CONFIG.imgbbApiKey}`, { method: 'POST', body: formData });
 if (!response.ok) throw new Error('Upload failed');
 const result = await response.json();
-if (result && result.data && result.data.url) { showToast("✅ Proof uploaded!"); return result.data.url; }
+if (result && result.data && result.data.url) { showToast("Proof uploaded!"); return result.data.url; }
 else throw new Error('Invalid response');
-} catch (error) { showToast("⚠️ Upload failed, please send manually via WhatsApp"); return null; }
+} catch (error) { showToast("Upload failed, please send manually via WhatsApp"); return null; }
 }
 
 function attachBukti() {
-if (!currentOrder) { showToast("❌ Please select a product first!"); return; }
+if (!currentOrder) { showToast("Please select a product first!"); return; }
 let fileInput = document.getElementById('hidden-file-input');
 if (!fileInput) {
 fileInput = document.createElement('input');
@@ -369,52 +285,52 @@ if (url) {
 currentBuktiUrl = url;
 currentBuktiNama = file.name;
 const indicator = document.getElementById('buktiIndicator');
-if (indicator) { indicator.classList.remove('hidden'); indicator.innerHTML = '<span class="text-xs text-green-500"><i class="fas fa-check-circle"></i> Proof attached (' + file.name + ')</span>'; }
+if (indicator) { indicator.classList.remove('hidden'); indicator.innerHTML = '<span class="text-xs text-green-600"><i class="fas fa-check-circle"></i> Proof attached (' + file.name + ')</span>'; }
 const btnAttach = document.getElementById('btnAttachBukti');
-if (btnAttach) { btnAttach.innerHTML = '<i class="fas fa-check-circle mr-2"></i> PROOF ATTACHED ✓'; btnAttach.style.background = 'rgba(16, 185, 129, 0.2)'; btnAttach.style.borderColor = '#10b981'; }
-showToast('✅ Proof attached!');
-} else { currentBuktiUrl = null; showToast('❌ Upload failed, please send manually via WhatsApp'); }
+if (btnAttach) { btnAttach.innerHTML = '<i class="fas fa-check-circle mr-2"></i> PROOF ATTACHED'; btnAttach.style.background = 'rgba(16, 185, 129, 0.2)'; btnAttach.style.borderColor = '#10b981'; }
+showToast('Proof attached!');
+} else { currentBuktiUrl = null; showToast('Upload failed, please send manually via WhatsApp'); }
 });
 }
 fileInput.click();
 }
 
 async function sendInvoiceToDiscord(order, buktiUrl = null) {
-const embed = { title: " NEW ROYAL PURCHASE! ", color: 0xff1a1a, fields: [
+const embed = { title: " NEW ROYAL PURCHASE ", color: 0x8b0000, fields: [
 { name: "ORDER ID", value: `\`${order.orderId}\``, inline: false },
 { name: "ITEM", value: `${order.name}`, inline: true },
 { name: "TRIBUTE", value: `Rp ${order.price.toLocaleString('id-ID')}`, inline: true },
 { name: "PAYMENT METHOD", value: "QRIS ONLY", inline: true },
 { name: "TIME", value: `<t:${Math.floor(Date.now()/1000)}:F>`, inline: false }
-], footer: { text: "XFOURTEEN CORPORATION • ROYAL TREASURY" }, timestamp: new Date().toISOString() };
-if (buktiUrl) { embed.image = { url: buktiUrl }; embed.fields.push({ name: "📸 PROOF", value: `[VIEW PROOF](${buktiUrl})`, inline: false }); }
-try { await fetch(CONFIG.webhookPurchase, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: "XFOURTEEN ROYAL BANK", avatar_url: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png", embeds: [embed], content: "**NEW PURCHASE!** 👑" }) }); return true; }
+], footer: { text: "XFOURTEEN CORPORATION - ROYAL TREASURY" }, timestamp: new Date().toISOString() };
+if (buktiUrl) { embed.image = { url: buktiUrl }; embed.fields.push({ name: "PROOF", value: `[VIEW PROOF](${buktiUrl})`, inline: false }); }
+try { await fetch(CONFIG.webhookPurchase, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: "XFOURTEEN ROYAL BANK", avatar_url: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png", embeds: [embed], content: "**NEW PURCHASE!**" }) }); return true; }
 catch(e) { return false; }
 }
 
 async function confirmToWA() {
-if (!currentOrder) { showToast("❌ No active order!"); return; }
-showToast("📤 Sending confirmation...");
+if (!currentOrder) { showToast("No active order!"); return; }
+showToast("Sending confirmation...");
 await sendInvoiceToDiscord(currentOrder, currentBuktiUrl);
 let message = `*ROYAL CONFIRMATION - XFOURTEEN CORPORATION*\n\n`;
 message += ` Order ID: #${currentOrder.orderId}\n`;
 message += ` Item: ${currentOrder.name}\n`;
 message += ` Tribute: Rp ${currentOrder.price.toLocaleString('id-ID')}\n`;
 message += ` Payment Method: QRIS\n\n`;
-if (currentBuktiUrl) { message += `📸 *PROOF:*\n${currentBuktiUrl}\n\n`; showToast("✅ Proof link included!"); }
-else { message += `📸 *PROOF:*\nNo proof attached\n\n`; showToast("⚠️ No proof attached!"); }
+if (currentBuktiUrl) { message += `*PROOF:*\n${currentBuktiUrl}\n\n`; showToast("Proof link included!"); }
+else { message += `*PROOF:*\nNo proof attached\n\n`; showToast("No proof attached!"); }
 message += `Hail to the King! I have completed the royal tribute. Please process my order.`;
 window.open(`https://wa.me/${CONFIG.wa}?text=${encodeURIComponent(message)}`, '_blank');
 currentBuktiUrl = null; currentBuktiNama = null;
 document.getElementById('buktiIndicator')?.classList.add('hidden');
 const btnAttach = document.getElementById('btnAttachBukti');
 if (btnAttach) { btnAttach.innerHTML = '<i class="fas fa-camera mr-2"></i> ATTACH PROOF'; btnAttach.style.background = ''; btnAttach.style.borderColor = ''; }
-setTimeout(() => { closePayment(); showToast("✅ Confirmation sent! Please wait for XIV Team."); }, 1500);
+setTimeout(() => { closePayment(); showToast("Confirmation sent! Please wait for XIV Team."); }, 1500);
 }
 
 function openPayment(id) {
 const p = PRODUCTS.find(x => x.id === id);
-if (!p) { showToast("❌ Product not found!"); return; }
+if (!p) { showToast("Product not found!"); return; }
 currentOrder = { ...p, orderId: 'ROYAL' + Date.now().toString().slice(-8) };
 currentBuktiUrl = null; currentBuktiNama = null;
 document.getElementById('pay-product').innerText = p.name;
@@ -458,17 +374,18 @@ function filterProducts(cat) {
 const grid = document.getElementById('product-grid');
 if (!grid) return;
 const filtered = PRODUCTS.filter(p => p.cat === cat);
-grid.innerHTML = filtered.map(p => `
-<div class="stagger-item group bg-black/30 backdrop-blur-sm p-5 rounded-xl border border-white/10 hover:border-[#ff1a1a]/40 transition-all duration-400 hover:-translate-y-2 relative overflow-hidden">
-${p.bestseller ? `<div class="absolute top-3 right-3 z-20"><span class="bg-[#ff1a1a] text-white text-[9px] font-bold uppercase px-2 py-1 rounded-full flex items-center gap-1 shadow-md"><i class="fas fa-crown text-[8px]"></i> BESTSELLER</span></div>` : ''}
-<div class="relative w-full aspect-video rounded-lg overflow-hidden mb-4 bg-black/30 border border-white/10"><img src="${p.img}" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-500" onerror="this.src='https://placehold.co/500x280/1a1a1a/ff1a1a?text=XFOURTEEN'"><div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div></div>
-<div class="mb-4"><h3 class="text-white font-bold text-lg mb-1 font-cinzel">${p.name}</h3><p class="text-[#ffcccc]/70 text-xs mb-2">${p.description}</p><ul class="space-y-1">${p.features.slice(0,4).map(f => `<li class="text-[11px] text-[#ffcccc]/80 flex items-center gap-1.5"><i class="fas fa-check-circle text-[#ff1a1a] text-[8px]"></i> ${f}</li>`).join('')}${p.features.length > 4 ? `<li class="text-[11px] text-[#ff6666]/60">+${p.features.length-4} more features</li>` : ''}</ul></div>
-<div class="mb-4"><p class="text-[#ff1a1a]/60 text-[9px] font-semibold uppercase tracking-wider mb-0.5">ROYAL TRIBUTE</p><p class="text-2xl font-bold text-[#ff1a1a]">Rp ${p.price.toLocaleString('id-ID')}</p></div>
-<button onclick="event.stopPropagation(); openPayment(${p.id})" class="w-full btn-royal-primary justify-center py-2.5 text-xs" style="position: relative; z-index: 10; cursor: pointer;"> Choose Product</button>
+grid.innerHTML = filtered.map((p, index) => `
+<div class="stagger-item group bg-black/40 backdrop-blur-sm p-5 rounded-xl border border-red-900/30 hover:border-red-800/50 transition-all duration-400 hover:-translate-y-2 relative overflow-hidden" style="transition-delay: ${index * 0.1}s;">
+${p.bestseller ? `<div class="absolute top-3 right-3 z-20"><span class="bg-red-900 text-white text-[9px] font-bold uppercase px-2 py-1 rounded-full flex items-center gap-1 shadow-md shadow-red-950/30"><i class="fas fa-crown text-[8px]"></i> BESTSELLER</span></div>` : ''}
+<div class="relative w-full aspect-video rounded-lg overflow-hidden mb-4 bg-black/40 border border-red-900/20"><img src="${p.img}" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-500" onerror="this.src='https://placehold.co/500x280/1a1a1a/ff1a1a?text=XFOURTEEN'"><div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div></div>
+<div class="mb-4"><h3 class="text-white font-bold text-lg mb-1 font-cinzel">${p.name}</h3><p class="text-red-300/60 text-xs mb-2">${p.description}</p><ul class="space-y-1">${p.features.slice(0,4).map(f => `<li class="text-[11px] text-red-300/70 flex items-center gap-1.5"><i class="fas fa-check-circle text-red-700 text-[8px]"></i> ${f}</li>`).join('')}${p.features.length > 4 ? `<li class="text-[11px] text-red-500/50">+${p.features.length-4} more features</li>` : ''}</ul></div>
+<div class="mb-4"><p class="text-red-700/50 text-[9px] font-semibold uppercase tracking-wider mb-0.5">ROYAL TRIBUTE</p><p class="text-2xl font-bold text-red-600">Rp ${p.price.toLocaleString('id-ID')}</p></div>
+<button onclick="event.stopPropagation(); openPayment(${p.id})" class="w-full btn-royal-primary justify-center py-2.5 text-xs" style="position: relative; z-index: 10; cursor: pointer;">Choose Product</button>
 </div>
 `).join('');
 document.querySelectorAll('.tab-royal').forEach(btn => btn.classList.remove('active'));
 document.getElementById(`tab-${cat}`)?.classList.add('active');
+initStaggerAnimation();
 }
 
 async function sendToDiscord() {
@@ -482,7 +399,7 @@ const original = btn.innerHTML;
 btn.disabled = true;
 btn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i> SENDING...`;
 try {
-const res = await fetch(CONFIG.webhookSupport, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: "XFOURTEEN ROYAL COURT", avatar_url: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png", embeds: [{ title: "👑 Royal Audience Request", color: 0xff1a1a, fields: [{ name: "🏰 Name", value: `\`\`\`${name.value}\`\`\``, inline: true }, { name: "📱 Contact", value: `\`\`\`${phone.value}\`\`\``, inline: true }, { name: "📜 Message", value: msg.value.substring(0, 1000), inline: false }], footer: { text: "XFOURTEEN ROYAL COURT • " + new Date().toLocaleString('en-US') }, timestamp: new Date().toISOString() }] }) });
+const res = await fetch(CONFIG.webhookSupport, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: "XFOURTEEN ROYAL COURT", avatar_url: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png", embeds: [{ title: "Royal Audience Request", color: 0x8b0000, fields: [{ name: "Name", value: `\`\`\`${name.value}\`\`\``, inline: true }, { name: "Contact", value: `\`\`\`${phone.value}\`\`\``, inline: true }, { name: "Message", value: msg.value.substring(0, 1000), inline: false }], footer: { text: "XFOURTEEN ROYAL COURT - " + new Date().toLocaleString('en-US') }, timestamp: new Date().toISOString() }] }) });
 if (res.ok) { showToast("Message delivered! The court will respond."); name.value = ""; phone.value = ""; msg.value = ""; }
 else throw new Error();
 } catch (e) { showToast("Failed to deliver message. Please contact directly on WhatsApp."); }
@@ -518,17 +435,29 @@ observer.unobserve(entry.target);
 revealElements.forEach(el => observer.observe(el));
 }
 
+function initStaggerAnimation() {
+const staggerContainers = document.querySelectorAll('.stagger-container');
+const staggerObserver = new IntersectionObserver((entries) => {
+entries.forEach(entry => {
+if (entry.isIntersecting) {
+entry.target.classList.add('revealed');
+staggerObserver.unobserve(entry.target);
+}
+});
+}, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+staggerContainers.forEach(el => staggerObserver.observe(el));
+}
+
 window.addEventListener('DOMContentLoaded', () => {
 new CursorGlow();
-new GoldDustSystem();
-new ParticleSystem();
+new BloodRainSystem();
 new MouseTrail();
 const typewriterElement = document.getElementById('typewriter-text');
 if (typewriterElement) new TypeWriter(typewriterElement, ['Optimize Your Free Fire Experience', 'Best Sensitivity Settings', 'Designed for Elite Players', 'Elevate Your Game to Throne Level'], 80, 2500);
 const fc = document.getElementById('features-container');
-if (fc) fc.innerHTML = FEATURES.map(f => `<div class="stagger-item"><div class="feature-icon"><i class="fas fa-${f.icon}"></i></div><h3>${f.title}</h3><p>${f.desc}</p></div>`).join('');
+if (fc) fc.innerHTML = FEATURES.map((f, i) => `<div class="stagger-item"><div class="feature-icon"><i class="fas fa-${f.icon}"></i></div><h3>${f.title}</h3><p>${f.desc}</p></div>`).join('');
 const tg = document.getElementById('team-grid');
-if (tg) tg.innerHTML = TEAM.map(t => `<div class="stagger-item"><div class="relative mb-4"><div class="w-20 h-20 rounded-full border border-[#ff1a1a]/30 p-1 mx-auto overflow-hidden bg-gradient-to-br from-[#1a0505] to-[#0a0000]"><img src="${t.img}" class="w-full h-full object-cover rounded-full" onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=${t.name}'"></div></div><div class="flex items-center justify-center gap-2 mb-1"><h3 class="text-white font-bold text-lg font-cinzel">${t.name}</h3></div><p class="text-[#ff1a1a] text-[10px] font-bold uppercase tracking-wider mb-3">${t.role}</p><div class="flex gap-3 justify-center">${t.socials.whatsapp ? `<a href="https://wa.me/${t.socials.whatsapp}" target="_blank" class="w-8 h-8 rounded-full bg-green-500/20 hover:bg-green-500 flex items-center justify-center text-green-500 hover:text-white transition-all"><i class="fab fa-whatsapp text-sm"></i></a>` : ''}${t.socials.instagram ? `<a href="${t.socials.instagram}" target="_blank" class="w-8 h-8 rounded-full bg-pink-500/20 hover:bg-pink-500 flex items-center justify-center text-pink-500 hover:text-white transition-all"><i class="fab fa-instagram text-sm"></i></a>` : ''}${t.socials.tiktok ? `<a href="${t.socials.tiktok}" target="_blank" class="w-8 h-8 rounded-full bg-black/30 hover:bg-black flex items-center justify-center text-[#ff9999]/70 hover:text-white transition-all"><i class="fab fa-tiktok text-sm"></i></a>` : ''}${t.socials.discord ? `<a href="${t.socials.discord}" target="_blank" class="w-8 h-8 rounded-full bg-indigo-500/20 hover:bg-indigo-500 flex items-center justify-center text-indigo-400 hover:text-white transition-all"><i class="fab fa-discord text-sm"></i></a>` : ''}</div></div>`).join('');
+if (tg) tg.innerHTML = TEAM.map((t, i) => `<div class="stagger-item"><div class="relative mb-4"><div class="w-20 h-20 rounded-full border border-red-900/40 p-1 mx-auto overflow-hidden bg-gradient-to-br from-[#0a0101] to-[#020000]"><img src="${t.img}" class="w-full h-full object-cover rounded-full" onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=${t.name}'"></div></div><div class="flex items-center justify-center gap-2 mb-1"><h3 class="text-white font-bold text-lg font-cinzel">${t.name}</h3></div><p class="text-red-600 text-[10px] font-bold uppercase tracking-wider mb-3">${t.role}</p><div class="flex gap-3 justify-center">${t.socials.whatsapp ? `<a href="https://wa.me/${t.socials.whatsapp}" target="_blank" class="w-8 h-8 rounded-full bg-green-500/20 hover:bg-green-500 flex items-center justify-center text-green-500 hover:text-white transition-all"><i class="fab fa-whatsapp text-sm"></i></a>` : ''}${t.socials.instagram ? `<a href="${t.socials.instagram}" target="_blank" class="w-8 h-8 rounded-full bg-pink-500/20 hover:bg-pink-500 flex items-center justify-center text-pink-500 hover:text-white transition-all"><i class="fab fa-instagram text-sm"></i></a>` : ''}${t.socials.tiktok ? `<a href="${t.socials.tiktok}" target="_blank" class="w-8 h-8 rounded-full bg-black/30 hover:bg-black flex items-center justify-center text-red-400/70 hover:text-white transition-all"><i class="fab fa-tiktok text-sm"></i></a>` : ''}${t.socials.discord ? `<a href="${t.socials.discord}" target="_blank" class="w-8 h-8 rounded-full bg-indigo-500/20 hover:bg-indigo-500 flex items-center justify-center text-indigo-400 hover:text-white transition-all"><i class="fab fa-discord text-sm"></i></a>` : ''}</div></div>`).join('');
 filterProducts('ANDROID');
 document.querySelectorAll('.btn-royal-primary, .btn-royal-secondary, .tab-royal').forEach(btn => addRippleEffect(btn));
 const menuBtn = document.getElementById('mobileMenuBtn');
@@ -547,4 +476,5 @@ const loader = document.getElementById('loader');
 if (loader) { let width = 0; const loadingBar = document.getElementById('loadingBar'); const interval = setInterval(() => { if (width >= 100) { clearInterval(interval); setTimeout(() => { loader.style.opacity = '0'; setTimeout(() => { loader.style.display = 'none'; if (nav) nav.style.transform = 'translateY(0)'; }, 500); }, 500); } else { width += Math.random() * 12 + 4; if (width > 100) width = 100; if (loadingBar) loadingBar.style.width = width + '%'; } }, 120); }
 initFaqAccordion();
 initScrollReveal();
+initStaggerAnimation();
 });
