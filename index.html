@@ -12,206 +12,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 <link rel="stylesheet" href="style.css">
-
-<script>
-(function() {
-    document.addEventListener('contextmenu', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
-    });
-
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'F12' || e.keyCode === 123) {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-        }
-        if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-        }
-        if (e.ctrlKey && e.keyCode === 85) {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-        }
-        if (e.ctrlKey && e.keyCode === 83) {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-        }
-        if (e.ctrlKey && e.keyCode === 80) {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-        }
-        if (e.ctrlKey && e.shiftKey && e.keyCode === 82) {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-        }
-        if (e.ctrlKey && e.keyCode === 82) {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-        }
-        if (e.key === 'F5' || e.keyCode === 116) {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-        }
-        if (e.ctrlKey && e.keyCode === 69) {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-        }
-        if (e.ctrlKey && e.shiftKey && e.keyCode === 46) {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-        }
-        if (e.ctrlKey && e.shiftKey && e.keyCode === 78) {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-        }
-        if (e.ctrlKey && e.keyCode === 78) {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-        }
-    });
-
-    document.addEventListener('copy', function(e) {
-        e.preventDefault();
-        return false;
-    });
-    document.addEventListener('cut', function(e) {
-        e.preventDefault();
-        return false;
-    });
-    document.addEventListener('paste', function(e) {
-        e.preventDefault();
-        return false;
-    });
-    document.addEventListener('selectstart', function(e) {
-        e.preventDefault();
-        return false;
-    });
-    document.addEventListener('dragstart', function(e) {
-        e.preventDefault();
-        return false;
-    });
-
-    const style = document.createElement('style');
-    style.textContent = `
-        * {
-            user-select: none !important;
-            -webkit-user-select: none !important;
-            -moz-user-select: none !important;
-            -ms-user-select: none !important;
-            -webkit-touch-callout: none !important;
-        }
-        img, video, iframe, canvas {
-            pointer-events: none !important;
-            -webkit-user-drag: none !important;
-            user-drag: none !important;
-        }
-        body {
-            -webkit-touch-callout: none !important;
-        }
-        .btn-royal-primary, .btn-royal-secondary, .tab-royal, .contact-royal, #product-grid > div {
-            pointer-events: auto !important;
-        }
-    `;
-    document.head.appendChild(style);
-
-    function detectDevTools() {
-        const before = new Date().getTime();
-        debugger;
-        const after = new Date().getTime();
-        if (after - before > 100) {
-            document.body.innerHTML = `
-                <div style="background: black; color: red; text-align: center; padding: 50px; font-family: monospace; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                    <h1 style="font-size: 48px;">DEVTOOLS DETECTED</h1>
-                    <p style="font-size: 24px; margin-top: 20px;">Lu pikir bisa inspect website XFOURTEEN CORPORATION?</p>
-                    <p style="font-size: 20px; color: #ff6666;">BALIK SEKOLAH DULU GOBLOK</p>
-                    <button onclick="location.reload()" style="margin-top: 30px; padding: 10px 20px; background: red; color: white; border: none; cursor: pointer; border-radius: 5px;">RELOAD</button>
-                </div>
-            `;
-            document.body.style.overflow = 'hidden';
-            throw new Error('DevTools detected');
-        }
-        setTimeout(detectDevTools, 500);
-    }
-    setTimeout(detectDevTools, 1000);
-
-    const noop = function() {};
-    window.console.log = noop;
-    window.console.info = noop;
-    window.console.warn = noop;
-    window.console.error = noop;
-    window.console.debug = noop;
-    window.console.table = noop;
-    window.console.trace = noop;
-    window.console.group = noop;
-    window.console.groupEnd = noop;
-    window.console.groupCollapsed = noop;
-
-    function disableImageContext() {
-        const images = document.querySelectorAll('img');
-        images.forEach(img => {
-            img.addEventListener('contextmenu', function(e) {
-                e.preventDefault();
-                return false;
-            });
-            img.setAttribute('draggable', 'false');
-        });
-    }
-    document.addEventListener('DOMContentLoaded', disableImageContext);
-    setTimeout(disableImageContext, 500);
-
-    setInterval(function() {
-        debugger;
-    }, 100);
-
-    let requestCount = 0;
-    let lastReset = Date.now();
-    
-    setInterval(function() {
-        requestCount = 0;
-        lastReset = Date.now();
-    }, 60000);
-    
-    const originalFetch = window.fetch;
-    window.fetch = function() {
-        requestCount++;
-        if (requestCount > 100) {
-            return Promise.reject('Rate limit exceeded');
-        }
-        return originalFetch.apply(this, arguments);
-    };
-    
-    const originalOpen = XMLHttpRequest.prototype.open;
-    XMLHttpRequest.prototype.open = function() {
-        requestCount++;
-        if (requestCount > 100) {
-            return;
-        }
-        return originalOpen.apply(this, arguments);
-    };
-
-    if (window.location.protocol === 'view-source:') {
-        window.location.href = 'about:blank';
-    }
-
-    if (top !== self) {
-        top.location = self.location;
-    }
-})();
-</script>
 </head>
 <body class="overflow-x-hidden">
 
@@ -250,7 +50,7 @@
             <div id="loadingBar" class="h-full w-0 bg-gradient-to-r from-[#8b0000] via-[#ff1a1a] to-[#8b0000] rounded-full transition-all duration-150 ease-out animate-loading-shimmer"></div>
         </div>
         
-        <p class="text-[#8b0000]/60 text-[10px] tracking-[0.2em] mt-4 font-montserrat animate-pulse-gentle">INITIALIZING SYSTEM</p>
+
     </div>
 </div>
 
@@ -614,76 +414,69 @@
     </div>
 </div>
 
-<footer class="py-10 text-center border-t border-red-900/20 bg-black/40 backdrop-blur-sm">
+<!-- ====== FOOTER (UKURAN SEDANG) ====== -->
+<footer class="py-10 border-t border-red-900/30 bg-gradient-to-b from-[#020000] to-[#0a0101]">
     <div class="max-w-7xl mx-auto px-6">
-        <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
-            <div class="flex items-center gap-2 animate-fade-in-up">
-                <div class="w-8 h-8 bg-gradient-to-br from-red-900 to-red-800 rounded-lg flex items-center justify-center shadow-md shadow-red-950/20">
-                    <i class="fas fa-crown text-white text-xs"></i>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+            
+            <!-- Kolom 1: XFOURTEEN CORPORATION -->
+            <div class="space-y-3">
+                <h3 class="text-lg md:text-xl font-bold font-playfair text-white tracking-wider">
+                    XFOURTEEN <span class="text-red-600">CORPORATION</span>
+                </h3>
+                <p class="text-red-300/60 text-xs leading-relaxed max-w-xs mx-auto md:mx-0">
+                    The leading provider of premium gaming tools. Secure, undetected, and instant delivery for the best gaming experience.
+                </p>
+                <div class="flex gap-4 justify-center md:justify-start text-xl pt-1">
+                    <a href="#" class="text-red-600/50 hover:text-red-500 transition-colors"><i class="fab fa-tiktok"></i></a>
+                    <a href="#" class="text-red-600/50 hover:text-red-500 transition-colors"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-red-600/50 hover:text-red-500 transition-colors"><i class="fab fa-discord"></i></a>
+                    <a href="#" class="text-red-600/50 hover:text-red-500 transition-colors"><i class="fab fa-youtube"></i></a>
                 </div>
-                <span class="text-sm md:text-base font-bold tracking-tight text-white font-montserrat">XFOURTEEN<span class="text-red-600"> CORPORATION</span></span>
             </div>
-            <div class="flex gap-6 animate-fade-in-up">
-                <a href="#" onclick="scrollToSection('home')" class="text-red-600/40 hover:text-red-500 text-xs uppercase tracking-wider font-medium transition-colors">Home</a>
-                <a href="#" onclick="scrollToSection('products')" class="text-red-600/40 hover:text-red-500 text-xs uppercase tracking-wider font-medium transition-colors">Products</a>
-                <a href="#" onclick="scrollToSection('about-us')" class="text-red-600/40 hover:text-red-500 text-xs uppercase tracking-wider font-medium transition-colors">About</a>
-                <a href="#" onclick="scrollToSection('faq')" class="text-red-600/40 hover:text-red-500 text-xs uppercase tracking-wider font-medium transition-colors">FAQ</a>
-                <a href="#" onclick="scrollToSection('contact-us')" class="text-red-600/40 hover:text-red-500 text-xs uppercase tracking-wider font-medium transition-colors">Contact</a>
+
+            <!-- Kolom 2: TRUST & SECURITY -->
+            <div class="space-y-3 flex flex-col items-center md:items-center">
+                <h4 class="text-lg md:text-xl font-bold font-playfair text-white tracking-wider border-b border-red-900/30 pb-2 inline-block">
+                    TRUST &amp; <span class="text-red-600">SECURITY</span>
+                </h4>
+                <ul class="space-y-2 text-xs text-center">
+                    <li><a href="#" class="text-red-400/60 hover:text-red-500 transition-colors">Privacy Policy</a></li>
+                    <li><a href="#" class="text-red-400/60 hover:text-red-500 transition-colors">Terms of Service</a></li>
+                    <li><a href="#" class="text-red-400/60 hover:text-red-500 transition-colors">Submit a Feedback</a></li>
+                </ul>
+            </div>
+
+            <!-- Kolom 3: SECURE PAYMENT -->
+            <div class="space-y-3 flex flex-col items-center md:items-end">
+                <h4 class="text-lg md:text-xl font-bold font-playfair text-white tracking-wider border-b border-red-900/30 pb-2 inline-block">
+                    SECURE <span class="text-red-600">PAYMENT</span>
+                </h4>
+                <p class="text-red-300/50 text-[10px] leading-relaxed text-center md:text-right">
+                    Encrypted 256-bit SSL payments via our protected gateways.
+                </p>
+                <div class="flex flex-wrap gap-2 justify-center md:justify-end pt-1">
+                    <span class="bg-black/50 px-2.5 py-1 rounded-lg border border-red-900/30 text-white/80 text-[10px] font-semibold flex items-center gap-1.5">
+                        <i class="fas fa-qrcode text-red-500"></i> QRIS
+                    </span>
+                    <span class="bg-black/50 px-2.5 py-1 rounded-lg border border-red-900/30 text-white/80 text-[10px] font-semibold flex items-center gap-1.5">
+                        <i class="fas fa-wallet text-blue-400"></i> DANA
+                    </span>
+                    <span class="bg-black/50 px-2.5 py-1 rounded-lg border border-red-900/30 text-white/80 text-[10px] font-semibold flex items-center gap-1.5">
+                        <i class="fas fa-university text-green-400"></i> SEABANK
+                    </span>
+                </div>
             </div>
         </div>
-        <p class="text-red-800/30 text-[10px] tracking-wider uppercase font-medium">2026 XFOURTEEN CORPORATION. All Rights Reserved. Forged in Darkness.</p>
+
+        <div class="mt-8 pt-5 border-t border-red-900/20 text-center">
+            <p class="text-red-800/30 text-[9px] tracking-wider uppercase font-medium">
+                &copy; 2026 XFOURTEEN CORPORATION · All Rights Reserved.
+            </p>
+        </div>
     </div>
 </footer>
 
-<audio id="welcomeSound" preload="auto" style="display: none;">
-    <source src="assets/welcome.mp3" type="audio/mpeg">
-</audio>
-
 <script src="script.js"></script>
-<script>
-function playWelcomeSound() {
-    const audio = document.getElementById('welcomeSound');
-    if (audio) {
-        audio.volume = 0.7;
-        const playPromise = audio.play();
-        if (playPromise !== undefined) {
-            playPromise.catch(error => {
-                const playOnInteraction = () => {
-                    audio.play().catch(e => console.log("Gagal memutar sound:", e));
-                    document.removeEventListener('click', playOnInteraction);
-                    document.removeEventListener('touchstart', playOnInteraction);
-                };
-                document.addEventListener('click', playOnInteraction);
-                document.addEventListener('touchstart', playOnInteraction);
-            });
-        }
-    }
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    const loader = document.getElementById('loader');
-    if (loader) {
-        const observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
-                if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-                    if (loader.style.display === 'none') {
-                        playWelcomeSound();
-                        observer.disconnect();
-                    }
-                }
-            });
-        });
-        observer.observe(loader, { attributes: true });
-        
-        const checkInterval = setInterval(function() {
-            if (loader.style.display === 'none') {
-                playWelcomeSound();
-                clearInterval(checkInterval);
-                observer.disconnect();
-            }
-        }, 100);
-    }
-});
-</script>
 </body>
 </html>
