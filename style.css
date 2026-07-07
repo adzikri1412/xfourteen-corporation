@@ -582,19 +582,41 @@ gap: 1.8rem;
 }
 
 #team-grid > div {
-background: linear-gradient(135deg, #0a0101, #020000);
-border-radius: 20px;
-padding: 2rem 1.5rem;
-border: 1px solid rgba(139, 0, 0, 0.4);
-transition: all 0.4s ease;
-text-align: center;
-box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+  background: linear-gradient(135deg, #0a0101, #020000);
+  border-radius: 20px;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(139, 0, 0, 0.4);
+  transition: all 0.4s ease;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+  height: 420px;
+  display: flex;
+  flex-direction: column;
 }
 
-#team-grid > div:hover {
-transform: translateY(-6px);
-border-color: rgba(200, 0, 0, 0.7);
-box-shadow: 0 20px 40px -10px rgba(139, 0, 0, 0.4);
+#team-grid > div .relative.pt-16.pb-8.px-6 {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+#team-grid > div .absolute.top-0.left-0.w-full.h-28 {
+  height: 200px !important;
+}
+
+#team-grid > div .absolute.top-0.left-0.w-full.h-28 img {
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+}
+
+#team-grid > div .absolute.inset-0.bg-gradient-to-b.from-transparent.via-\[0a0101\]\/80.to-\[0a0101\] {
+  background: linear-gradient(to bottom, transparent 50%, rgba(10, 1, 1, 0.3) 80%, rgba(10, 1, 1, 0.6) 100%) !important;
+  backdrop-filter: blur(1px) !important;
+  -webkit-backdrop-filter: blur(1px) !important;
 }
 
 .contact-royal-glossy {
