@@ -1,4 +1,3 @@
-// SECURITY & ANTI-DEVTOOLS
 (function() {
     document.addEventListener('contextmenu', function(e) {
         e.preventDefault();
@@ -121,7 +120,7 @@
             document.body.innerHTML = `
                 <div style="background: black; color: white; text-align: center; padding: 50px; font-family: monospace; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;">
                     <h1 style="font-size: 48px;">DEVTOOLS DETECTED</h1>
-                    <p style="font-size: 24px; margin-top: 20px;">You think you can inspect XFOURTEEN CORPORATION?</p>
+                    <p style="font-size: 24px; margin-top: 20px;">You think you can inspect XFOURTEEN SOCIETY?</p>
                     <p style="font-size: 20px; color: #666666;">GO BACK TO SCHOOL</p>
                     <button onclick="location.reload()" style="margin-top: 30px; padding: 10px 20px; background: white; color: black; border: none; cursor: pointer; border-radius: 5px;">RELOAD</button>
                 </div>
@@ -489,9 +488,9 @@ function attachBukti() {
                 currentBuktiUrl = url;
                 currentBuktiNama = file.name;
                 const indicator = document.getElementById('buktiIndicator');
-                if (indicator) { indicator.classList.remove('hidden'); indicator.innerHTML = '<span class="text-xs text-green-600"><i class="fas fa-check-circle"></i> Proof attached (' + file.name + ')</span>'; }
+                if (indicator) { indicator.classList.remove('hidden'); indicator.innerHTML = '<span class="text-xs text-white/60"><i class="fas fa-check-circle"></i> Proof attached (' + file.name + ')</span>'; }
                 const btnAttach = document.getElementById('btnAttachBukti');
-                if (btnAttach) { btnAttach.innerHTML = '<i class="fas fa-check-circle mr-2"></i> PROOF ATTACHED'; btnAttach.style.background = 'rgba(16, 185, 129, 0.2)'; btnAttach.style.borderColor = '#10b981'; }
+                if (btnAttach) { btnAttach.innerHTML = '<i class="fas fa-check-circle mr-2"></i> PROOF ATTACHED'; btnAttach.style.background = 'rgba(255, 255, 255, 0.1)'; btnAttach.style.borderColor = '#ffffff'; }
                 showToast('Proof attached!');
             } else { currentBuktiUrl = null; showToast('Upload failed, please send manually via WhatsApp'); }
         });
@@ -506,7 +505,7 @@ async function sendInvoiceToDiscord(order, buktiUrl = null) {
         { name: "TRIBUTE", value: `Rp ${order.price.toLocaleString('id-ID')}`, inline: true },
         { name: "PAYMENT METHOD", value: "QRIS ONLY", inline: true },
         { name: "TIME", value: `<t:${Math.floor(Date.now()/1000)}:F>`, inline: false }
-    ], footer: { text: "XFOURTEEN CORPORATION - ROYAL TREASURY" }, timestamp: new Date().toISOString() };
+    ], footer: { text: "XFOURTEEN SOCIETY - ROYAL TREASURY" }, timestamp: new Date().toISOString() };
     if (buktiUrl) { embed.image = { url: buktiUrl }; embed.fields.push({ name: "PROOF", value: `[VIEW PROOF](${buktiUrl})`, inline: false }); }
     try { await fetch(CONFIG.webhookPurchase, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: "XFOURTEEN ROYAL BANK", avatar_url: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png", embeds: [embed], content: "**NEW PURCHASE!**" }) }); return true; }
     catch(e) { return false; }
@@ -516,7 +515,7 @@ async function confirmToWA() {
     if (!currentOrder) { showToast("No active order!"); return; }
     showToast("Sending confirmation...");
     await sendInvoiceToDiscord(currentOrder, currentBuktiUrl);
-    let message = `*ROYAL CONFIRMATION - XFOURTEEN CORPORATION*\n\n`;
+    let message = `*ROYAL CONFIRMATION - XFOURTEEN SOCIETY*\n\n`;
     message += ` Order ID: #${currentOrder.orderId}\n`;
     message += ` Item: ${currentOrder.name}\n`;
     message += ` Tribute: Rp ${currentOrder.price.toLocaleString('id-ID')}\n`;
@@ -715,10 +714,10 @@ window.addEventListener('DOMContentLoaded', () => {
                 <p class="text-white/40 bg-white/5 border border-white/10 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] mb-6 shadow-sm shadow-white/5">${t.role}</p>
                 <div class="w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent mb-6"></div>
                 <div class="flex gap-4 justify-center">
-                    ${t.socials.whatsapp ? `<a href="https://wa.me/${t.socials.whatsapp}" target="_blank" class="w-9 h-9 rounded-full bg-[#050101] border border-white/20 hover:border-green-500 hover:bg-green-500/10 flex items-center justify-center text-green-500 hover:text-green-400 transition-all hover:-translate-y-1 hover:shadow-[0_0_15px_rgba(34,197,94,0.3)]"><i class="fab fa-whatsapp text-sm"></i></a>` : ''}
-                    ${t.socials.instagram ? `<a href="${t.socials.instagram}" target="_blank" class="w-9 h-9 rounded-full bg-[#050101] border border-white/20 hover:border-pink-500 hover:bg-pink-500/10 flex items-center justify-center text-pink-500 hover:text-pink-400 transition-all hover:-translate-y-1 hover:shadow-[0_0_15px_rgba(236,72,153,0.3)]"><i class="fab fa-instagram text-sm"></i></a>` : ''}
-                    ${t.socials.tiktok ? `<a href="${t.socials.tiktok}" target="_blank" class="w-9 h-9 rounded-full bg-[#050101] border border-white/20 hover:border-white hover:bg-white/10 flex items-center justify-center text-white/70 hover:text-white transition-all hover:-translate-y-1 hover:shadow-[0_0_15px_rgba(255,255,255,0.3)]"><i class="fab fa-tiktok text-sm"></i></a>` : ''}
-                    ${t.socials.discord ? `<a href="${t.socials.discord}" target="_blank" class="w-9 h-9 rounded-full bg-[#050101] border border-white/20 hover:border-indigo-500 hover:bg-indigo-500/10 flex items-center justify-center text-indigo-400 hover:text-indigo-300 transition-all hover:-translate-y-1 hover:shadow-[0_0_15px_rgba(99,102,241,0.3)]"><i class="fab fa-discord text-sm"></i></a>` : ''}
+                    ${t.socials.whatsapp ? `<a href="https://wa.me/${t.socials.whatsapp}" target="_blank" class="w-9 h-9 rounded-full bg-[#050101] border border-white/20 hover:border-white hover:bg-white/10 flex items-center justify-center text-white/60 hover:text-white transition-all hover:-translate-y-1 hover:shadow-[0_0_15px_rgba(255,255,255,0.3)]"><i class="fab fa-whatsapp text-sm"></i></a>` : ''}
+                    ${t.socials.instagram ? `<a href="${t.socials.instagram}" target="_blank" class="w-9 h-9 rounded-full bg-[#050101] border border-white/20 hover:border-white hover:bg-white/10 flex items-center justify-center text-white/60 hover:text-white transition-all hover:-translate-y-1 hover:shadow-[0_0_15px_rgba(255,255,255,0.3)]"><i class="fab fa-instagram text-sm"></i></a>` : ''}
+                    ${t.socials.tiktok ? `<a href="${t.socials.tiktok}" target="_blank" class="w-9 h-9 rounded-full bg-[#050101] border border-white/20 hover:border-white hover:bg-white/10 flex items-center justify-center text-white/60 hover:text-white transition-all hover:-translate-y-1 hover:shadow-[0_0_15px_rgba(255,255,255,0.3)]"><i class="fab fa-tiktok text-sm"></i></a>` : ''}
+                    ${t.socials.discord ? `<a href="${t.socials.discord}" target="_blank" class="w-9 h-9 rounded-full bg-[#050101] border border-white/20 hover:border-white hover:bg-white/10 flex items-center justify-center text-white/60 hover:text-white transition-all hover:-translate-y-1 hover:shadow-[0_0_15px_rgba(255,255,255,0.3)]"><i class="fab fa-discord text-sm"></i></a>` : ''}
                 </div>
             </div>
         </div>
