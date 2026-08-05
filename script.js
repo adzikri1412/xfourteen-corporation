@@ -1,4 +1,4 @@
-// ===== SECURITY & ANTI-DEVTOOLS =====
+// SECURITY & ANTI-DEVTOOLS
 (function() {
     document.addEventListener('contextmenu', function(e) {
         e.preventDefault();
@@ -107,7 +107,7 @@
         body {
             -webkit-touch-callout: none !important;
         }
-        .btn-royal-primary, .btn-royal-secondary, .tab-royal, .contact-royal, #product-grid > div {
+        .btn-royal-primary, .btn-royal-secondary, .tab-royal, .contact-royal-glossy, #product-grid > div {
             pointer-events: auto !important;
         }
     `;
